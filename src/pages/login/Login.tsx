@@ -1,3 +1,4 @@
+
 import React from "react";
 import Form from "components/common/form/Form";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +8,7 @@ import naver from "../../assets/images/naver.png";
 
 const Login = () => {
   const navigte = useNavigate();
+
 
   const goLogin = () => {
     navigte("/login");
