@@ -20,7 +20,12 @@ img {
   vertical-align: middle;
 }
 body {
+  font-family: "Noto Sans KR", "Roboto", sans-serif;
 }
 em {
   font-style: normal;
 }
+section {
+  height: 49.9vw;
+}
+/* font-family: "Jua", sans-serif; */
