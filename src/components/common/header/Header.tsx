@@ -2,11 +2,11 @@ import { Link, NavLink } from "react-router-dom";
 import HeaderCss from "./style/HeaderCss";
 
 const Header = () => {
-  
+  if (window.location.pathname === "/login" || "/signup") return null;
   return (
     <HeaderCss>
       <div>
-        <Link to="/shelf">Project SB</Link>
+        <Link to="/">Project SB</Link>
       </div>
       <div>
         <ul>
