@@ -4,18 +4,14 @@ import { useNavigate } from "react-router-dom";
 import SignupCss from "./style/SignupCss";
 import kakao from "../../assets/images/kakao.png";
 import naver from "../../assets/images/naver.png";
-
 const Signup = () => {
-  const navigte = useNavigate();
-
+  const navigate = useNavigate();
   const goLogin = () => {
-    navigte("/login");
+    navigate("/login");
   };
-
   const goSignup = () => {
-    navigte("/signup");
+    navigate("/signup");
   };
-
   return (
     <SignupCss>
       <div>
@@ -24,7 +20,13 @@ const Signup = () => {
       </div>
       <div>
         <span onClick={goLogin}>로그인</span> or
-        <span onClick={goSignup}>등록</span>
+        <span
+          onClick={() => {
+            navigate("/signup");
+          }}
+        >
+          등록
+        </span>
       </div>
       <Form />
       <span className="line">OR</span>
@@ -39,5 +41,4 @@ const Signup = () => {
     </SignupCss>
   );
 };
-
 export default Signup;
