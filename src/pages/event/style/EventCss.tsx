@@ -3,8 +3,6 @@ import styled from "styled-components";
 const EventCss = styled.section`
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 50.5208vw;
   .swiper {
     width: 100%;
   }
