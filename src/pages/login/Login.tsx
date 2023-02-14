@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoginCss from "./style/LoginCss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,6 +20,10 @@ const schema = yup.object({
 });
 
 const Login = () => {
+  useEffect(() => {
+    // document.querySelector("header").style.display = "none";
+  }, []);
+
   const {
     register,
     handleSubmit,
