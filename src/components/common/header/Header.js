@@ -5,7 +5,6 @@ import { navheader } from "./data/headjson";
 const Header = () => {
   useEffect(() => {}, []);
   if (window.location.pathname === "/login") return null;
-
   return (
     <HeaderCss>
       <div>
@@ -30,5 +29,4 @@ const Header = () => {
     </HeaderCss>
   );
 };
-
 export default Header;
