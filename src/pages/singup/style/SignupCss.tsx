@@ -1,6 +1,25 @@
 import styled from "styled-components";
 
-const LoginCss = styled.section`
+const SignupCss = styled.section`
+  .line {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100px;
+      height: 10px;
+      background: #3a2929;
+    }
+    &::before {
+      width: 100px;
+      height: 10px;
+      background: #3a2929;
+    }
+  }
   .kakao {
     cursor: pointer;
     display: flex;
@@ -43,4 +62,4 @@ const LoginCss = styled.section`
   }
 `;
 
-export default LoginCss;
+export default SignupCss;
