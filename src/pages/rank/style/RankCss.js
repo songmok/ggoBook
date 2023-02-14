@@ -22,9 +22,13 @@ const RankCss = styled.section`
       }
     }
   }
-  .fl {
+  .rankUser {
     > li {
       ${rankgrid}
+      padding-top: 45px;
+      &:first-child {
+        padding-top: 30px;
+      }
       > span {
         display: block;
         font-size: ${midllesize};
