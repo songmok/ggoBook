@@ -25,4 +25,7 @@ body {
 em {
   font-style: normal;
 }
+section {
+  height: 49.9vw;
+}
 /* font-family: "Jua", sans-serif; */
