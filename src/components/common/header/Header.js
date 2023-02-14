@@ -1,10 +1,9 @@
-import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import HeaderCss from "./style/HeaderCss";
 import { navheader } from "./data/headjson";
+import { useEffect } from "react";
 const Header = () => {
-  useEffect(() => {}, []);
-  if (window.location.pathname === "/login") return null;
+  if (window.location.pathname === "/login" && "/signup") return null;
   return (
     <HeaderCss>
       <div>
