@@ -6,7 +6,8 @@ import MyCalendar from "pages/myCalendar/MyCalendar";
 import MyPage from "pages/myPage/MyPage";
 import NotFound from "pages/notFound/NotFound";
 import Rank from "pages/rank/Rank";
-import React from "react";
+import Signup from "pages/signup/Signup";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/event" element={<Event />} />
           <Route path="/mycalendar" element={<MyCalendar />} />
           <Route path="/myPage" element={<MyPage />} />
