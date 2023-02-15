@@ -7,8 +7,6 @@ import MyPage from "pages/myPage/MyPage";
 import NotFound from "pages/notFound/NotFound";
 import Rank from "pages/rank/Rank";
 import Signup from "pages/signup/Signup";
-
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   return (

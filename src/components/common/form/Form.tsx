@@ -1,17 +1,19 @@
 import FormCss from "./style/FormCss";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import instance from "api/axios";
+import request from "api/request";
 
 // types
 type LoginType = {
-  email: string;
-  password: string;
+  uiEmail: string;
+  uiPwd: string;
 };
 
 const schema = yup.object({
-  email: yup.string().email().required("Email is required"),
-  password: yup
+  uiEmail: yup.string().email().required("Email is required"),
+  uiPwd: yup
     .string()
     .min(8)
     .max(16)
@@ -27,37 +29,64 @@ const Form = () => {
     resolver: yupResolver(schema),
   });
 
-  const submit = () => {
-    console.log("제출확인");
+  const submit: SubmitHandler<LoginType> = (body) => {
+    console.log(body);
+    window.location.pathname === "/signup" &&
+      instance
+        .put(request.join, body)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    window.location.pathname === "/login" &&
+      instance
+        .post(request.login, body)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
   };
+
   return (
     <FormCss>
       <form onSubmit={handleSubmit(submit)}>
-        <label htmlFor="email">이메일</label>
+        <label htmlFor="email" />
         <input
+          className="input"
           id="email"
           type="email"
           placeholder="이메일 주소"
-          {...register("email")}
+          {...register("uiEmail")}
         />
-        <p>{errors.email?.message}</p>
-        <label htmlFor="password">비밀번호</label>
+        <p className="error">{errors.uiEmail?.message}</p>
+        <label htmlFor="password" />
         <input
+          className="input"
           id="password"
           type="password"
           placeholder="8~16자리 비밀번호"
-          {...register("password")}
+          {...register("uiPwd")}
         />
-        <p>{errors.password?.message}</p>
+        <p className="error">{errors.uiPwd?.message}</p>
         {window.location.pathname === "/login" && (
           <button className="submit" type="submit">
             로그인
           </button>
         )}
         {window.location.pathname === "/signup" && (
-          <button className="submit" type="submit">
-            회원가입
-          </button>
+          <>
+            <div className="agree">
+              서비스를 이용하므로써 이용 약관 및 개인 정보 보호 정책 에 동의하는
+              것으로 간주됩니다
+            </div>
+            <button className="submit" type="submit">
+              회원가입
+            </button>
+          </>
         )}
       </form>
     </FormCss>
