@@ -1,7 +1,5 @@
 import React from "react";
 
-const shelf = () => {
-  return <div>shelf</div>;
-};
+const shelf = () => {};
 
 export default shelf;

@@ -1,5 +1,8 @@
 import Footer from "components/common/footer/Footer";
 import Header from "components/common/header/Header";
+import Book from "pages/book/Book";
+import BookDetail from "pages/bookDetail/BookDetail";
+
 import Event from "pages/event/Event";
 import Login from "pages/login/Login";
 import MyCalendar from "pages/myCalendar/MyCalendar";
@@ -20,6 +23,8 @@ function App() {
           <Route path="/event" element={<Event />} />
           <Route path="/myPage" element={<MyPage />} />
           <Route path="/rank" element={<Rank />} />
+          <Route path="/book" element={<Book />} />
+          <Route path="/bookdetail" element={<BookDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
