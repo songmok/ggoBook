@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { headertitle, midllesize } from "utils/FontSize";
-import { rankgrid } from "utils/Layout";
+import { rankgrid, sectionwrap } from "utils/Layout";
 import { bfaf } from "utils/repeatCss";
 const RankCss = styled.section`
-  margin: 0 100px;
-  padding-top: 50px;
+  ${sectionwrap}
   .rankHead {
     ${rankgrid}
     padding-bottom: 30px;
