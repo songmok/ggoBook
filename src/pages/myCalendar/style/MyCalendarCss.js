@@ -1,32 +1,6 @@
 import styled from "styled-components";
 
 const MyCalendarCss = styled.section`
-  #external-events {
-    position: fixed;
-    z-index: 2;
-    top: 20px;
-    left: 20px;
-    width: 150px;
-    padding: 0 10px;
-    border: 1px solid #ccc;
-    background: #eee;
-  }
-
-  #external-events .fc-event {
-    cursor: move;
-    margin: 3px 0;
-  }
-
-  #calendar-container {
-    position: relative;
-    z-index: 1;
-    margin-left: 200px;
-  }
-
-  #calendar {
-    max-width: 1100px;
-    margin: 20px auto;
-  }
   .demo-app {
     display: flex;
     min-height: 100%;
@@ -55,6 +29,7 @@ const MyCalendarCss = styled.section`
     max-width: 1100px;
     margin: 0 auto;
   }
+
   .fc-day-sun a {
     color: red;
   }
