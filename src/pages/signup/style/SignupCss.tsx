@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { defaltsize, headertitle } from "utils/FontSize";
 
 const SignupCss = styled.section`
@@ -55,6 +56,7 @@ const SignupCss = styled.section`
         transform: translateY(-50%);
         background: #000000;
       }
+
     }
   }
   .kakao {
@@ -64,7 +66,7 @@ const SignupCss = styled.section`
     align-items: center;
     border: 0;
     border-radius: 12px;
-    background-color: #fddc3f;
+
     height: 4.6875vw;
     width: 100%;
     margin: 10px 0px;
@@ -74,6 +76,7 @@ const SignupCss = styled.section`
     img {
       height: 90%;
       width: 4.1667vw;
+
       margin-right: 10px;
     }
   }

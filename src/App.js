@@ -7,7 +7,6 @@ import MyPage from "pages/myPage/MyPage";
 import NotFound from "pages/notFound/NotFound";
 import Rank from "pages/rank/Rank";
 import Signup from "pages/signup/Signup";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   return (
@@ -17,8 +16,8 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/event" element={<Event />} />
           <Route path="/mycalendar" element={<MyCalendar />} />
+          <Route path="/event" element={<Event />} />
           <Route path="/myPage" element={<MyPage />} />
           <Route path="/rank" element={<Rank />} />
           <Route path="*" element={<NotFound />} />

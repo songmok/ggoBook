@@ -5,7 +5,6 @@ import { navheader } from "./data/headjson";
 const Header = () => {
   if (window.location.pathname === "/login") return null;
   if (window.location.pathname === "/signup") return null;
-
   return (
     <HeaderCss>
       <div>
