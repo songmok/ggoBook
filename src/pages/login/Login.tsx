@@ -3,14 +3,11 @@ import { useNavigate } from "react-router-dom";
 import LoginCss from "./style/LoginCss";
 import kakao from "../../assets/images/kakao.png";
 import naver from "../../assets/images/naver.png";
-
 const Login = () => {
   const navigate = useNavigate();
-
   const goSignup = () => {
     navigate("/signup");
   };
-
   return (
     <LoginCss>
       <div className="title">
@@ -37,5 +34,4 @@ const Login = () => {
     </LoginCss>
   );
 };
-
 export default Login;
