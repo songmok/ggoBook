@@ -25,7 +25,7 @@ export default class MyCalendar extends Component {
                 headerToolbar={{
                   left: "prev,next today",
                   center: "title",
-                  right: "dayGridMonth,timeGridWeek,timeGridDay",
+                  right: "dayGridMonth",
                 }}
                 initialView="dayGridMonth"
                 editable={true}
@@ -54,7 +54,7 @@ export default class MyCalendar extends Component {
     return (
       <div className="demo-app-sidebar">
         <div className="demo-app-sidebar-section">
-          <h2>Instructions</h2>
+          <h2>오보검의 책장</h2>
           <ul>
             <li>Select dates and you will be prompted to create a new event</li>
             <li>Drag, drop, and resize events</li>
