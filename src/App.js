@@ -11,22 +11,26 @@ import NotFound from "pages/notFound/NotFound";
 import Rank from "pages/rank/Rank";
 import Signup from "pages/signup/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import store from "reduser/store";
+import { Provider } from "react-redux";
 function App() {
   return (
     <>
       <Router>
         <Header />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/mycalendar" element={<MyCalendar />} />
-          <Route path="/event" element={<Event />} />
-          <Route path="/myPage" element={<MyPage />} />
-          <Route path="/rank" element={<Rank />} />
-          <Route path="/book" element={<Book />} />
-          <Route path="/bookdetail" element={<BookDetail />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Provider store={store}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/mycalendar" element={<MyCalendar />} />
+            <Route path="/event" element={<Event />} />
+            <Route path="/myPage" element={<MyPage />} />
+            <Route path="/rank" element={<Rank />} />
+            <Route path="/book" element={<Book />} />
+            <Route path="/bookdetail" element={<BookDetail />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Provider>
         <Footer />
       </Router>
     </>

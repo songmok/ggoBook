@@ -1,26 +1,85 @@
 import React, { useEffect, useState } from "react";
-
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
+import { INITIAL_EVENTS, createEventId } from "./data/evet-utils";
+import { formatDate } from "@fullcalendar/core";
 
-export default function MyCalendar() {
-  // initial state
+const MyCalendar = () => {
   const [state, setState] = useState({
-    weekendsVisible: true,
-    externalEvents: [
-      { title: "Art 1", color: "#0097a7", id: 34432 },
-      { title: "Art 2", color: "#f44336", id: 323232 },
-      { title: "Art 3", color: "#f57f17", id: 1111 },
-      { title: "Art 4", color: "#90a4ae", id: 432432 },
-    ],
+    externalEvents: [],
+    currentEvents: [],
   });
 
-  // load external events
+  const handleDateSelect = (selectInfo) => {
+    let title = prompt("Please enter a new title for your event");
+    let calendarApi = selectInfo.view.calendar;
+
+    calendarApi.unselect(); // clear date selection
+
+    if (title) {
+      calendarApi.addEvent({
+        id: createEventId(),
+        title,
+        start: selectInfo.startStr,
+        end: selectInfo.endStr,
+        allDay: selectInfo.allDay,
+      });
+    }
+  };
+
+  const handleEventClick = (clickInfo) => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete the event '${clickInfo.event.title}'`
+      )
+    ) {
+      clickInfo.event.remove();
+    }
+  };
+
+  const handleEvents = (events) => {
+    setState({
+      currentEvents: events,
+    });
+  };
+
+  function renderEventContent(eventInfo) {
+    return (
+      <>
+        <b>{eventInfo.timeText}</b>
+        <i>{eventInfo.event.title}</i>
+      </>
+    );
+  }
+
+  function renderSidebarEvent(event) {
+    return (
+      <div
+        className="fc-event"
+        title={event.title}
+        data-id={event.id}
+        data-color={event.color}
+        data-custom={event.custom}
+        key={event.id}
+        style={{
+          backgroundColor: event.color,
+          borderColor: event.color,
+          cursor: "pointer",
+        }}
+      >
+        <div className="fc-event-main">
+          <div>
+            <strong>{event.title}</strong>
+          </div>
+          {event.custom}
+        </div>
+      </div>
+    );
+  }
   useEffect(() => {
     let containerEl = document.getElementById("external-events");
-
     const draggable = new Draggable(containerEl, {
       itemSelector: ".fc-event",
       eventData: function (eventEl) {
@@ -39,57 +98,61 @@ export default function MyCalendar() {
     });
     return () => draggable.destroy();
   }, []);
-  // load external events
 
   return (
     <>
-      <div id="external-events">
-        <p>
-          <strong>Draggable Events</strong>
-        </p>
+      <div className="demo-app">
+        <div
+          className="demo-app-sidebar"
+          style={{ float: "left", width: "25%" }}
+        >
+          <div className="demo-app-sidebar-section">
+            <h2>Instructions</h2>
+            <ul>
+              <li>
+                Select dates and you will be prompted to create a new event
+              </li>
+              <li>Drag, drop, and resize events</li>
+              <li>Click an event to delete it</li>
+            </ul>
+          </div>
 
-        <div className="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-          <div className="fc-event-main">My Event 1</div>
+          <div className="demo-app-sidebar-section" id="external-events">
+            <h2>All Events ({state.currentEvents.length})</h2>
+            <ul>{state.currentEvents.map(renderSidebarEvent)}</ul>
+          </div>
         </div>
-        <div className="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-          <div className="fc-event-main">My Event 2</div>
+        <div className="demo-app-main" style={{ float: "left", width: "75%" }}>
+          <FullCalendar
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            headerToolbar={{
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek,timeGridDay",
+            }}
+            initialView="dayGridMonth"
+            editable={true}
+            selectable={true}
+            // selectMirror={true}
+            // dayMaxEvents={true}
+            weekends={true}
+            draggable={true}
+            droppable={true}
+            initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+            select={handleDateSelect}
+            // eventContent={renderEventContent} // custom render function
+            eventClick={handleEventClick}
+            eventsSet={handleEvents} // called after events are initialized/added/changed/removed
+            /* you can update a remote database when these fire:
+                eventAdd={function(){}}
+                eventChange={function(){}}
+                eventRemove={function(){}}
+                */
+          />
         </div>
-        <div className="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-          <div className="fc-event-main">My Event 3</div>
-        </div>
-        <div className="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-          <div className="fc-event-main">My Event 4</div>
-        </div>
-        <div className="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-          <div className="fc-event-main">My Event 5</div>
-        </div>
-
-        <p>
-          <input type="checkbox" id="drop-remove" />
-          <label htmlFor="drop-remove">remove after drop</label>
-        </p>
       </div>
-
-      <div id="calendar-container">
-        <div id="calendar"></div>
-      </div>
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
-        }}
-        initialView="dayGridMonth"
-        editable={true}
-        selectable={true}
-        selectMirror={true}
-        dayMaxEvents={true}
-        weekends={state.weekendsVisible}
-        // events={state.calendarEvents}
-        // droppable={true}
-        // eventReceive={handleEventReceive}
-      />
     </>
   );
-}
+};
+
+export default MyCalendar;
