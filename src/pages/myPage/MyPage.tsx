@@ -8,8 +8,13 @@ import { faFileLines } from "@fortawesome/free-solid-svg-icons";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "reducer/store";
 
 const MyPage = () => {
+  const user = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,6 +24,12 @@ const MyPage = () => {
   const closeModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     setModalOpen(false);
   };
+
+  const goToComplete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    navigate("/complete");
+  };
+
+  console.log(user);
 
   return (
     <MyPageCss>
@@ -40,7 +51,9 @@ const MyPage = () => {
             <button className="profileBt" onClick={openModal}>
               프로필 수정
             </button>
-            <button className="profileBt">완독서 관리</button>
+            <button className="profileBt" onClick={goToComplete}>
+              완독서 관리
+            </button>
           </div>
         </div>
         {modalOpen === true ? <Modal closeModal={closeModal} /> : null}
