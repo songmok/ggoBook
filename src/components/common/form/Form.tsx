@@ -4,6 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import instance from "api/axios";
 import request from "api/request";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "reducer/userSlice";
 
 // types
 type LoginType = {
@@ -21,6 +24,9 @@ const schema = yup.object({
 });
 
 const Form = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -30,12 +36,12 @@ const Form = () => {
   });
 
   const submit: SubmitHandler<LoginType> = (body) => {
-    console.log(body);
     window.location.pathname === "/signup" &&
       instance
         .put(request.join, body)
         .then((res) => {
           console.log(res);
+          navigate("/login");
         })
         .catch((err) => {
           console.log(err);
@@ -44,7 +50,9 @@ const Form = () => {
       instance
         .post(request.login, body)
         .then((res) => {
-          console.log(res.data);
+          const uiSeq = res.data.loginUser.uiSeq;
+          dispatch(loginUser(uiSeq));
+          navigate("/mycalendar");
         })
         .catch((err) => {
           alert(err.response.data.message);

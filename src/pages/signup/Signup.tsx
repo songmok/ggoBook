@@ -1,8 +1,6 @@
 import Form from "components/common/form/Form";
 import { useNavigate } from "react-router-dom";
 import SignupCss from "./style/SignupCss";
-import kakao from "../../assets/images/kakao.png";
-import naver from "../../assets/images/naver.png";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -23,7 +21,7 @@ const Signup = () => {
         <span className="on">등록</span>
       </div>
       <Form />
-      <div className="lineBox">
+      {/* <div className="lineBox">
         <span className="or"> 또는 </span>
       </div>
       <button className="kakao">
@@ -33,7 +31,7 @@ const Signup = () => {
       <button className="naver">
         <img src={naver} alt="네이버로 시작" />
         <span>네이버로 시작하기</span>
-      </button>
+      </button> */}
     </SignupCss>
   );
 };
