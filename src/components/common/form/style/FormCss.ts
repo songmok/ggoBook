@@ -6,7 +6,6 @@ const FormCss = styled.div`
   .input {
     border: 0;
     border-bottom: 1px solid;
-    /* border-radius: 12px; */
     height: 3.125vw;
     width: 100%;
     font-size: ${midllesize};
