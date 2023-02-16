@@ -3,6 +3,7 @@ import Header from "components/common/header/Header";
 import Event from "pages/event/Event";
 import Login from "pages/login/Login";
 import MyCalendar from "pages/myCalendar/MyCalendar";
+import Complete from "pages/myPage/complete/Complete";
 import MyPage from "pages/myPage/MyPage";
 import NotFound from "pages/notFound/NotFound";
 import Rank from "pages/rank/Rank";
@@ -19,6 +20,7 @@ function App() {
           <Route path="/mycalendar" element={<MyCalendar />} />
           <Route path="/event" element={<Event />} />
           <Route path="/myPage" element={<MyPage />} />
+          <Route path="/complete" element={<Complete />} />
           <Route path="/rank" element={<Rank />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
