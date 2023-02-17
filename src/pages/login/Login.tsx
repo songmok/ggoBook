@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LoginCss from "./style/LoginCss";
 import kakao from "../../assets/images/kakao.png";
 import naver from "../../assets/images/naver.png";
-import { KAKAO_URL } from "OAuth";
+import { KAKAO_URL, NAVER_URL } from "OAuth";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -27,15 +27,16 @@ const Login = () => {
       <div className="lineBox">
         <span className="or"> 또는 </span>
       </div>
-      <a className="kakao" href={KAKAO_URL}>
+      <a href={KAKAO_URL} className="kakao">
         <img src={kakao} alt="카카오 로그인" />
         <span>카카오 로그인</span>
       </a>
-      <button className="naver">
+      <a href={NAVER_URL} className="naver">
         <img src={naver} alt="네이버 로그인" />
         <span>네이버 로그인</span>
-      </button>
+      </a>
     </LoginCss>
   );
 };
+
 export default Login;

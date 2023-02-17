@@ -11,6 +11,7 @@ import MyPage from "pages/myPage/MyPage";
 import NotFound from "pages/notFound/NotFound";
 import Rank from "pages/rank/Rank";
 import Signup from "pages/signup/Signup";
+import Wait from "pages/wait/Wait";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/book" element={<Book />} />
           <Route path="/bookdetail" element={<BookDetail />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/wait" element={<Wait />} />
         </Routes>
 
         <Footer />
