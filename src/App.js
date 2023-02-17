@@ -10,6 +10,7 @@ import MyPage from "pages/myPage/MyPage";
 import NotFound from "pages/notFound/NotFound";
 import Rank from "pages/rank/Rank";
 import Signup from "pages/signup/Signup";
+import Wait from "pages/wait/Wait";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import theme from "theme/ThemeProvider";
@@ -17,6 +18,7 @@ import theme from "theme/ThemeProvider";
 function App() {
   return (
     <>
+
       <ThemeProvider theme={theme}>
         <Router>
           <Header />
@@ -31,10 +33,12 @@ function App() {
             <Route path="/book" element={<Book />} />
             <Route path="/bookdetail" element={<BookDetail />} />
             <Route path="*" element={<NotFound />} />
+             <Route path="/wait" element={<Wait />} />
           </Routes>
           <Footer />
         </Router>
       </ThemeProvider>
+
     </>
   );
 }
