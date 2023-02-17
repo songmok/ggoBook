@@ -11,34 +11,35 @@ import NotFound from "pages/notFound/NotFound";
 import Rank from "pages/rank/Rank";
 import Signup from "pages/signup/Signup";
 import Wait from "pages/wait/Wait";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { store } from "reducer/store";
 import { ThemeProvider } from "styled-components";
 import theme from "theme/ThemeProvider";
-
 function App() {
   return (
     <>
-
       <ThemeProvider theme={theme}>
         <Router>
-          <Header />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/mycalendar" element={<MyCalendar />} />
-            <Route path="/event" element={<Event />} />
-            <Route path="/myPage" element={<MyPage />} />
-            <Route path="/complete" element={<Complete />} />
-            <Route path="/rank" element={<Rank />} />
-            <Route path="/book" element={<Book />} />
-            <Route path="/bookdetail" element={<BookDetail />} />
-            <Route path="*" element={<NotFound />} />
-             <Route path="/wait" element={<Wait />} />
-          </Routes>
-          <Footer />
+          <Provider store={store}>
+            <Header />
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/mycalendar" element={<MyCalendar />} />
+              <Route path="/event" element={<Event />} />
+              <Route path="/myPage" element={<MyPage />} />
+              <Route path="/complete" element={<Complete />} />
+              <Route path="/rank" element={<Rank />} />
+              <Route path="/book" element={<Book />} />
+              <Route path="/bookdetail" element={<BookDetail />} />
+              <Route path="*" element={<NotFound />} />
+              <Route path="/wait" element={<Wait />} />
+            </Routes>
+            <Footer />
+          </Provider>
         </Router>
       </ThemeProvider>
-
     </>
   );
 }
