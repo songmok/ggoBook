@@ -7,6 +7,9 @@ const FooterCss = styled.footer`
   width: 100%;
   height: 200px;
   border-top: 1px solid #bbb;
+  @media ${(props) => props.theme.mob} {
+    display: none;
+  }
 `;
 
 export default FooterCss;
