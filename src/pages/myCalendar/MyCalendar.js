@@ -7,7 +7,6 @@ import { useLocation, useParams } from "react-router-dom";
 import Modal from "react-modal";
 import AppointmentForm from "./AppointmentForm";
 import { useSelector, useDispatch } from "react-redux";
-import { add_appointment } from "reducer/appointmentActions";
 import { search_appointment } from "reducer/appointmentActions";
 import AppointmentDetails from "./AppointmentDetails";
 import {
@@ -39,6 +38,8 @@ const MyCalendar = () => {
     (state) => state.appointment.selectedAppointment
   );
   console.log(events);
+  // console.log(selectedEvent);
+  // console.log(events);
   //Assign useDispatch hook to a variable
   const dispatch = useDispatch();
 
@@ -70,6 +71,7 @@ const MyCalendar = () => {
   // Open appointment details when clicked on an event
   const handleEventClick = (clickInfo) => {
     if (clickInfo.event) {
+      console.log(clickInfo.event._def.publicId);
       dispatch(search_appointment(clickInfo.event._def.publicId));
       setSelectedModal("AppointmentDetails");
       openModal();

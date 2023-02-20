@@ -5,9 +5,9 @@ const AppointmentDetails = ({ selectedEvent }) => {
   const startDateTime = selectedEvent.start;
   const endDateTime = selectedEvent.end;
   const formattedStartDate = moment(startDateTime).utc().format("DD MMMM YYYY");
-  const formattedStartTime = moment(startDateTime).local().format("hh:mm a");
-  const formattedEndTime = moment(endDateTime).local().format("hh:mm a");
-
+  const formattedEndDate = moment(endDateTime).utc().format("DD MMMM YYYY");
+  console.log(selectedEvent);
+  console.log(formattedEndDate);
   return (
     <div>
       {selectedEvent ? (
@@ -15,10 +15,8 @@ const AppointmentDetails = ({ selectedEvent }) => {
           <Title>{selectedEvent.title}</Title>
           <div>Name: {selectedEvent.name}</div>
           <div>Age: {selectedEvent.age}</div>
-          <div>Gender: {selectedEvent.gender}</div>
-          <div>Date: {formattedStartDate}</div>
-          <div>Start Time: {formattedStartTime}</div>
-          <div>End Time: {formattedEndTime}</div>
+          <div>시작일: {formattedStartDate}</div>
+          <div>마지막일: {formattedEndDate}</div>
         </div>
       ) : (
         <div>Error Getting Data</div>
