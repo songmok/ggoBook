@@ -10,6 +10,9 @@ const HeaderCss = styled.header`
   border-bottom: 1px solid #bbb;
   padding: 0px 30px;
   background-color: #942e44;
+  position: relative;
+  z-index: 9999;
+
   .headerWrap {
     @media ${(props) => props.theme.mob} {
       position: fixed;

@@ -10,6 +10,7 @@ const SignupCss = styled.section`
   justify-content: center;
   flex-direction: column;
   width: 36.4583vw;
+  
   .title {
     text-align: center;
     margin: 30px 0;

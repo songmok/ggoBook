@@ -39,7 +39,8 @@ const AppointmentForm = ({ closeModal }) => {
   // Add start and end date time when state changes
   useEffect(() => {
     let formattedDate = moment(selectedDate).format("YYYY-MM-DD");
-    // setStartDateTime(formattedDate + "T" + selectedTime[0] + ":00");
+    console.log(formattedDate);
+    onChangeDate(formattedDate);
     // setEndDateTime(formattedDate + "T" + selectedTime[1] + ":00");
   }, [selectedDate, selectedTime]);
 
@@ -130,8 +131,18 @@ const AppointmentForm = ({ closeModal }) => {
           </ListItem>
           <ListItem>
             <Label>Date</Label>
-            <DatePicker onChange={setStart} value={start} format="y-MM-d" />
-            <DatePicker onChange={setEnd} value={end} format="y-MM-d" />
+            <DatePicker
+              onChange={(e) => {
+                setStart(e);
+              }}
+              value={start}
+              dateFormat={"yyyy-MM-dd"}
+            />
+            <DatePicker
+              onChange={setEnd}
+              value={end}
+              dateFormat={"yyyy-MM-dd"}
+            />
           </ListItem>
           <ListItem>
             <Label>Time</Label>

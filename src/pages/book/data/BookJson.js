@@ -1,15 +1,15 @@
 export const BookJson = [
   {
     biSeq: "1",
-    biName: "앵무새 죽이기",
-    biAuthor: "앵무새작가",
-    biPublisher: "앵무새출판",
+    biName: "소나기",
+    biAuthor: "오한수작가",
+    biPublisher: "오한수출판",
     biPage: "1302",
     biIsbn: "가고가",
   },
   {
     biSeq: "1",
-    biName: "강아지 죽이기",
+    biName: "광장",
     biAuthor: "강아지",
     biPublisher: "강아지출판",
     biPage: "1302",
@@ -17,7 +17,7 @@ export const BookJson = [
   },
   {
     biSeq: "1",
-    biName: "호랑이 죽이기",
+    biName: "완두콩",
     biAuthor: "호랑이",
     biPublisher: "호랑이출판",
     biPage: "1302",
@@ -25,7 +25,7 @@ export const BookJson = [
   },
   {
     biSeq: "1",
-    biName: "새 죽이기",
+    biName: "빨간망토",
     biAuthor: "새",
     biPublisher: "새 출판",
     biPage: "1302",
@@ -33,7 +33,7 @@ export const BookJson = [
   },
   {
     biSeq: "1",
-    biName: "고라니 죽이기",
+    biName: "링",
     biAuthor: "고라니",
     biPublisher: "고라니출판1",
     biPage: "1302",
@@ -41,7 +41,7 @@ export const BookJson = [
   },
   {
     biSeq: "1",
-    biName: "고라니 죽이기",
+    biName: "파라노말액티비티",
     biAuthor: "고라니",
     biPublisher: "고라니출판1",
     biPage: "1302",
@@ -49,7 +49,7 @@ export const BookJson = [
   },
   {
     biSeq: "1",
-    biName: "고라니 죽이기",
+    biName: "우리들의 일그러진",
     biAuthor: "고라니",
     biPublisher: "고라니출판1",
     biPage: "1302",
@@ -57,7 +57,7 @@ export const BookJson = [
   },
   {
     biSeq: "1",
-    biName: "고라니 죽이기",
+    biName: "앵무새 죽이기",
     biAuthor: "고라니",
     biPublisher: "고라니출판1",
     biPage: "1302",
