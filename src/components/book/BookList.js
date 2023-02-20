@@ -1,23 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const BookList = ({ BookJson }) => {
+const BookList = ({ searchResult }) => {
+  console.log(searchResult);
   return (
     <>
       <div className="bookWrap">
         <ul className="bookGnb">
-          {BookJson.map((v, i) => {
+          {searchResult.map((v, i) => {
             return (
               <li key={i} className="bookList">
-                <Link to="/bookdetail">
+                <Link to={`/bookdetail/${v.isbn13}`}>
                   <div className="bookImg">
-                    <img src="/" alt="" />
+                    <img src={v.cover} alt="cover" />
                   </div>
                   <div className="text">
                     <p>
-                      <span className="title">{v.biName}</span>
-                      <span className="author">{v.biAuthor}</span>
-                      <span className="pub">{v.biPublisher}</span>
+                      <span className="title">{v.title}</span>
+                      <span className="author">{v.author}</span>
+                      <span className="pub">{v.publisher}</span>
                     </p>
                   </div>
                 </Link>

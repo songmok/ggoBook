@@ -39,116 +39,29 @@ const MyPage = () => {
     navigate("/complete");
   };
 
-  // 카카오 로그인 정보받아오기
-
-  const [ACCESS_TOKEN, setACCESS_TOKEN] = useState<string>("");
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const AUTH_CODE = params.get("code");
-
-  const kakaoData = async () => {
-    await axios({
-      method: "get",
-      url: "https://kapi.kakao.com//v2/user/me",
-      headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        alert("한수불러오기 성공");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("한수불러오기 실패");
-      });
-  };
-
-  const fetchKakao = async () => {
-    const body = `grant_type=authorization_code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${AUTH_CODE}`;
-    await axios
-      .post(`https://kauth.kakao.com/oauth/token`, body)
-      .then((res) => {
-        console.log(res.data);
-        setACCESS_TOKEN(res.data.access_token);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const naverData = async () => {
-    await axios({
-      method: "get",
-      url: "openapi/v1/nid/me",
-      headers: {
-        Authorization: `bearer ${ACCESS_TOKEN}`,
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        alert("한수불러오기 성공");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("한수불러오기 실패");
-      });
-  };
-
-  const fetchNaver = async () => {
-    await axios({
-      method: "get",
-      url: "naver/oauth2.0/token",
-      params: {
-        grant_type: `authorization_code`,
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-        code: AUTH_CODE,
-        state: `NaverLogin`,
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-        setACCESS_TOKEN(res.data.access_token);
-      })
-      .then(() => {
-        naverData();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    fetchKakao();
-    fetchNaver();
-  }, []);
-
-  const logout = () => {
-    axios({
-      method: "post",
-      url: "https://kapi.kakao.com/v1/user/logout",
-      headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        alert("한수짱");
-        navigate("/login");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("한수실패");
-      });
-  };
+  // const logout = () => {
+  //   axios({
+  //     method: "post",
+  //     url: "https://kapi.kakao.com/v1/user/logout",
+  //     headers: {
+  //       Authorization: `Bearer ${ACCESS_TOKEN}`,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //       alert("한수짱");
+  //       navigate("/login");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       alert("한수실패");
+  //     });
+  // };
 
   return (
     <MyPageCss>
-      <button onClick={logout}>로그아웃</button>
+      {/* <button onClick={logout}>로그아웃</button> */}
       <a href={KAKAO_LOGOUT}>카카오로그아웃</a>
-      <button onClick={kakaoData}>카카오정보</button>
-      <button onClick={naverData}>네이버정보</button>
       <div className="profile">
         <div className="profileTop">
           <div className="profilePic"></div>

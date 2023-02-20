@@ -9,6 +9,10 @@ import axios from "axios";
 type Props = {};
 
 const Wait = (props: Props) => {
+  interface info {
+    snsUid: string;
+    type: string;
+  }
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -36,7 +40,20 @@ const Wait = (props: Props) => {
         })
           .then((res) => {
             const kakaoID = res.data.id;
-            alert("한수불러오기 성공");
+            axios({
+              method: "post",
+              url: "http://192.168.0.160:8520/api/user/sns/login",
+              data: {
+                snsUid: kakaoID,
+                type: "kakao",
+              },
+            })
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           })
           .catch((err) => {
             console.log(err);
@@ -70,7 +87,20 @@ const Wait = (props: Props) => {
         })
           .then((res) => {
             const naverID = res.data.response.id;
-            alert("한수불러오기 성공");
+            axios({
+              method: "post",
+              url: "http://192.168.0.160:8520/api/user/sns/login",
+              data: {
+                snsUid: naverID,
+                type: "naver",
+              },
+            })
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           })
           .catch((err) => {
             console.log(err);
