@@ -1,37 +1,42 @@
+import { minsize } from "utils/FontSize";
+import { midllesize } from "utils/FontSize";
 import styled from "styled-components";
-import { defaltsize, midllesize, minsize } from "utils/FontSize";
 
 const BookCss = styled.section`
-  margin: 0 100px;
-  padding-top: 50px;
-  .search {
-    padding: 15px 10px;
-    border-radius: 15px;
-  }
   .bookWrap {
-    display: block;
-    width: 30%;
-    background-color: pink;
+    display: flex;
+    width: 40vw;
+    position: relative;
+    margin: 0 auto;
     .bookGnb {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
+      width: 40vw;
+      height: 100%;
+      overflow-y: scroll;
+      background: #eaf9ff;
       .bookList {
-        > a {
+        a {
           display: flex;
-          > .bookImg {
-            width: 155px;
-            height: 210px;
-            background-color: red;
-            border: 1px solid #fff;
+          width: 100%;
+          height: 300px;
+          padding: 10px;
+          border-bottom: 2px solid #ffffff;
+          .bookImg {
+            padding: 5px;
+            width: 30%;
+            height: 100%;
+            background-color: yellow;
+            border: 0;
+            border-radius: 15px;
+            margin-right: 5px;
             img {
             }
           }
           .text {
             position: relative;
-            width: calc(100% - 155px);
-            background-color: skyblue;
+            width: 70%;
+            height: 100%;
             p {
-              color: #fff;
+              color: #000000;
               display: block;
               position: absolute;
               left: 50%;
@@ -40,7 +45,7 @@ const BookCss = styled.section`
               text-align: center;
               > span {
                 display: block;
-                padding-bottom: 30px;
+                margin-bottom: 20px;
                 white-space: nowrap;
               }
               .title {

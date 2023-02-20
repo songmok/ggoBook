@@ -18,6 +18,10 @@ const RankCss = styled.section`
     > li {
       > span {
         font-size: ${headertitle};
+        @media ${(props) => props.theme.mob} {
+          font-size: ${midllesize};
+          font-weight: bold;
+        }
       }
     }
   }
