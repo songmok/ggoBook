@@ -11,3 +11,8 @@ export const KAKAO_LOGOUT = `https://kauth.kakao.com/oauth/logout?client_id=${RE
 export const CLIENT_ID = process.env.REACT_APP_NAVER;
 export const CLIENT_SECRET = process.env.REACT_APP_NAVER_SECRET;
 export const NAVER_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&state=NaverLogin&redirect_uri=${REDIRECT_URI}`;
+
+// 알라딘
+
+export const TTBKey = process.env.REACT_APP_TTBKEY;
+export const TTBKey_DETAIL = process.env.REACT_APP_TTBKEY_DETAIL;
