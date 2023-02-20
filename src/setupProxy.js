@@ -20,4 +20,14 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
+
+  app.use(
+    createProxyMiddleware("/aladin", {
+      target: "http://www.aladin.co.kr",
+      pathRewrite: {
+        "^/aladin": "",
+      },
+      changeOrigin: true,
+    })
+  );
 };

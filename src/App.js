@@ -32,7 +32,7 @@ function App() {
               <Route path="/complete" element={<Complete />} />
               <Route path="/rank" element={<Rank />} />
               <Route path="/book" element={<Book />} />
-              <Route path="/bookdetail" element={<BookDetail />} />
+              <Route path="/bookdetail/:ISBN" element={<BookDetail />} />
               <Route path="*" element={<NotFound />} />
               <Route path="/wait" element={<Wait />} />
             </Routes>
