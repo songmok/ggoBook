@@ -1,11 +1,16 @@
 import axios from "axios";
-import { TTBKey, TTBKey_DETAIL } from "OAuth";
-import React, { useEffect } from "react";
+import { TTBKey_DETAIL } from "OAuth";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import BookRating from "./bookRating/BookRating";
+import BookReview from "./bookReview/BookReview";
 import BookDetailCss from "./style/BookDetailCss";
 
 const BookDetail = () => {
   const { ISBN } = useParams();
+  const [bookAbout, setBookAbout] = useState([]);
+  const [subInfo, setSubInfo] = useState([]);
+  const [selectOne, setSelectOne] = useState("평점");
 
   const bookData = async () => {
     await axios({
@@ -18,25 +23,50 @@ const BookDetail = () => {
         ItemIdType: "ISBN13",
         Output: "JS",
         Version: "20131101",
+        Cover: "Big",
       },
-    }).then((res) => console.log(res));
+    }).then((res) => {
+      setBookAbout(res.data.item[0]);
+      setSubInfo(res.data.item[0].subInfo);
+    });
   };
 
   useEffect(() => {
     bookData();
   }, []);
 
+  console.log(bookAbout.subInfo);
+  console.log(subInfo);
+
   return (
     <>
       <BookDetailCss>
-        <div className="bookInfoWrap">
-          <div className="bookImg">
-            <img src="" alt="" />
-          </div>
-          <span className="bookTitle">어스시의 마법사</span>
+        <div className="bookInfo">
+          <span>{bookAbout.title}</span>
+          <img src={bookAbout.cover} />
+          <span>{bookAbout.author}</span>
+          <span>{subInfo.itemPage}쪽</span>
         </div>
-        {/* <span>{params}</span> */}
-        <article></article>
+        <div className="bookReviwes">
+          <div>
+            <button
+              onClick={() => {
+                setSelectOne("평점");
+              }}
+            >
+              평점
+            </button>
+            <button
+              onClick={() => {
+                setSelectOne("독후감");
+              }}
+            >
+              독후감
+            </button>
+          </div>
+          {selectOne === "평점" && <BookRating />}
+          {selectOne === "독후감" && <BookReview />}
+        </div>
       </BookDetailCss>
     </>
   );

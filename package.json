@@ -15,6 +15,7 @@
     "@fullpage/react-fullpage": "^0.1.31",
     "@hookform/resolvers": "^2.9.11",
     "@reduxjs/toolkit": "^1.9.1",
+    "@types/redux-persist": "^4.3.1",
     "@wojtekmaj/react-timerange-picker": "^4.2.0",
     "animate.css": "^4.1.1",
     "axios": "^1.2.2",
