@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REST_API_KEY } from "OAuth";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loginUser } from "reducer/userSlice";
 
 type Props = {};
 
@@ -13,6 +15,7 @@ const Wait = (props: Props) => {
     snsUid: string;
     type: string;
   }
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -49,7 +52,9 @@ const Wait = (props: Props) => {
               },
             })
               .then((res) => {
-                console.log(res);
+                const uiSeq = res.data.uiSeq;
+                dispatch(loginUser(uiSeq));
+                navigate("/myPage");
               })
               .catch((err) => {
                 console.log(err);
@@ -96,7 +101,9 @@ const Wait = (props: Props) => {
               },
             })
               .then((res) => {
-                console.log(res);
+                const uiSeq = res.data.uiSeq;
+                dispatch(loginUser(uiSeq));
+                navigate("/myPage");
               })
               .catch((err) => {
                 console.log(err);

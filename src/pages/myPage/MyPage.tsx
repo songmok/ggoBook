@@ -22,6 +22,8 @@ import {
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
+import profile from "../../assets/images/profile.png";
+
 const MyPage = () => {
   const user = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
@@ -64,7 +66,9 @@ const MyPage = () => {
       <a href={KAKAO_LOGOUT}>카카오로그아웃</a>
       <div className="profile">
         <div className="profileTop">
-          <div className="profilePic"></div>
+          <div className="profilePic">
+            <img src={profile} alt="img" />
+          </div>
           <div>
             <p className="nickName">오한수리남</p>
             <p className="point">

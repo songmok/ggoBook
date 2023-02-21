@@ -11,11 +11,12 @@ const MyPageCss = styled.section`
       align-items: center;
       flex-direction: row;
       .profilePic {
-        width: 10.4167vw;
-        height: 10.4167vw;
-        background: yellow;
+        border: 1px solid;
         border-radius: 100%;
         margin-right: 50px;
+        img {
+          size: cover;
+        }
       }
       .nickName {
         font-size: ${headertitle};
