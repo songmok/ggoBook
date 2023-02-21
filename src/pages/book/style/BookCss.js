@@ -3,6 +3,35 @@ import { midllesize } from "utils/FontSize";
 import styled from "styled-components";
 
 const BookCss = styled.section`
+  .searchWrap {
+    position: relative;
+    margin: 10px auto;
+    width: 40vw;
+    display: flex;
+    .search {
+      width: 40vw;
+      border: 3px solid #00b4cc;
+      border-right: none;
+      padding: 20px;
+      height: 20px;
+      border-radius: 15px 0 0 15px;
+      outline: none;
+      color: #9dbfaf;
+      &:focus {
+        color: #00b4cc;
+      }
+    }
+    .searchButton {
+      width: 40px;
+      height: 46px;
+      border: none;
+      background: #00b4cc;
+      text-align: center;
+      color: #fff;
+      border-radius: 0 10px 10px 0;
+      cursor: pointer;
+    }
+  }
   .bookWrap {
     display: flex;
     width: 40vw;
@@ -11,8 +40,9 @@ const BookCss = styled.section`
     height: 85vh;
     .bookGnb {
       width: 40vw;
-      height: 100%;
+      height: 903px;
       overflow-y: scroll;
+      overflow-x: hidden;
       background: #eaf9ff;
       .bookList {
         a {
