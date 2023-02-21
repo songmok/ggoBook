@@ -8,6 +8,7 @@ const BookCss = styled.section`
     width: 40vw;
     position: relative;
     margin: 0 auto;
+    height: 85vh;
     .bookGnb {
       width: 40vw;
       height: 100%;
