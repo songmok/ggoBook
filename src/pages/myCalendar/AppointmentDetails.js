@@ -1,11 +1,12 @@
 import moment from "moment";
+import "moment/locale/ko";
 import { Title } from "./style/AppointmentDetailsStyles";
 
 const AppointmentDetails = ({ selectedEvent }) => {
   const startDateTime = selectedEvent.start;
   const endDateTime = selectedEvent.end;
-  const formattedStartDate = moment(startDateTime).utc().format("DD MMMM YYYY");
-  const formattedEndDate = moment(endDateTime).utc().format("DD MMMM YYYY");
+  const formattedStartDate = moment(startDateTime).utc().format("YYYY-MM-DD");
+  const formattedEndDate = moment(endDateTime).utc().format("YYYY-MM-DD");
   console.log(selectedEvent);
   console.log(formattedEndDate);
   return (

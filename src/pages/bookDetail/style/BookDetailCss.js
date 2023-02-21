@@ -3,6 +3,7 @@ import { sectionwrap } from "utils/Layout";
 
 const BookDetailCss = styled.section`
   ${sectionwrap}
+
 `;
 
 export default BookDetailCss;
