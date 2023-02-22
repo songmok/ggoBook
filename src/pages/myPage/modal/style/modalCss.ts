@@ -60,11 +60,14 @@ const ModalCss = styled.div`
           justify-content: center;
           width: 18.23vw;
           .profilePic {
-            width: 10.4167vw;
-            height: 10.4167vw;
-            background: yellow;
-            border-radius: 100%;
             margin: 0.52vw 0;
+            height: 200px;
+            width: 200px;
+            img {
+              border: 1px solid;
+              border-radius: 100%;
+              size: cover;
+            }
           }
           button {
             cursor: pointer;
