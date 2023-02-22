@@ -1,17 +1,42 @@
 import ModalCss from "./style/modalCss";
 
+import profile from "../../../assets/images/profile.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
+import instance from "api/axios";
+import request from "api/request";
+import { useState } from "react";
 
 type Props = {
   closeModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  userInfo: userData | null;
+  uiSeq: number;
 };
 
+interface userData {
+  nickName: string;
+  userImg: string | null;
+  userPoint: number;
+  userRank: number;
+}
+
 const Modal = (props: Props) => {
+  const [editName, setEditName] = useState<string>("");
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-    // SetEditName(e);
+    setEditName(e.target.value);
+  };
+
+  const updateName = () => {
+    const params = {
+      uiSeq: props.uiSeq,
+    };
+    const data = {
+      uiNickname: editName,
+    };
+    instance.patch(request.updateName, data, { params: params }).then((res) => {
+      console.log(res);
+    });
   };
 
   return (
@@ -26,7 +51,13 @@ const Modal = (props: Props) => {
         <section>
           <div className="fixPic">
             <div>
-              <div className="profilePic"></div>
+              <div className="profilePic">
+                {props.userInfo?.userImg === null ? (
+                  <img src={profile} alt="img" />
+                ) : (
+                  <img src={props.userInfo?.userImg} alt="img" />
+                )}
+              </div>
               <button>
                 <FontAwesomeIcon icon={faImage} />
                 <span>불러오기</span>
@@ -42,7 +73,9 @@ const Modal = (props: Props) => {
                 onChange={nameChange}
               />
             </form>
-            <button className="edit">수정</button>
+            <button className="edit" onClick={updateName}>
+              수정
+            </button>
           </div>
         </section>
       </div>
