@@ -37,11 +37,9 @@ const MyCalendar = () => {
   // const events = useSelector((state) => state.appointment.appointments);
   const uiSeq = useSelector((state) => state.user.uiSeq);
 
-  // console.log(user);
   const selectedEvent = useSelector(
     (state) => state.appointment.selectedAppointment
   );
-
   const fetchData = async () => {
     const user = {
       uiSeq: uiSeq,
@@ -57,47 +55,11 @@ const MyCalendar = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    // console.log(events);
-    // setEvnet(events);
   };
   useEffect(() => {
     fetchData();
   }, []);
-  // console.log(events);
-  // console.log(selectedEvent);
-  // console.log(events);
-  //Assign useDispatch hook to a variable
-  const dispatch = useDispatch();
 
-  // Router Location
-  const location = useLocation();
-
-  // Router Params
-  const { year, monthDate } = useParams();
-
-  // Initial Date
-  let initialDate = new Date().toISOString();
-
-  //   if (month && date) {
-  //     // Set up initial date to start the calendar
-  //     initialDate = `${year}-${month < 10 ? `0${month}` : month}-${
-  //       date < 10 ? `0${date}` : date
-  //     }T00:00:00`;
-  //   }
-  // }
-
-  // Open appointment details when clicked on an event
-  // const handleEventClick = (clickInfo) => {
-  //   if (clickInfo.event) {
-  //     console.log(clickInfo.event._def.publicId);
-  //     dispatch(search_appointment(clickInfo.event._def.publicId));
-  //     setSelectedModal("AppointmentDetails");
-  //     openModal();
-  //   }
-  // };
-
-  // Open appointment form
   const openForm = () => {
     setSelectedModal("AppointmentForm");
     openModal();

@@ -47,7 +47,6 @@ const AppointmentForm = ({ closeModal }) => {
     onChangeDate(formattedDate);
     // setEndDateTime(formattedDate + "T" + selectedTime[1] + ":00");
   }, [selectedDate, selectedTime]);
-
   // onSubmit Function
   const onSubmit = (data) => {
     const appointmentInfo = {
@@ -68,7 +67,6 @@ const AppointmentForm = ({ closeModal }) => {
         console.log(appointmentInfo);
         closeModal();
       });
-
     // Reset react-hook-form states
     reset();
     // Reset date picker and time picker
