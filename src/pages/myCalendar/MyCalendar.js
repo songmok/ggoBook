@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -7,7 +7,6 @@ import { useLocation, useParams } from "react-router-dom";
 import Modal from "react-modal";
 import AppointmentForm from "./AppointmentForm";
 import { useSelector, useDispatch } from "react-redux";
-import { search_appointment } from "reducer/appointmentActions";
 import AppointmentDetails from "./AppointmentDetails";
 import {
   Button,
@@ -16,6 +15,7 @@ import {
   MainWrapper,
 } from "./style/CalendarStyles";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const MyCalendar = () => {
   const customModalStyles = {
@@ -33,11 +33,38 @@ const MyCalendar = () => {
   // States
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedModal, setSelectedModal] = useState("");
-  const events = useSelector((state) => state.appointment.appointments);
+  const [event, setEvnet] = useState([]);
+  // const events = useSelector((state) => state.appointment.appointments);
+  const uiSeq = useSelector((state) => state.user.uiSeq);
+
+  // console.log(user);
   const selectedEvent = useSelector(
     (state) => state.appointment.selectedAppointment
   );
-  console.log(events);
+
+  const fetchData = async () => {
+    const user = {
+      uiSeq: uiSeq,
+    };
+    await axios
+      .get(`http://192.168.0.160:8520/api/schedule/my`, {
+        params: user,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setEvnet(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // console.log(events);
+    // setEvnet(events);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  // console.log(events);
   // console.log(selectedEvent);
   // console.log(events);
   //Assign useDispatch hook to a variable
@@ -52,14 +79,6 @@ const MyCalendar = () => {
   // Initial Date
   let initialDate = new Date().toISOString();
 
-  // Condition for changing initial date from router params
-  // When user added `/year/:year/month/:monthDate` path after route
-  // if (location.pathname !== "/" && year > 999 && year < 10000) {
-  //   const parsedMonth = parseInt(monthDate.split("-")[0]);
-  //   const parsedDate = parseInt(monthDate.split("-")[1]);
-  //   const month = parsedMonth > 0 && parsedMonth < 13 ? parsedMonth : null;
-  //   const date = parsedDate > 0 && parsedDate < 31 ? parsedDate : null;
-
   //   if (month && date) {
   //     // Set up initial date to start the calendar
   //     initialDate = `${year}-${month < 10 ? `0${month}` : month}-${
@@ -69,14 +88,14 @@ const MyCalendar = () => {
   // }
 
   // Open appointment details when clicked on an event
-  const handleEventClick = (clickInfo) => {
-    if (clickInfo.event) {
-      console.log(clickInfo.event._def.publicId);
-      dispatch(search_appointment(clickInfo.event._def.publicId));
-      setSelectedModal("AppointmentDetails");
-      openModal();
-    }
-  };
+  // const handleEventClick = (clickInfo) => {
+  //   if (clickInfo.event) {
+  //     console.log(clickInfo.event._def.publicId);
+  //     dispatch(search_appointment(clickInfo.event._def.publicId));
+  //     setSelectedModal("AppointmentDetails");
+  //     openModal();
+  //   }
+  // };
 
   // Open appointment form
   const openForm = () => {
@@ -100,7 +119,7 @@ const MyCalendar = () => {
         <Button onClick={openForm}>Add Appointment</Button>
       </ButtonContainer>
       <div>
-        {events ? (
+        {uiSeq ? (
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={{
@@ -108,14 +127,14 @@ const MyCalendar = () => {
               right: "prevYear,prev,today,next,nextYear",
             }}
             initialView="dayGridMonth"
-            initialDate={initialDate}
-            events={events}
+            // initialDate={initialDate}
+            events={event}
             editable={true}
             selectable={false}
             selectMirror={true}
             weekends={true}
-            eventClick={handleEventClick}
-            dateClick={handleEventClick}
+            // eventClick={handleEventClick}
+            // dateClick={handleEventClick}
             views={{
               dayGrid: {
                 dayMaxEventRows: 4,

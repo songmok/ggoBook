@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-date-picker";
-import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { add_appointment } from "reducer/appointmentActions";
+import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-uuid";
 import {
   AddButton,
@@ -15,6 +13,7 @@ import {
   ListContainer,
   ListItem,
 } from "./style/AppointFormStyles";
+import axios from "axios";
 
 const AppointmentForm = ({ closeModal }) => {
   // States
@@ -27,12 +26,17 @@ const AppointmentForm = ({ closeModal }) => {
   // useForm handler
   const { register, handleSubmit, reset } = useForm();
 
-  // Date Picker State
+  // user selector
+  const user = useSelector((state) => state.user.uiSeq);
+  console.log(user);
+  // Date Picker State\
+  console.log(new Date());
   const [selectedDate, onChangeDate] = useState(new Date());
 
   // date start end
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
+
   // Timerange Picker State
   const [selectedTime, onChangeTime] = useState(["10:00", "11:00"]);
 
@@ -48,42 +52,30 @@ const AppointmentForm = ({ closeModal }) => {
   const onSubmit = (data) => {
     const appointmentInfo = {
       ...data,
-      start: start,
-      end: end,
-      id: uuid(),
+      biSeq: 1,
+      startDate: start,
+      endDate: end,
+      uiSeq: user,
     };
-    dispatch(add_appointment(appointmentInfo))
-      .then(() => {
-        console.log("form data: ", appointmentInfo);
-        // Check with localstorage data
-
-        if ("appointments" in localStorage) {
-          let localStorageArray = JSON.parse(
-            localStorage.getItem("appointments")
-          );
-          localStorageArray.push(appointmentInfo);
-          localStorage.setItem(
-            "appointments",
-            JSON.stringify(localStorageArray)
-          );
-        } else {
-          let newArray = [];
-          newArray.push(appointmentInfo);
-          localStorage.setItem("appointments", JSON.stringify(newArray));
-        }
-        // Reset react-hook-form states
-        reset();
-        // Reset date picker and time picker
-        setStartDateTime(new Date());
-        setEndDateTime(new Date());
-        // Close modal
-        closeModal();
+    axios
+      .post("http://192.168.0.160:8520/api/schedule/add", appointmentInfo)
+      .then((res) => {
+        console.log(res);
+        console.log(appointmentInfo);
       })
-      .catch((error) => {
-        console.log(`Error getting data: ${error}`);
-        // Close modal
+      .catch((err) => {
+        console.log(err);
+        console.log(appointmentInfo);
         closeModal();
       });
+
+    // Reset react-hook-form states
+    reset();
+    // Reset date picker and time picker
+    setStartDateTime(new Date());
+    setEndDateTime(new Date());
+    // Close modal
+    closeModal();
   };
 
   return (
@@ -92,7 +84,7 @@ const AppointmentForm = ({ closeModal }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <ListContainer>
           <ListItem>
-            <Label>Title</Label>
+            <Label>책제목</Label>
             <Input
               name="title"
               type="text"
@@ -105,38 +97,26 @@ const AppointmentForm = ({ closeModal }) => {
             />
           </ListItem>
           <ListItem>
-            <Label>Name</Label>
-            <Input
-              name="name"
-              type="text"
-              placeholder="Patient Name"
-              required
-              {...register("name", {
-                required: true,
-                maxLength: 45,
-              })}
+            <Label>일정</Label>
+            <DatePicker
+              onChange={setStart}
+              value={start}
+              dateFormat={"yy-MM-dd"}
             />
-          </ListItem>
-          <ListItem>
-            <Label>Age</Label>
-            <Input
-              name="age"
-              type="number"
-              required
-              {...register("age", {
-                required: true,
-                maxLength: 3,
-              })}
-            />
-          </ListItem>
-          <ListItem>
-            <Label>Date</Label>
-            <DatePicker onChange={setStart} value={start} dateFormat="MM-dd" />
             <DatePicker onChange={setEnd} value={end} dateFormat={"yy-MM-dd"} />
           </ListItem>
           <ListItem>
-            <Label>Time</Label>
-            <TimeRangePicker onChange={onChangeTime} value={selectedTime} />
+            <Label>기록</Label>
+            <Input
+              name="description"
+              type="text"
+              placeholder="기록하기"
+              required
+              {...register("description", {
+                required: true,
+                maxLength: 300,
+              })}
+            />
           </ListItem>
           <ListItem>
             <AddButton type="submit">Add To Calendar</AddButton>
