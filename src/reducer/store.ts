@@ -1,14 +1,33 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  combineReducers,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage/session";
+
 import userReducer from "./userSlice";
 import appointmentReducer from "./calendarSlice";
 
-export const store = configureStore({
-  reducer: {
-    user: userReducer,
-    appointment: appointmentReducer,
-  },
+const reducers = combineReducers({
+  user: userReducer,
+  appointment: appointmentReducer,
 });
 
-export default store;
+const persistConfig = {
+  key: "root",
+  storage,
+  whiteList: ["user"],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+  }),
+});
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -1,12 +1,10 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface userType {
   uiSeq: number;
-  kakaoID: number;
-  naverID: string;
 }
 
-const initialState: userType = { uiSeq: 0, kakaoID: 0, naverID: "" };
+const initialState: userType = { uiSeq: 0 };
 
 const userSlice = createSlice({
   name: "user",
@@ -14,8 +12,6 @@ const userSlice = createSlice({
   reducers: {
     loginUser(state, action) {
       state.uiSeq = action.payload;
-      state.kakaoID = action.payload;
-      state.naverID = action.payload;
     },
     logoutUser(state) {
       state.uiSeq = 0;
