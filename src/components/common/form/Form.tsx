@@ -33,23 +33,25 @@ const Form = () => {
 
   const submit: SubmitHandler<LoginType> = (body) => {
     window.location.pathname === "/signup" &&
-      instance
-        .put(request.join, body)
-        .then((res) => {
-          console.log(res);
+      instance.put(request.join, body).then((res) => {
+        if (res.data.status === false) {
+          alert(res.data.message);
+        } else {
+          alert(res.data.message);
           navigate("/login");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        }
+      });
     window.location.pathname === "/login" &&
       instance
         .post(request.login, body)
         .then((res) => {
-          console.log(res.data);
-          const uiSeq = res.data.uiSeq;
-          dispatch(loginUser(uiSeq));
-          navigate("/myPage");
+          if (res.data.status === false) {
+            alert(res.data.message);
+          } else {
+            const uiSeq = res.data.uiSeq;
+            dispatch(loginUser(uiSeq));
+            navigate("/myPage");
+          }
         })
         .catch((err) => {
           alert(err.response.message);

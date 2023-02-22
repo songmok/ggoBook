@@ -20,6 +20,7 @@ const BookList = ({ searchResult }) => {
                       <span className="author">{v.author}</span>
                       <span className="pub">{v.publisher}</span>
                     </p>
+                    <button>한수죽이기</button>
                   </div>
                 </Link>
               </li>
