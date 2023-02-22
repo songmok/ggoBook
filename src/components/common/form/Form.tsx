@@ -50,12 +50,13 @@ const Form = () => {
       instance
         .post(request.login, body)
         .then((res) => {
-          const uiSeq = res.data.loginUser.uiSeq;
+          console.log(res.data);
+          const uiSeq = res.data.uiSeq;
           dispatch(loginUser(uiSeq));
-          navigate("/mycalendar");
+          navigate("/myPage");
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          alert(err.response.message);
         });
   };
 
