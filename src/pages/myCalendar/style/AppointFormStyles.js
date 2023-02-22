@@ -5,6 +5,9 @@ export const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  .ReactModal__Content ReactModal__Content--after-open{
+    
+  }
 `;
 
 export const Header = styled.h3`
