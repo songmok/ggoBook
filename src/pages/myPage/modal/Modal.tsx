@@ -7,6 +7,7 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import instance from "api/axios";
 import request from "api/request";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   closeModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -22,6 +23,7 @@ interface userData {
 }
 
 const Modal = (props: Props) => {
+  const navigate = useNavigate();
   const [editName, setEditName] = useState<string>("");
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditName(e.target.value);
@@ -37,6 +39,20 @@ const Modal = (props: Props) => {
     instance.patch(request.updateName, data, { params: params }).then((res) => {
       console.log(res);
     });
+  };
+
+  const leave = () => {
+    const params = {
+      uiSeq: props.uiSeq,
+    };
+    if (window.confirm("정말 탈퇴하시겠습니까?")) {
+      instance.patch(request.leave, null, { params: params }).then((res) => {
+        alert("탈퇴처리 되었습니다.");
+        navigate("/signup");
+      });
+    } else {
+      alert("취소 ㅋ");
+    }
   };
 
   return (
@@ -77,6 +93,9 @@ const Modal = (props: Props) => {
               수정
             </button>
           </div>
+          <button className="edit" onClick={leave}>
+            회원탈퇴
+          </button>
         </section>
       </div>
     </ModalCss>
