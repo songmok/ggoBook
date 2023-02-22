@@ -15,12 +15,8 @@ type LoginType = {
 };
 
 const schema = yup.object({
-  uiEmail: yup.string().email().required("Email is required"),
-  uiPwd: yup
-    .string()
-    .min(8)
-    .max(16)
-    .required("Password must be 8 - 16 characters"),
+  uiPwd: yup.string().required("비밀번호는 8 - 16 글자로 입력해주세요"),
+  uiEmail: yup.string().email().required("이메일을 입력해주세요"),
 });
 
 const Form = () => {
@@ -77,7 +73,9 @@ const Form = () => {
           className="input"
           id="password"
           type="password"
-          placeholder="8~16자리 비밀번호"
+          placeholder="8-16자리 비밀번호"
+          minLength={8}
+          maxLength={16}
           {...register("uiPwd")}
         />
         <p className="error">{errors.uiPwd?.message}</p>
