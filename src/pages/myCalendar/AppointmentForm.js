@@ -31,8 +31,8 @@ const AppointmentForm = ({ closeModal }) => {
   const [selectedDate, onChangeDate] = useState(new Date());
 
   // date start end
-  const [start, setStart] = useState(new Date());
-  const [end, setEnd] = useState(new Date());
+  const [start, setStart] = useState();
+  const [end, setEnd] = useState();
   // Timerange Picker State
   const [selectedTime, onChangeTime] = useState(["10:00", "11:00"]);
 
@@ -131,18 +131,8 @@ const AppointmentForm = ({ closeModal }) => {
           </ListItem>
           <ListItem>
             <Label>Date</Label>
-            <DatePicker
-              onChange={(e) => {
-                setStart(e);
-              }}
-              value={start}
-              dateFormat={"yyyy-MM-dd"}
-            />
-            <DatePicker
-              onChange={setEnd}
-              value={end}
-              dateFormat={"yyyy-MM-dd"}
-            />
+            <DatePicker onChange={setStart} value={start} dateFormat="MM-dd" />
+            <DatePicker onChange={setEnd} value={end} dateFormat={"yy-MM-dd"} />
           </ListItem>
           <ListItem>
             <Label>Time</Label>
