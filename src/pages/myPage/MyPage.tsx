@@ -10,23 +10,26 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reducer/store";
 import { KAKAO_LOGOUT } from "OAuth";
 
 import profile from "../../assets/images/profile.png";
 import instance from "api/axios";
 import request from "api/request";
+import { logoutUser } from "reducer/userSlice";
+
+interface userData {
+  nickName: string;
+  userImg: string | null;
+  userPoint: number;
+  userRank: number;
+}
 
 const MyPage = () => {
-  interface userData {
-    nickName: string;
-    userImg: string | null;
-    userPoint: number;
-    userRank: number;
-  }
   const uiSeq: number = useSelector((state: RootState) => state.user.uiSeq);
-  // const uiSeq: number = user.uiSeq;
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<userData | null>(null);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -75,10 +78,14 @@ const MyPage = () => {
     userData();
   }, []);
 
+  const logout = () => {
+    dispatch(logoutUser());
+    navigate("/login");
+  };
+
   return (
     <MyPageCss>
-      {/* <button onClick={logout}>로그아웃</button> */}
-      <a href={KAKAO_LOGOUT}>카카오로그아웃</a>
+      {/* <a href={KAKAO_LOGOUT}>카카오로그아웃</a> */}
       <div className="profile">
         <div className="profileTop">
           <div className="profilePic">
@@ -105,6 +112,9 @@ const MyPage = () => {
             </button>
             <button className="profileBt" onClick={goToComplete}>
               완독서 관리
+            </button>
+            <button className="profileBt" onClick={logout}>
+              로그아웃
             </button>
           </div>
         </div>
