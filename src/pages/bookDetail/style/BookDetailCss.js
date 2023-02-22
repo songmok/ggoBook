@@ -3,6 +3,7 @@ import { sectionwrap } from "utils/Layout";
 
 const BookDetailCss = styled.section`
   ${sectionwrap}
+
   display: flex;
   justify-content: center;
   gap: 50px;
@@ -22,6 +23,7 @@ const BookDetailCss = styled.section`
   .bookReviews {
     background: white;
   }
+
 `;
 
 export default BookDetailCss;

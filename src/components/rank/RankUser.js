@@ -1,8 +1,6 @@
 import React from "react";
 
-import { rankuser } from "pages/rank/data/rankjson";
-
-const RankUser = () => {
+const RankUser = ({ rankuser }) => {
   return (
     <>
       {rankuser.map((v, i) => {
