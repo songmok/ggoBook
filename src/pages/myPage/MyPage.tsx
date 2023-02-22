@@ -12,21 +12,23 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "reducer/store";
-import {
-  CLIENT_ID,
-  CLIENT_SECRET,
-  KAKAO_LOGOUT,
-  REDIRECT_URI,
-  REST_API_KEY,
-} from "OAuth";
-import { useLocation } from "react-router-dom";
-import axios from "axios";
+import { KAKAO_LOGOUT } from "OAuth";
 
 import profile from "../../assets/images/profile.png";
+import instance from "api/axios";
+import request from "api/request";
 
 const MyPage = () => {
-  const user = useSelector((state: RootState) => state.user);
+  interface userData {
+    nickName: string;
+    userImg: string | null;
+    userPoint: number;
+    userRank: number;
+  }
+  const uiSeq: number = useSelector((state: RootState) => state.user.uiSeq);
+  // const uiSeq: number = user.uiSeq;
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState<userData | null>(null);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -60,6 +62,19 @@ const MyPage = () => {
   //     });
   // };
 
+  const userData = async () => {
+    const params = {
+      uiSeq: uiSeq,
+    };
+    instance.get(request.info, { params: params }).then((res) => {
+      setUserInfo(res.data);
+    });
+  };
+
+  useEffect(() => {
+    userData();
+  }, []);
+
   return (
     <MyPageCss>
       {/* <button onClick={logout}>로그아웃</button> */}
@@ -67,15 +82,19 @@ const MyPage = () => {
       <div className="profile">
         <div className="profileTop">
           <div className="profilePic">
-            <img src={profile} alt="img" />
+            {userInfo?.userImg === null ? (
+              <img src={profile} alt="img" />
+            ) : (
+              <img src={userInfo?.userImg} alt="img" />
+            )}
           </div>
           <div>
-            <p className="nickName">오한수리남</p>
+            <p className="nickName">{userInfo?.nickName} 님</p>
             <p className="point">
-              포인트 <span>1557pt</span>
+              포인트 <span>{userInfo?.userPoint}pt</span>
             </p>
             <p className="rank">
-              나의 독서 랭킹 <span>999등</span>
+              나의 독서 랭킹 <span>{userInfo?.userRank}등</span>
             </p>
           </div>
         </div>
@@ -89,7 +108,9 @@ const MyPage = () => {
             </button>
           </div>
         </div>
-        {modalOpen === true ? <Modal closeModal={closeModal} /> : null}
+        {modalOpen === true ? (
+          <Modal closeModal={closeModal} userInfo={userInfo} uiSeq={uiSeq} />
+        ) : null}
       </div>
       <div className="record">
         <p className="title">기록</p>

@@ -11,10 +11,12 @@ const MyPageCss = styled.section`
       align-items: center;
       flex-direction: row;
       .profilePic {
-        border: 1px solid;
-        border-radius: 100%;
         margin-right: 50px;
+        height: 200px;
+        width: 200px;
         img {
+          border-radius: 100%;
+          border: 1px solid;
           size: cover;
         }
       }
