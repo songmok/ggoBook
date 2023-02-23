@@ -16,8 +16,10 @@ import {
 } from "./style/CalendarStyles";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import request from "api/request";
+import ListBook from "components/listBook/ListBook";
 import instance from "api/axios";
+import request from "api/request";
+
 
 const MyCalendar = () => {
   const customModalStyles = {
@@ -36,6 +38,7 @@ const MyCalendar = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedModal, setSelectedModal] = useState("");
   const [event, setEvnet] = useState([]);
+  const [plan, setPlan] = useState([]);
   // const events = useSelector((state) => state.appointment.appointments);
   const uiSeq = useSelector((state) => state.user.uiSeq);
   const selectedEvent = useSelector(
@@ -78,6 +81,7 @@ const MyCalendar = () => {
   };
   useEffect(() => {
     fetchData();
+    listPlan();
   }, []);
 
   const openForm = () => {
@@ -95,11 +99,24 @@ const MyCalendar = () => {
     setModalOpen(false);
   };
 
+  const listPlan = async () => {
+    const params = {
+      uiSeq: uiSeq,
+    };
+    await instance.get(request.listPlan, { params: params }).then((res) => {
+      // console.log(res.data.mybookList);
+      setPlan(res.data.mybookList);
+    });
+  };
+
+  console.log(plan);
+
   return (
     <MainWrapper>
       <ButtonContainer>
         <Button onClick={openForm}>Add Appointment</Button>
       </ButtonContainer>
+      <ListBook plan={plan} />
       <div>
         {uiSeq ? (
           <FullCalendar
