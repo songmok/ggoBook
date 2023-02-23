@@ -53,19 +53,22 @@ const BookCss = styled.section`
           border-bottom: 2px solid #ffffff;
           .bookImg {
             padding: 5px;
-            width: 30%;
-            height: 100%;
-            background-color: yellow;
+            background-color: #666;
             border: 0;
-            border-radius: 15px;
+            border-radius: 5px;
             margin-right: 5px;
             img {
+              width: 200px;
+              height: 270px;
             }
           }
           .text {
             position: relative;
             width: 70%;
             height: 100%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
             p {
               color: #000000;
               display: block;
@@ -74,7 +77,9 @@ const BookCss = styled.section`
               top: 50%;
               transform: translate(-50%, -50%);
               text-align: center;
+              width: 100%;
               > span {
+                padding: 0 20px;
                 display: block;
                 margin-bottom: 20px;
                 white-space: nowrap;

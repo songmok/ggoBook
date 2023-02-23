@@ -6,6 +6,10 @@ const request = {
   updateName: "/api/user/update/name",
   leave: "/api/user/leave",
   calendar: "/api/schedule/add",
+  addPlan: "/api/mybook/add/plan",
+  addRead: "/api/mybook/add/read",
+  listPlan: "/api/mybook/list/plan",
+  listRead: "/api/mybook/list/read",
 };
 
 export default request;
