@@ -10,6 +10,8 @@ const request = {
   addRead: "/api/mybook/add/read",
   listPlan: "/api/mybook/list/plan",
   listRead: "/api/mybook/list/read",
+  delete: "/api/schedule/delete",
+
 };
 
 export default request;
