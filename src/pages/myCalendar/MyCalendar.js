@@ -16,6 +16,8 @@ import {
 } from "./style/CalendarStyles";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import request from "api/request";
+import instance from "api/axios";
 
 const MyCalendar = () => {
   const customModalStyles = {
@@ -36,12 +38,11 @@ const MyCalendar = () => {
   const [event, setEvnet] = useState([]);
   // const events = useSelector((state) => state.appointment.appointments);
   const uiSeq = useSelector((state) => state.user.uiSeq);
-
   const selectedEvent = useSelector(
     (state) => state.appointment.selectedAppointment
   );
   const fetchData = async () => {
-    const user = {
+    let user = {
       uiSeq: uiSeq,
     };
     await axios
@@ -55,6 +56,25 @@ const MyCalendar = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+  const deleteEvnet = (e) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      // e.event.remove();
+      console.log(e.event._def);
+      const siSeq = e.event._def;
+      instance
+        .delete(request.delete, {
+          params: {
+            id: siSeq.publicId,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   useEffect(() => {
     fetchData();
@@ -88,6 +108,7 @@ const MyCalendar = () => {
               left: "title",
               right: "prevYear,prev,today,next,nextYear",
             }}
+            eventClick={deleteEvnet}
             initialView="dayGridMonth"
             // initialDate={initialDate}
             events={event}
@@ -108,7 +129,6 @@ const MyCalendar = () => {
           <div>Loading</div>
         )}
       </div>
-
       {modalOpen && (
         <Modal
           isOpen={true}
