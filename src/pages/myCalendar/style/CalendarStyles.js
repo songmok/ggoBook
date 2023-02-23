@@ -27,8 +27,5 @@ export const Button = styled.button`
 `;
 
 export const CloseButton = styled(Button)`
-  padding: 0.2rem 0.4rem 0.2rem 0.4rem;
-  position: absolute;
-  right: 1%;
-  top: 1%;
+  
 `;

@@ -13,7 +13,7 @@ const AppointmentDetails = ({ selectedEvent }) => {
     <div>
       {selectedEvent ? (
         <div>
-          <Title>{selectedEvent.title}</Title>
+          <h3>{selectedEvent.title}</h3>
           <div>Name: {selectedEvent.name}</div>
           <div>Age: {selectedEvent.age}</div>
           <div>시작일: {formattedStartDate}</div>

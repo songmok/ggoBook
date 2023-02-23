@@ -9,11 +9,12 @@ import {
   FormWrapper,
   Header,
   Input,
-  Label,
+  label,
   ListContainer,
   ListItem,
 } from "./style/AppointFormStyles";
 import axios from "axios";
+import FormCss from "components/common/form/style/FormCss";
 
 const AppointmentForm = ({ closeModal }) => {
   // States
@@ -34,8 +35,8 @@ const AppointmentForm = ({ closeModal }) => {
   const [selectedDate, onChangeDate] = useState(new Date());
 
   // date start end
-  const [start, setStart] = useState();
-  const [end, setEnd] = useState();
+  const [start, setStart] = useState(new Date());
+  const [end, setEnd] = useState(new Date());
 
   // Timerange Picker State
   const [selectedTime, onChangeTime] = useState(["10:00", "11:00"]);
@@ -52,14 +53,14 @@ const AppointmentForm = ({ closeModal }) => {
     const appointmentInfo = {
       ...data,
       biSeq: 1,
-      startDate: start,
-      endDate: end,
+      start: start,
+      end: end,
       uiSeq: user,
     };
     axios
       .post("http://192.168.0.160:8520/api/schedule/add", appointmentInfo)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         console.log(appointmentInfo);
       })
       .catch((err) => {
@@ -77,13 +78,13 @@ const AppointmentForm = ({ closeModal }) => {
   };
 
   return (
-    <FormWrapper>
-      <Header>Create New Appointment</Header>
+    <FormCss>
+      <h3>Create New Appointment</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <ListContainer>
-          <ListItem>
-            <Label>책제목</Label>
-            <Input
+        <ul>
+          <li>
+            <label>책제목</label>
+            <input
               name="title"
               type="text"
               placeholder="Appointment of..."
@@ -93,19 +94,19 @@ const AppointmentForm = ({ closeModal }) => {
                 maxLength: 100,
               })}
             />
-          </ListItem>
-          <ListItem>
-            <Label>일정</Label>
+          </li>
+          <li>
+            <label>일정</label>
             <DatePicker
               onChange={setStart}
               value={start}
               dateFormat={"yy-MM-dd"}
             />
             <DatePicker onChange={setEnd} value={end} dateFormat={"yy-MM-dd"} />
-          </ListItem>
-          <ListItem>
-            <Label>기록</Label>
-            <Input
+          </li>
+          <li>
+            <label>기록</label>
+            <input
               name="description"
               type="text"
               placeholder="기록하기"
@@ -115,13 +116,15 @@ const AppointmentForm = ({ closeModal }) => {
                 maxLength: 300,
               })}
             />
-          </ListItem>
-          <ListItem>
-            <AddButton type="submit">Add To Calendar</AddButton>
-          </ListItem>
-        </ListContainer>
+          </li>
+          <li>
+            <button type="submit">
+              <span>Add To Calendar</span>
+            </button>
+          </li>
+        </ul>
       </form>
-    </FormWrapper>
+    </FormCss>
   );
 };
 
