@@ -79,8 +79,12 @@ const MyPage = () => {
   }, []);
 
   const logout = () => {
-    dispatch(logoutUser());
-    navigate("/login");
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      dispatch(logoutUser());
+      navigate("/login");
+    } else {
+      alert("취소 ㅋ");
+    }
   };
 
   return (
