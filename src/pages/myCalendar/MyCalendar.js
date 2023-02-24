@@ -11,7 +11,8 @@ import instance from "api/instance";
 import request from "api/request";
 import { MyCalendarCss } from "./style/MyCalendarCss";
 import MyCalendarModal from "./MyCalendarModal";
-import MyCalendarSchedual from "./MyCalendarSchedule";
+import MyCalendarSchedule from "./MyCalendarSchedule";
+
 
 const MyCalendar = () => {
   // States
@@ -32,8 +33,6 @@ const MyCalendar = () => {
   const [end, setEnd] = useState(new Date());
   // useForm handler
   const { register, handleSubmit } = useForm();
-  // 스테이터스
-  const [status, setStatus] = useState();
   // 일정추가
   const addEvent = async () => {
     let user = {
@@ -69,6 +68,7 @@ const MyCalendar = () => {
         });
     }
   };
+
   // onSubmit Function
   // booklist
   const listPlan = async () => {
@@ -111,7 +111,7 @@ const MyCalendar = () => {
   return (
     <MyCalendarCss>
       <ListBook plan={plan} openForm={openForm} setModalData={setModalData} />
-      <MyCalendarSchedual
+      <MyCalendarSchedule
         ing={ing}
         openForm={openForm}
         setModalData={setModalData}
