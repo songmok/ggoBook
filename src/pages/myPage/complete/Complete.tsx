@@ -28,9 +28,7 @@ const Complete = (props: Props) => {
 
   return (
     <CompleteCss>
-      <div>
-        <ListBook plan={plan} />
-      </div>
+      <div>{/* <ListBook /> */}</div>
       <div>
         <div className="독후감"></div>
       </div>

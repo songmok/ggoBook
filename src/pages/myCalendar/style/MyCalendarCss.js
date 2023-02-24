@@ -1,4 +1,13 @@
 import styled from "styled-components";
 
-const MyCalendarCss = styled.section``;
-export default MyCalendarCss;
+export const MyCalendarCss = styled.section`
+  display: flex;
+
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  .fullcalendarWrap {
+    .fc {
+    }
+  }
+`;

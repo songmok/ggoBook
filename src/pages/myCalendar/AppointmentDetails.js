@@ -1,6 +1,5 @@
 import moment from "moment";
 import "moment/locale/ko";
-import { Title } from "./style/AppointmentDetailsStyles";
 
 const AppointmentDetails = ({ selectedEvent }) => {
   const startDateTime = selectedEvent.start;
