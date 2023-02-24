@@ -1,20 +1,12 @@
 import React, { useEffect } from "react";
-
 import { useNavigate } from "react-router-dom";
-
 import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REST_API_KEY } from "OAuth";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginUser } from "reducer/userSlice";
 
-type Props = {};
-
-const Wait = (props: Props) => {
-  interface info {
-    snsUid: string;
-    type: string;
-  }
+const Wait = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,7 +45,8 @@ const Wait = (props: Props) => {
             })
               .then((res) => {
                 const uiSeq = res.data.uiSeq;
-                dispatch(loginUser(uiSeq));
+                const type = res.data.snsType;
+                dispatch(loginUser({ uiSeq, token, type }));
                 navigate("/myPage");
               })
               .catch((err) => {
@@ -102,7 +95,8 @@ const Wait = (props: Props) => {
             })
               .then((res) => {
                 const uiSeq = res.data.uiSeq;
-                dispatch(loginUser(uiSeq));
+                const type = res.data.snsType;
+                dispatch(loginUser({ uiSeq, token, type }));
                 navigate("/myPage");
               })
               .catch((err) => {

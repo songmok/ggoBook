@@ -49,7 +49,7 @@ const Form = () => {
             alert(res.data.message);
           } else {
             const uiSeq = res.data.uiSeq;
-            dispatch(loginUser(uiSeq));
+            dispatch(loginUser({ uiSeq: uiSeq, type: "normal" }));
             navigate("/myPage");
           }
         })

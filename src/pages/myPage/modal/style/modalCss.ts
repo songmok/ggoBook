@@ -66,7 +66,6 @@ const ModalCss = styled.div`
               width: 200px;
               border: 1px solid;
               border-radius: 100%;
-              size: cover;
             }
           }
           input {
