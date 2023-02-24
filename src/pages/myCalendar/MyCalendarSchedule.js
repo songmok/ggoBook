@@ -1,12 +1,12 @@
-import React from "react";
 import ListBookCss from "components/listBook/style/ListBookCss";
 import { Button } from "utils/repeatCss";
 
-const MyCalendarSchedual = ({ ing, openForm, setModalData }) => {
-  console.log(ing);
+const MyCalendarSchedule = ({ ing, openForm, setModalData }) => {
   return (
     <>
-      {ing !== null ? (
+      {ing.status === "성공" ? (
+        ""
+      ) : (
         <>
           <ListBookCss>
             <div className="bookList">
@@ -24,14 +24,7 @@ const MyCalendarSchedual = ({ ing, openForm, setModalData }) => {
                           <span className="author">{v.end}</span>
                         </p>
                         <Button className="add">
-                          <button
-                            onClick={() => {
-                              openForm(true);
-                              setModalData(v);
-                            }}
-                          >
-                            일정 추가하기
-                          </button>
+                          <button onClick={() => {}}>일정 삭제하기</button>
                         </Button>
                       </div>
                     </li>
@@ -41,11 +34,9 @@ const MyCalendarSchedual = ({ ing, openForm, setModalData }) => {
             </div>
           </ListBookCss>
         </>
-      ) : (
-        ""
       )}
     </>
   );
 };
 
-export default MyCalendarSchedual;
+export default MyCalendarSchedule;
