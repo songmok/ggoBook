@@ -6,21 +6,17 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import instance from "api/instance";
 import request from "api/request";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { IUserData } from "../MyPage";
 
 interface Props {
   closeModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  userInfo: userData | null;
+  alarm: () => void;
+  userInfo: IUserData | null;
   uiSeq: number;
   imageURL: string;
-}
-
-interface userData {
-  nickName: string;
-  userImg: string | null;
-  userPoint: number;
-  userRank: number;
 }
 
 const Modal = (props: Props) => {
@@ -44,6 +40,7 @@ const Modal = (props: Props) => {
         alert(res.data.message);
       } else {
         alert(res.data.message);
+        props.alarm();
       }
     });
   };
@@ -71,9 +68,24 @@ const Modal = (props: Props) => {
     };
   };
 
-  console.log(imgFile);
-
-  const updateImg = () => {};
+  const updateImg = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("uiSeq", props.uiSeq.toString());
+    formData.append("img", imgRef.current.files[0]);
+    axios({
+      method: "put",
+      url: "http://192.168.0.160:8520/api/user/update/photo",
+      data: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then((res) => {
+      console.log(res);
+      alert("프로필 사진 수정이 완료되었습니다.");
+      props.alarm();
+    });
+  };
 
   return (
     <ModalCss>
@@ -88,11 +100,8 @@ const Modal = (props: Props) => {
           <div className="fixPic">
             <div>
               <div className="profilePic">
-                {props.imageURL === null ? (
-                  <img
-                    src={imgFile ? imgFile : { profile }}
-                    alt="profile img"
-                  />
+                {props.imageURL === "" ? (
+                  <img src={imgFile ? imgFile : profile} alt="profile img" />
                 ) : (
                   <img
                     src={imgFile ? imgFile : props.imageURL}
