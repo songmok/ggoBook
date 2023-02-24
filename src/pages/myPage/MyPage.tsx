@@ -9,19 +9,21 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reducer/store";
 import { KAKAO_LOGOUT } from "OAuth";
+import { CLIENT_ID } from "OAuth";
+import { CLIENT_SECRET } from "OAuth";
 
 import profile from "../../assets/images/profile.png";
 import instance from "api/instance";
 import request from "api/request";
 import { logoutUser } from "reducer/userSlice";
-import axios from "axios";
 import downloadFiles from "api/download";
+import axios from "axios";
 
-interface userData {
+export interface IUserData {
   nickName: string;
   userImg: string | null;
   userPoint: number;
@@ -29,13 +31,16 @@ interface userData {
 }
 
 const MyPage = () => {
-  const uiSeq: number = useSelector((state: RootState) => state.user.uiSeq);
+  const uiSeq = useSelector((state: RootState) => state.user.uiSeq);
+  const type = useSelector((state: RootState) => state.user.type);
+  const token = useSelector((state: RootState) => state.user.token);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState<userData | null>(null);
+  const [userInfo, setUserInfo] = useState<IUserData | null>(null);
   const [imageURL, setImageURL] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [change, setChange] = useState<boolean>(true);
 
   const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     setModalOpen(true);
@@ -49,6 +54,9 @@ const MyPage = () => {
     navigate("/complete");
   };
 
+  const alarm = () => {
+    setChange(!change);
+  };
   // const logout = () => {
   //   axios({
   //     method: "post",
@@ -93,7 +101,7 @@ const MyPage = () => {
 
   useEffect(() => {
     userData();
-  }, []);
+  }, [change]);
 
   const logout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
@@ -104,9 +112,53 @@ const MyPage = () => {
     }
   };
 
+  const kakaoLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      dispatch(logoutUser());
+      document.location.href = KAKAO_LOGOUT;
+    } else {
+      alert("취소 ㅋ");
+    }
+  };
+
+  const naverLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      axios({
+        url: `naver/oauth2.0/token`,
+        params: {
+          grant_type: "delete",
+          client_id: CLIENT_ID,
+          client_secret: CLIENT_SECRET,
+          access_token: token,
+          service_provider: "NAVER",
+        },
+      }).then((res) => {
+        dispatch(logoutUser());
+        navigate("/login");
+      });
+    } else {
+      alert("취소 ㅋ");
+    }
+  };
+
+  const LogoutType = () => {
+    if (type === "kakao") {
+      <button className="profileBt" onClick={kakaoLogout}>
+        카카오 로그아웃
+      </button>;
+    } else if (type === "naver") {
+      <button className="profileBt" onClick={logout}>
+        네이버 로그아웃
+      </button>;
+    } else {
+      <button className="profileBt" onClick={logout}>
+        로그아웃
+      </button>;
+    }
+  };
+
   return (
     <MyPageCss>
-      <a href={KAKAO_LOGOUT}>카카오로그아웃</a>
       <div className="profile">
         <div className="profileTop">
           <div className="profilePic">
@@ -134,14 +186,25 @@ const MyPage = () => {
             <button className="profileBt" onClick={goToComplete}>
               완독서 관리
             </button>
-            <button className="profileBt" onClick={logout}>
-              로그아웃
-            </button>
+            {type === "kakao" ? (
+              <button className="profileBt" onClick={kakaoLogout}>
+                카카오 로그아웃
+              </button>
+            ) : type === "naver" ? (
+              <button className="profileBt" onClick={naverLogout}>
+                네이버 로그아웃
+              </button>
+            ) : (
+              <button className="profileBt" onClick={logout}>
+                로그아웃
+              </button>
+            )}
           </div>
         </div>
         {modalOpen === true ? (
           <Modal
             closeModal={closeModal}
+            alarm={alarm}
             userInfo={userInfo}
             uiSeq={uiSeq}
             imageURL={imageURL}
