@@ -136,8 +136,6 @@ const MyPage = () => {
         dispatch(logoutUser());
         navigate("/login");
       });
-    } else {
-      alert("취소 ㅋ");
     }
   };
 

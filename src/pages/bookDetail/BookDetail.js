@@ -58,9 +58,11 @@ const BookDetail = () => {
     instance
       .post(request.addPlan, body, { params: params })
       .then((res) => {
-        console.log(res);
+        alert("한수담기 성공");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
   };
 
   const gotoBuy = () => {
