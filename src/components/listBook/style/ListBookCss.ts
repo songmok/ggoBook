@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { midllesize, minsize } from "utils/FontSize";
 
-const ListBookCss = styled.section`
+const ListBookCss = styled.article`
   display: flex;
   .bookList {
     display: flex;
