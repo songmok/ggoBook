@@ -61,25 +61,21 @@ const ModalCss = styled.div`
           width: 18.23vw;
           .profilePic {
             margin: 0.52vw 0;
-            height: 200px;
-            width: 200px;
             img {
+              height: 200px;
+              width: 200px;
               border: 1px solid;
               border-radius: 100%;
               size: cover;
             }
           }
-          button {
-            cursor: pointer;
-            border: 0;
+          input {
+            /* border: 0;
             border-radius: 10px;
             width: 6.25vw;
             height: 1.5vw;
             margin: 0.52vw 0;
-            font-size: ${defaltsize};
-            span {
-              margin: 2px;
-            }
+            font-size: ${defaltsize}; */
           }
         }
       }
