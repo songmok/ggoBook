@@ -1,4 +1,4 @@
-import instance from "api/axios";
+import instance from "api/instance";
 import request from "api/request";
 import axios from "axios";
 import { TTBKey_DETAIL } from "OAuth";
