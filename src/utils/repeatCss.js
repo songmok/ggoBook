@@ -10,6 +10,8 @@ export const Button = styled.div`
   display: block;
   width: 100px;
   height: 100px;
+  z-index: 99;
+  position: relative;
   button {
     padding: 0.7rem;
     border: 0.1rem #000 solid;
