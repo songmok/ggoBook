@@ -11,7 +11,7 @@ import instance from "api/instance";
 import request from "api/request";
 import { MyCalendarCss } from "./style/MyCalendarCss";
 import MyCalendarModal from "./MyCalendarModal";
-import MyCalendarSchedual from "./MyCalendarSchedual";
+import MyCalendarSchedual from "./MyCalendarSchedule";
 
 const MyCalendar = () => {
   // States
