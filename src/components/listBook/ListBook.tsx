@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "utils/repeatCss";
 import ListBookCss from "./style/ListBookCss";
 
@@ -6,9 +5,10 @@ interface Props {
   plan: any[];
   openForm: any;
   setModalData: any;
+  start: any;
 }
-
 const ListBook = (props: Props) => {
+  console.log(props.plan);
   return (
     <ListBookCss>
       <div className="bookList">
