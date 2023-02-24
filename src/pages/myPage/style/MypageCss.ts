@@ -12,9 +12,9 @@ const MyPageCss = styled.section`
       flex-direction: row;
       .profilePic {
         margin-right: 50px;
-        height: 200px;
-        width: 200px;
         img {
+          height: 200px;
+          width: 200px;
           border-radius: 100%;
           border: 1px solid;
           size: cover;

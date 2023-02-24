@@ -4,16 +4,17 @@ import profile from "../../../assets/images/profile.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
-import instance from "api/axios";
+import instance from "api/instance";
 import request from "api/request";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-type Props = {
+interface Props {
   closeModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
   userInfo: userData | null;
   uiSeq: number;
-};
+  imageURL: string;
+}
 
 interface userData {
   nickName: string;
@@ -24,7 +25,9 @@ interface userData {
 
 const Modal = (props: Props) => {
   const navigate = useNavigate();
+  const [imgFile, setImgFile] = useState<any>(null);
   const [editName, setEditName] = useState<string>("");
+  const imgRef = useRef<any>(null);
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditName(e.target.value);
   };
@@ -37,7 +40,11 @@ const Modal = (props: Props) => {
       uiNickname: editName,
     };
     instance.patch(request.updateName, data, { params: params }).then((res) => {
-      console.log(res);
+      if (res.data.status === false) {
+        alert(res.data.message);
+      } else {
+        alert(res.data.message);
+      }
     });
   };
 
@@ -55,6 +62,19 @@ const Modal = (props: Props) => {
     }
   };
 
+  const handleChangeFile = () => {
+    const file = imgRef.current.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImgFile(reader.result);
+    };
+  };
+
+  console.log(imgFile);
+
+  const updateImg = () => {};
+
   return (
     <ModalCss>
       <div className="modal">
@@ -68,18 +88,32 @@ const Modal = (props: Props) => {
           <div className="fixPic">
             <div>
               <div className="profilePic">
-                {props.userInfo?.userImg === null ? (
-                  <img src={profile} alt="img" />
+                {props.imageURL === null ? (
+                  <img
+                    src={imgFile ? imgFile : { profile }}
+                    alt="profile img"
+                  />
                 ) : (
-                  <img src={props.userInfo?.userImg} alt="img" />
+                  <img
+                    src={imgFile ? imgFile : props.imageURL}
+                    alt="porfile img"
+                  />
                 )}
               </div>
-              <button>
-                <FontAwesomeIcon icon={faImage} />
-                <span>불러오기</span>
-              </button>
+              <form>
+                {/* <FontAwesomeIcon icon={faImage} /> */}
+                <input
+                  type="file"
+                  className="imgFile"
+                  id="imgFile"
+                  onChange={handleChangeFile}
+                  ref={imgRef}
+                />
+              </form>
             </div>
-            <button className="edit">수정</button>
+            <button className="edit" onClick={updateImg}>
+              수정
+            </button>
           </div>
           <div className="fixNickName">
             <form>

@@ -12,10 +12,11 @@ import AppointmentDetails from "./AppointmentDetails";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import ListBook from "components/listBook/ListBook";
-import instance from "api/axios";
+import instance from "api/instance";
 import request from "api/request";
 import { MyCalendarCss } from "./style/MyCalendarCss";
 import { Button } from "utils/repeatCss";
+
 
 const MyCalendar = () => {
   const { reset } = useForm();

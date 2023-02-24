@@ -2,7 +2,7 @@ import FormCss from "./style/FormCss";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import instance from "api/axios";
+import instance from "api/instance";
 import request from "api/request";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";

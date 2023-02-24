@@ -15,9 +15,11 @@ import { RootState } from "reducer/store";
 import { KAKAO_LOGOUT } from "OAuth";
 
 import profile from "../../assets/images/profile.png";
-import instance from "api/axios";
+import instance from "api/instance";
 import request from "api/request";
 import { logoutUser } from "reducer/userSlice";
+import axios from "axios";
+import downloadFiles from "api/download";
 
 interface userData {
   nickName: string;
@@ -32,6 +34,7 @@ const MyPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<userData | null>(null);
+  const [imageURL, setImageURL] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -71,6 +74,20 @@ const MyPage = () => {
     };
     instance.get(request.info, { params: params }).then((res) => {
       setUserInfo(res.data);
+      const userImg = res.data.userImg;
+      res.data.userImg !== null &&
+        downloadFiles
+          .get(`http://192.168.0.160:8520/api/download/user/${userImg}`)
+          .then((res) => {
+            console.log(res.data);
+            const newFile = res.data;
+            const reader = new FileReader(); // 1
+            reader.onload = (e) => {
+              const previewImage = String(e.target?.result);
+              setImageURL(previewImage); // 2
+            };
+            reader.readAsDataURL(newFile); // 3
+          });
     });
   };
 
@@ -89,14 +106,14 @@ const MyPage = () => {
 
   return (
     <MyPageCss>
-      {/* <a href={KAKAO_LOGOUT}>카카오로그아웃</a> */}
+      <a href={KAKAO_LOGOUT}>카카오로그아웃</a>
       <div className="profile">
         <div className="profileTop">
           <div className="profilePic">
             {userInfo?.userImg === null ? (
               <img src={profile} alt="img" />
             ) : (
-              <img src={userInfo?.userImg} alt="img" />
+              <img src={imageURL} alt="img" />
             )}
           </div>
           <div>
@@ -123,7 +140,12 @@ const MyPage = () => {
           </div>
         </div>
         {modalOpen === true ? (
-          <Modal closeModal={closeModal} userInfo={userInfo} uiSeq={uiSeq} />
+          <Modal
+            closeModal={closeModal}
+            userInfo={userInfo}
+            uiSeq={uiSeq}
+            imageURL={imageURL}
+          />
         ) : null}
       </div>
       <div className="record">
