@@ -1,4 +1,4 @@
-import { minsize } from "utils/FontSize";
+import { bigsize, headertitle, minsize } from "utils/FontSize";
 import { midllesize } from "utils/FontSize";
 import styled from "styled-components";
 
@@ -44,6 +44,14 @@ const BookCss = styled.section`
       overflow-y: scroll;
       overflow-x: hidden;
       background: #eaf9ff;
+      .searchText {
+        h1 {
+        }
+        .searchImg {
+          img {
+          }
+        }
+      }
       .bookList {
         a {
           display: flex;

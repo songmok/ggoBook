@@ -1,7 +1,7 @@
 import moment from "moment";
 import "moment/locale/ko";
 
-const AppointmentDetails = ({ selectedEvent }) => {
+const MyCalendarDetail = ({ selectedEvent }) => {
   const startDateTime = selectedEvent.start;
   const endDateTime = selectedEvent.end;
   const formattedStartDate = moment(startDateTime).utc().format("YYYY-MM-DD");
@@ -25,4 +25,4 @@ const AppointmentDetails = ({ selectedEvent }) => {
   );
 };
 
-export default AppointmentDetails;
+export default MyCalendarDetail;

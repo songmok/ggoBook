@@ -3,39 +3,37 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { useLocation, useParams } from "react-router-dom";
-
-import AppointmentForm from "./AppointmentForm";
-import { useSelector, useDispatch } from "react-redux";
-import AppointmentDetails from "./AppointmentDetails";
-
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import ListBook from "components/listBook/ListBook";
 import instance from "api/instance";
 import request from "api/request";
 import { MyCalendarCss } from "./style/MyCalendarCss";
-import { Button } from "utils/repeatCss";
-
+import MyCalendarModal from "./MyCalendarModal";
+import MyCalendarSchedual from "./MyCalendarSchedual";
 
 const MyCalendar = () => {
-  const { reset } = useForm();
   // States
   // 모달
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedModal, setSelectedModal] = useState("");
+  // const [selectedModal, setSelectedModal] = useState("");
   // 이벤트
   const [event, setEvnet] = useState([]);
   // 리스트
   const [plan, setPlan] = useState([]);
+  const [ing, setIng] = useState([]);
   // 책 seq
   const [modalData, setModalData] = useState();
   // 유저 Seq
   const uiSeq = useSelector((state) => state.user.uiSeq);
-
-  const selectedEvent = useSelector(
-    (state) => state.appointment.selectedAppointment
-  );
+  // date start end
+  const [start, setStart] = useState(new Date());
+  const [end, setEnd] = useState(new Date());
+  // useForm handler
+  const { register, handleSubmit } = useForm();
+  // 스테이터스
+  const [status, setStatus] = useState();
   // 일정추가
   const addEvent = async () => {
     let user = {
@@ -71,6 +69,7 @@ const MyCalendar = () => {
         });
     }
   };
+  // onSubmit Function
   // booklist
   const listPlan = async () => {
     const params = {
@@ -78,17 +77,26 @@ const MyCalendar = () => {
     };
     await instance.get(request.listPlan, { params: params }).then((res) => {
       console.log(res.data.mybookList);
-      console.log(res);
       setPlan(res.data.mybookList);
+    });
+  };
+  const listIng = async () => {
+    const params = {
+      uiSeq: uiSeq,
+    };
+    await instance.get(request.myCalendar, { params: params }).then((res) => {
+      setIng(res.data);
+      console.log(res.data);
     });
   };
   useEffect(() => {
     addEvent();
     listPlan();
+    listIng();
   }, []);
 
   const openForm = () => {
-    setSelectedModal(true);
+    // setSelectedModal(true);
     openModal();
   };
   const openModal = () => {
@@ -103,12 +111,24 @@ const MyCalendar = () => {
   return (
     <MyCalendarCss>
       <ListBook plan={plan} openForm={openForm} setModalData={setModalData} />
-      <AppointmentForm
-        plan={plan}
+      <MyCalendarSchedual
+        ing={ing}
+        openForm={openForm}
+        setModalData={setModalData}
+        start={start}
+        end={end}
+      />
+      <MyCalendarModal
         modalData={modalData}
         closeModal={closeModal}
         modalOpen={modalOpen}
-        selectedModal={selectedModal}
+        start={start}
+        setStart={setStart}
+        end={end}
+        setEnd={setEnd}
+        handleSubmit={handleSubmit}
+        register={register}
+        uiSeq={uiSeq}
       />
       <div className="fullcalendarWrap">
         {uiSeq ? (
@@ -120,14 +140,11 @@ const MyCalendar = () => {
             }}
             eventClick={deleteEvnet}
             initialView="dayGridMonth"
-            // initialDate={initialDate}
             events={event}
             editable={true}
             selectable={false}
             selectMirror={true}
             weekends={true}
-            // eventClick={handleEventClick}
-            // dateClick={handleEventClick}
             views={{
               dayGrid: {
                 dayMaxEventRows: 4,
@@ -144,6 +161,3 @@ const MyCalendar = () => {
 };
 
 export default MyCalendar;
-// : selectedModal === "AppointmentDetails" ? (
-//   <AppointmentDetails selectedEvent={selectedEvent} />
-// )
