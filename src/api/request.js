@@ -13,6 +13,8 @@ const request = {
   listIng: "/api/mybook/list/ing",
   listRead: "/api/mybook/list/read",
   delete: "/api/schedule/delete",
+  listDelete: "/api/mybook/delete",
+  listComplete: "/api/mybook/status",
 };
 
 export default request;

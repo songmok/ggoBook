@@ -1,19 +1,44 @@
+import instance from "api/instance";
+import request from "api/request";
 import { Button } from "utils/repeatCss";
 import ListBookCss from "./style/ListBookCss";
 
-interface Props {
+interface IProps {
   plan: any[];
   openForm: any;
   setModalData: any;
   start: any;
 }
-const ListBook = (props: Props) => {
+
+const ListBook = (props: IProps) => {
+  const listDelete = (id: number) => {
+    const params = {
+      id: id,
+    };
+    window.confirm("책 목록에서 삭제하시겠습니까?") &&
+      instance.delete(request.listDelete, { params: params }).then((res) => {
+        alert(res.data.message);
+      });
+  };
+
+  const listCompelete = (id: number) => {
+    const params = {
+      id: id,
+    };
+    window.confirm("완독서로 넣으시겠습니까?") &&
+      instance
+        .post(request.listComplete, null, { params: params })
+        .then((res) => {
+          console.log(res);
+        }); 
+  };
+
   console.log(props.plan);
   return (
     <ListBookCss>
       <div className="bookList">
         <ul className="bookGnb">
-          {props.plan.map((v, i) => {
+          {props.plan.map((v) => {
             return (
               <li key={v.id} className="bookInfo">
                 <div className="bookImg">
@@ -33,6 +58,22 @@ const ListBook = (props: Props) => {
                       }}
                     >
                       일정 추가하기
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        listDelete(v.id);
+                      }}
+                    >
+                      삭제
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        listCompelete(v.id);
+                      }}
+                    >
+                      완독
                     </button>
                   </Button>
                 </div>
