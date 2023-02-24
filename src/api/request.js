@@ -11,7 +11,6 @@ const request = {
   listPlan: "/api/mybook/list/plan",
   listRead: "/api/mybook/list/read",
   delete: "/api/schedule/delete",
-
 };
 
 export default request;
