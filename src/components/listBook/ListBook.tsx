@@ -1,8 +1,11 @@
 import React from "react";
+import { Button } from "utils/repeatCss";
 import ListBookCss from "./style/ListBookCss";
 
 interface Props {
   plan: any[];
+  openForm: any;
+  setModalData: any;
 }
 
 const ListBook = (props: Props) => {
@@ -11,9 +14,8 @@ const ListBook = (props: Props) => {
       <div className="bookList">
         <ul className="bookGnb">
           {props.plan.map((v, i) => {
-            console.log(v);
             return (
-              <li key={i} className="bookInfo">
+              <li key={v.id} className="bookInfo">
                 <div className="bookImg">
                   <img src="/" alt="" />
                 </div>
@@ -23,6 +25,16 @@ const ListBook = (props: Props) => {
                     <span className="author">{v.biAuthor}</span>
                     <span className="pub">{v.biPublisher}</span>
                   </p>
+                  <Button className="add">
+                    <button
+                      onClick={() => {
+                        props.openForm(true);
+                        props.setModalData(v);
+                      }}
+                    >
+                      일정 추가하기
+                    </button>
+                  </Button>
                 </div>
               </li>
             );
