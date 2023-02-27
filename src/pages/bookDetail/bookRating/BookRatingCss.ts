@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 const BookRatingCss = styled.section`
   .ratings {
     height: calc(100% - 200px);
@@ -13,4 +14,5 @@ const BookRatingCss = styled.section`
     }
   }
 `;
+
 export default BookRatingCss;

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 export const bfaf = `
 content: "";
 position: absolute;
@@ -23,7 +22,6 @@ export const Button = styled.div`
     }
   }
 `;
-
 export const addButton = `
 position: absolute;
 bottom: 10px;
