@@ -19,20 +19,25 @@ const ListBookCss = styled.article`
         height: 200px;
         border-bottom: 2px solid #ffffff;
         .bookImg {
-          padding: 5px;
-          width: 30%;
-          height: 100%;
-          background-color: yellow;
+          padding: 4px;
+          background-color: #666;
           border: 0;
-          border-radius: 15px;
+          border-radius: 5px;
           margin-right: 5px;
           img {
+            display: flex;
+            align-items: center;
+            width: 120px;
+            height: 170px;
           }
         }
         .text {
           position: relative;
           width: 70%;
           height: 100%;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
           p {
             color: #000000;
             display: block;

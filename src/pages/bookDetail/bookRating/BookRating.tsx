@@ -1,28 +1,51 @@
-import React from "react";
+import instance from "api/instance";
+import request from "api/request";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "reducer/store";
 import BookRatingCss from "./BookRatingCss";
 
-const BookRating = () => {
+interface IProps {
+  ISBN: number;
+}
+
+interface IRating {
+  content: string;
+  nickName: string;
+  score: number;
+  onecommentSeq: number;
+}
+
+const BookRating = (props: IProps) => {
+  const uiSeq = useSelector((state: RootState) => state.user.uiSeq);
+  const [content, setContent] = useState<IRating[]>([]);
+  const commentList = async () => {
+    const params = {
+      page: 0,
+    };
+    await instance
+      .get(`api/onecomment/${props.ISBN}/list`, { params: params })
+      .then((res) => {
+        setContent(res.data.content);
+      });
+  };
+
+  useEffect(() => {
+    commentList();
+  }, []);
+
   return (
     <BookRatingCss>
-      <div className="ratingTop">
-        <form>
-          <textarea
-            cols={80}
-            placeholder="감상평을 남겨주세요. 이 책에 대한 욕설 및 인신공격성 글은 평점 페이지에서 노출 제외처리됩니다."
-            rows={4}
-          ></textarea>
-          <button type="button">작성</button>
-        </form>
-      </div>
-      <div className="ratingBottom">
-        <div className="rating">감상평1</div>
-        <div className="rating">감상평2</div>
-        <div className="rating">감상평3</div>
-        <div className="rating">감상평4</div>
-        <div className="rating">감상평4</div>
-        <div className="rating">감상평4</div>
-        <div className="rating">감상평4</div>
-        <div className="rating">감상평4</div>
+      <div className="ratings">
+        {content.map((ele) => {
+          return (
+            <div className="rating" key={ele.onecommentSeq}>
+              <p>{ele.content}</p>
+              <p>{ele.nickName} 님</p>
+              <span>{ele.score}</span>
+            </div>
+          );
+        })}
       </div>
     </BookRatingCss>
   );

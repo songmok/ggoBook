@@ -1,14 +1,7 @@
 import styled from "styled-components";
 
 const BookRatingCss = styled.section`
-  .ratingTop {
-    margin-bottom: 20px;
-    textarea {
-      resize: none;
-      border-radius: 5px;
-    }
-  }
-  .ratingBottom {
+  .ratings {
     height: calc(100% - 200px);
     overflow-y: scroll;
     .rating {
