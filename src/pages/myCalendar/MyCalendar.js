@@ -5,13 +5,14 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import { MyCalendarCss } from "./style/MyCalendarCss";
 import axios from "axios";
-import ListBook from "components/listBook/ListBook";
 import instance from "api/instance";
 import request from "api/request";
-import { MyCalendarCss } from "./style/MyCalendarCss";
-import MyCalendarModal from "./MyCalendarModal";
-import MyCalendarSchedule from "./MyCalendarSchedule";
+import MyCalendarSchedule from "components/myCalendar/listBook/MyCalendarSchedule";
+
+import MyCalendarModal from "components/myCalendar/myCalendarModal/MyCalendarModal";
+import ListBook from "components/myCalendar/listBook/ListBook";
 
 const MyCalendar = () => {
   // States
@@ -140,9 +141,12 @@ const MyCalendar = () => {
             eventClick={deleteEvnet}
             initialView="dayGridMonth"
             events={event}
+            droppable={false}
+            dragRevertDuration={false}
+            allDaySlot={true}
             editable={true}
             selectable={false}
-            selectMirror={true}
+            selectMirror={false}
             weekends={true}
             views={{
               dayGrid: {
