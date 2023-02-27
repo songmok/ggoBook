@@ -8,7 +8,7 @@ import { RootState } from "reducer/store";
 import instance from "api/instance";
 import request from "api/request";
 import CompleteCss from "./style/CompleteCss";
-import ListBookCss from "components/myCalendar/listBook/style/ListBookCss";
+// import ListBookCss from "components/myCalendar/listBook/style/ListBookCss";
 
 interface IBookList {
   id: number;
@@ -39,28 +39,28 @@ const Complete = () => {
   return (
     <CompleteCss>
       <div>
-        <ListBookCss>
-          <div className="bookList">
-            <ul className="bookGnb">
-              {bookList.map((ele) => {
-                return (
-                  <li key={ele.id} className="bookInfo">
-                    <div className="bookImg">
-                      <img src="/" alt="" />
-                    </div>
-                    <div className="text">
-                      <p>
-                        <span className="title">{ele.biName}</span>
-                        <span className="author">{ele.biAuthor}</span>
-                        <span className="pub">{ele.biPublisher}</span>
-                      </p>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </ListBookCss>
+        {/* <ListBookCss> */}
+        <div className="bookList">
+          <ul className="bookGnb">
+            {bookList.map((ele) => {
+              return (
+                <li key={ele.id} className="bookInfo">
+                  <div className="bookImg">
+                    <img src="/" alt="" />
+                  </div>
+                  <div className="text">
+                    <p>
+                      <span className="title">{ele.biName}</span>
+                      <span className="author">{ele.biAuthor}</span>
+                      <span className="pub">{ele.biPublisher}</span>
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        {/* </ListBookCss> */}
       </div>
       <div>
         <div className="독후감"></div>
