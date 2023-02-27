@@ -30,19 +30,22 @@ const ListBook = (props: IProps) => {
         .post(request.listComplete, null, { params: params })
         .then((res) => {
           console.log(res);
-        }); 
+        });
   };
-
   console.log(props.plan);
+
   return (
     <ListBookCss>
       <div className="bookList">
+        <div className="header">
+          <h3>나의 북 리스트</h3>
+        </div>
         <ul className="bookGnb">
           {props.plan.map((v) => {
             return (
               <li key={v.id} className="bookInfo">
                 <div className="bookImg">
-                  <img src="/" alt="" />
+                  <img src={v.bimgUri} alt={v.biName} />
                 </div>
                 <div className="text">
                   <p>

@@ -47,11 +47,9 @@ const MyCalendarModal = ({
         console.log(err);
         closeModal();
       });
-    // Reset react-hook-form states
-    // reset();
-    // Reset date picker and time picker
-    // setStartDateTime(new Date());
-    // setEndDateTime(new Date());
+
+    setStart(new Date());
+    setEnd(new Date());
     closeModal();
   };
   return (
