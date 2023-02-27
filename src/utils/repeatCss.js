@@ -14,16 +14,20 @@ export const Button = styled.div`
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
-    background-color: #942e44 !important;
+    background-color: #942e44;
     &:hover {
       border: 0.1rem #6c7e05 solid;
       color: #fff;
-      background-color: #8002a7 !important;
+      background-color: #8002a7;
     }
   }
 `;
 export const addButton = `
 position: absolute;
-bottom: 10px;
+bottom: 0px;
 width: 100%;
+`;
+export const myScheduleBtn = `
+width: 77px;
+height: 52px;
 `;

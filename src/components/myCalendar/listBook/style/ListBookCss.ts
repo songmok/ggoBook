@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { midllesize, minsize } from "utils/FontSize";
-import { addButton } from "utils/repeatCss";
+import { addButton, myScheduleBtn } from "utils/repeatCss";
 
 const ListBookCss = styled.article`
   display: flex;
@@ -27,17 +27,17 @@ const ListBookCss = styled.article`
       }
     }
     .bookGnb {
-      width: 23.44vw;
+      width: 100%;
       height: 100%;
       overflow-y: scroll;
       .bookInfo {
         display: flex;
         width: 100%;
-        padding: 10px;
+        padding: 5px;
         height: 300px;
         border-bottom: 2px solid #ffffff;
         .bookImg {
-          width: 30%;
+          width: 40%;
           align-self: center;
           display: flex;
           align-items: center;
@@ -54,8 +54,9 @@ const ListBookCss = styled.article`
         }
         .text {
           position: relative;
-          width: calc(100% - 45%);
+          width: calc(100% - 30%);
           height: 100%;
+          border-radius: 10px;
           background-color: #fff;
           p {
             color: #000000;
@@ -86,19 +87,21 @@ const ListBookCss = styled.article`
             ${addButton}
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            .delete {
-            }
+            justify-items: center;
             button {
-              width: 77px;
-              height: 52px;
+              ${myScheduleBtn}
+            }
+            .comp {
+              background-color: #6c7e05 !important;
             }
           }
           .addSch {
             ${addButton}
             display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-items: center;
             button {
-              width: 77px;
-              height: 52px;
+              ${myScheduleBtn}
             }
           }
         }

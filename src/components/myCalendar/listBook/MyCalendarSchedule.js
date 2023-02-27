@@ -1,8 +1,24 @@
+import instance from "api/instance";
+import request from "api/request";
 import { Button } from "utils/repeatCss";
 import ListBookCss from "./style/ListBookCss";
 
 const MyCalendarSchedule = ({ ing, openForm, setModalData }) => {
   console.log(ing);
+  const deleteEvnet = (e) => {
+    const sch = {
+      id: e,
+    };
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      instance
+        .delete(request.scheduleDelete, {
+          params: sch,
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    }
+  };
   return (
     <>
       {ing.status === "성공" ? (
@@ -29,8 +45,16 @@ const MyCalendarSchedule = ({ ing, openForm, setModalData }) => {
                           <span className="description">{v.description}</span>
                         </p>
                         <Button className="addSch">
-                          <button className="delete" onClick={() => {}}>
+                          <button
+                            className="delete"
+                            onClick={() => {
+                              deleteEvnet(v.id);
+                            }}
+                          >
                             일정 삭제하기
+                          </button>
+                          <button className="re" onClick={() => {}}>
+                            일정 수정하기
                           </button>
                         </Button>
                       </div>

@@ -50,12 +50,12 @@ const MyCalendar = () => {
         console.log(err);
       });
   };
-  // 일정삭제
+  // 캘린더에서 삭제
   const deleteEvnet = (e) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       const siSeq = e.event._def;
       instance
-        .delete(request.delete, {
+        .delete(request.scheduleDelete, {
           params: {
             id: siSeq.publicId,
           },
@@ -142,18 +142,21 @@ const MyCalendar = () => {
             initialView="dayGridMonth"
             events={event}
             droppable={false}
-            dragRevertDuration={false}
-            allDaySlot={true}
+            allDaySlot={false}
+            defaultAllDay={false}
             editable={true}
             selectable={false}
             selectMirror={false}
+            displayEventTime={false}
             weekends={true}
+            locale={"ko"}
             views={{
               dayGrid: {
                 dayMaxEventRows: 4,
               },
             }}
-            height="90vh"
+            height="80vh"
+            withd="80vw"
           />
         ) : (
           <div>Loading</div>
