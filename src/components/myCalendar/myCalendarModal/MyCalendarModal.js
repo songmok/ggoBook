@@ -2,7 +2,8 @@ import DatePicker from "react-date-picker";
 import Modal from "react-modal";
 import axios from "axios";
 
-import { FormModalCss } from "./style/AppointFormStyles";
+import { FormCss, FormModalCss } from "./style/AppointFormStyles";
+import { Button } from "utils/repeatCss";
 
 const MyCalendarModal = ({
   closeModal,
@@ -23,6 +24,8 @@ const MyCalendarModal = ({
       right: "auto",
       bottom: "auto",
       marginRight: "-50%",
+      width: "50%",
+      height: "500px",
       transform: "translate(-50%, -50%)",
     },
     overlay: { zIndex: 1000 },
@@ -52,6 +55,7 @@ const MyCalendarModal = ({
     setEnd(new Date());
     closeModal();
   };
+  console.log(modalData);
   return (
     <>
       <FormModalCss>
@@ -65,44 +69,45 @@ const MyCalendarModal = ({
             <button onClick={closeModal} className="dks">
               X
             </button>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <FormCss onSubmit={handleSubmit(onSubmit)}>
+              <div className="header">
+                <h2>{modalData.biName}</h2>
+                <img src={modalData.bimgUri} alt="" />
+              </div>
               <ul>
-                <li>
-                  <h2>{modalData.biName}</h2>
-                </li>
-                <li>
-                  <span>일정</span>
+                <li className="dateWrap">
+                  <span className="dateHead">시작 날</span>
                   <DatePicker
                     onChange={setStart}
                     value={start}
                     dateFormat={"yy-MM-dd"}
                   />
+                  <span className="dateHead">마지막 날</span>
                   <DatePicker
                     onChange={setEnd}
                     value={end}
                     dateFormat={"yy-MM-dd"}
                   />
                 </li>
-                <li>
-                  <label>기록</label>
-                  <input
+                <li className="descWrap">
+                  <label>기록란</label>
+                  <textarea
+                    className="desc"
                     name="description"
-                    type="text"
-                    placeholder="기록하기"
                     required
                     {...register("description", {
                       required: true,
                       maxLength: 300,
                     })}
-                  />
-                </li>
-                <li>
-                  <button type="submit">
-                    <span>Add To Calendar</span>
-                  </button>
+                  ></textarea>
+                  <Button className="submit">
+                    <button className="save" type="submit">
+                      저장하기
+                    </button>
+                  </Button>
                 </li>
               </ul>
-            </form>
+            </FormCss>
           </Modal>
         )}
       </FormModalCss>
