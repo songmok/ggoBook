@@ -104,8 +104,8 @@ const BookDetail = () => {
               독후감
             </button>
           </div>
-          {selectOne === "평점" && <BookRating />}
-          {selectOne === "독후감" && <BookReview />}
+          {selectOne === "평점" && <BookRating ISBN={ISBN} />}
+          {selectOne === "독후감" && <BookReview ISBN={ISBN} />}
         </div>
       </BookDetailCss>
     </>

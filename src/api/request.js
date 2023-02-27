@@ -15,6 +15,8 @@ const request = {
   delete: "/api/schedule/delete",
   listDelete: "/api/mybook/delete",
   listComplete: "/api/mybook/status",
+  article: "/api/user/article",
+  addComment: "/api/onecomment/add",
 };
 
 export default request;
