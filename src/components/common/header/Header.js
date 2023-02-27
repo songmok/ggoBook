@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import HeaderCss from "./style/HeaderCss";
 import { navheader } from "./data/headjson";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,8 +13,9 @@ import {
 const Header = () => {
   library.add(faUser, faBook, faPersonRunning, faCalendarDay, faBookOpen);
   // <FontAwesomeIcon icon="fa-solid fa-person-running" />;
-  if (window.location.pathname === "/login") return null;
-  if (window.location.pathname === "/signup") return null;
+  const location = useLocation();
+  if (location.pathname === "/login") return null;
+  if (location.pathname === "/signup") return null;
   return (
     <HeaderCss>
       <div>

@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { BookJson } from "./list";
-import CompleteCss from "./style/CompleteCss";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import { RootState } from "reducer/store";
 import ListBook from "components/listBook/ListBook";
 import ListBookCss from "components/listBook/style/ListBookCss";
 import instance from "api/instance";
 import request from "api/request";
-import { useSelector } from "react-redux";
-import { RootState } from "reducer/store";
+import CompleteCss from "./style/CompleteCss";
 
 interface IBookList {
   id: number;
