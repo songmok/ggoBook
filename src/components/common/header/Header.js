@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <HeaderCss>
       <div>
-        <Link to="/">로고</Link>
+        <Link to="/login">Project SB</Link>
       </div>
       <div className="headerWrap">
         <ul>

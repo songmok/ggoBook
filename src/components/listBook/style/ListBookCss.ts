@@ -1,62 +1,43 @@
 import styled from "styled-components";
 import { midllesize, minsize } from "utils/FontSize";
-import { addButton } from "utils/repeatCss";
 
 const ListBookCss = styled.article`
   display: flex;
-  position: relative;
-  .scheduleList {
-    margin-left: 20px;
-  }
   .bookList {
     display: flex;
-    width: 20vw;
-    height: 50vw;
-    flex-direction: column;
-    background: #eaf9ff;
-    .header {
-      height: 50px;
-      background-color: #fefefe;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      h3 {
-        display: block;
-        font-size: ${midllesize};
-        color: #555;
-      }
-    }
+    width: 25vw;
+    height: 49vw;
     .bookGnb {
       width: 23.44vw;
       height: 100%;
       overflow-y: scroll;
+      background: #eaf9ff;
       .bookInfo {
         display: flex;
         width: 100%;
         padding: 10px;
-        height: 300px;
+        height: 200px;
         border-bottom: 2px solid #ffffff;
         .bookImg {
-          width: 30%;
-          align-self: center;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: rgba(0, 0, 0, 0.3);
-          height: 200px;
-          border-radius: 15px;
+          padding: 4px;
+          background-color: #666;
+          border: 0;
+          border-radius: 5px;
           margin-right: 5px;
           img {
-            width: 90%;
-            height: 90%;
-            display: block;
+            display: flex;
+            align-items: center;
+            width: 120px;
+            height: 170px;
           }
         }
         .text {
           position: relative;
-          width: calc(100% - 45%);
+          width: 70%;
           height: 100%;
-          background-color: #fff;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
           p {
             color: #000000;
             display: block;
@@ -65,11 +46,10 @@ const ListBookCss = styled.article`
             top: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            width: 100%;
             > span {
               display: block;
               margin-bottom: 20px;
-              /* white-space: nowrap; */
+              white-space: nowrap;
             }
             .title {
               font-weight: bold;
@@ -80,25 +60,6 @@ const ListBookCss = styled.article`
             }
             .pub {
               font-size: ${minsize};
-            }
-          }
-          .add {
-            ${addButton}
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            .delete {
-            }
-            button {
-              width: 77px;
-              height: 52px;
-            }
-          }
-          .addSch {
-            ${addButton}
-            display: grid;
-            button {
-              width: 77px;
-              height: 52px;
             }
           }
         }

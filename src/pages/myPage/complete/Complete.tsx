@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "reducer/store";
-// import ListBookCss from "components/myCalendar/listBook/style/ListBookCss";
+import ListBookCss from "components/myCalendar/listBook/style/ListBookCss";
 import instance from "api/instance";
 import request from "api/request";
 import CompleteCss from "./style/CompleteCss";
+
 interface IBookList {
   id: number;
   biIsbn: number;
@@ -15,16 +16,19 @@ interface IBookList {
   bimgUri: string;
   biSeq: number;
 }
+
 interface IArticle {
   contant: string;
   comment: string;
   score: number;
 }
+
 const Complete = () => {
   const uiSeq = useSelector((state: RootState) => state.user.uiSeq);
   const [bookList, setBookList] = useState<IBookList[]>([]);
   const [biSeq, setBiSeq] = useState<number | null>(null);
   const [article, setArticle] = useState<IArticle | null>(null);
+
   const completeBooks = async () => {
     const params = {
       uiSeq: uiSeq,
@@ -33,9 +37,11 @@ const Complete = () => {
       .get(request.listRead, { params: params })
       .then((res) => setBookList(res.data.mybookList));
   };
+
   useEffect(() => {
     completeBooks();
   }, []);
+
   const myArticle = (biIsbn: number, biSeq: number) => {
     const params = {
       uiSeq: uiSeq,
@@ -46,11 +52,14 @@ const Complete = () => {
       setBiSeq(biSeq);
     });
   };
+
   const [content, setContent] = useState<string>("");
   const [comment, setComment] = useState<string>("");
+
   const commentText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
+
   const addComment = () => {
     const data = {
       uiSeq: uiSeq,
@@ -62,34 +71,35 @@ const Complete = () => {
       .post(request.addComment, data)
       .then((res) => console.log(res.data));
   };
+
   return (
     <CompleteCss>
-      {/* <ListBookCss> */}
-      <div className="bookList">
-        <ul className="bookGnb">
-          {bookList.map((ele) => {
-            return (
-              <li
-                key={ele.id}
-                className="bookInfo"
-                onClick={() => myArticle(ele.biIsbn, ele.biSeq)}
-              >
-                <div className="bookImg">
-                  <img src={ele.bimgUri} alt="" />
-                </div>
-                <div className="text">
-                  <p>
-                    <span className="title">{ele.biName}</span>
-                    <span className="author">{ele.biAuthor}</span>
-                    <span className="pub">{ele.biPublisher}</span>
-                  </p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      {/* </ListBookCss> */}
+      <ListBookCss>
+        <div className="bookList">
+          <ul className="bookGnb">
+            {bookList.map((ele) => {
+              return (
+                <li
+                  key={ele.id}
+                  className="bookInfo"
+                  onClick={() => myArticle(ele.biIsbn, ele.biSeq)}
+                >
+                  <div className="bookImg">
+                    <img src={ele.bimgUri} alt="" />
+                  </div>
+                  <div className="text">
+                    <p>
+                      <span className="title">{ele.biName}</span>
+                      <span className="author">{ele.biAuthor}</span>
+                      <span className="pub">{ele.biPublisher}</span>
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </ListBookCss>
       <div className="bookDetail">
         <span> 나의 평점 / 독후감 </span>
         {article === null ? (
@@ -143,4 +153,5 @@ const Complete = () => {
     </CompleteCss>
   );
 };
+
 export default Complete;
