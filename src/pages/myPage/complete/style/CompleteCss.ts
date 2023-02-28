@@ -11,11 +11,12 @@ const CompleteCss = styled.section`
     justify-content: center;
     flex-direction: column;
     span {
-      font-size: 24px;
-      margin: 50px;
+      font-size: 30px;
+      font-weight: 600;
+      margin: 20px 0;
     }
     .bookChoose {
-      font-size: 30px;
+      font-size: 25px;
       font-weight: 500;
       margin: 10px 0;
     }
@@ -24,21 +25,74 @@ const CompleteCss = styled.section`
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      .formName {
+        font-size: 25px;
+        font-weight: 500;
+        margin: 10px 0;
+      }
       .bookRating {
         display: flex;
-        margin: 30px 0;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px 0;
+        .ratingBox {
+          width: 708px;
+          padding: 5px;
+          border: 1px solid;
+          border-radius: 5px;
+          font-size: 14px;
+        }
         textarea {
           resize: none;
           border-radius: 5px;
+          padding: 5px;
+          font-size: 14px;
+          ::placeholder {
+            opacity: 0.6;
+            text-align: center;
+          }
         }
       }
       .bookReview {
         display: flex;
-        margin: 30px 0;
+        flex-direction: column;
+        margin: 10px 0;
+        .reviewBox {
+          width: 708px;
+          padding: 5px;
+          border: 1px solid;
+          border-radius: 5px;
+          .reviewTitle {
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            margin: 5px 0;
+          }
+          .reviewContent {
+            font-size: 14px;
+          }
+        }
+        form {
+          display: flex;
+          flex-direction: column;
+        }
         textarea {
           resize: none;
           border-radius: 5px;
+          padding: 5px;
+          margin: 2px 0;
+          font-size: 14px;
+          ::placeholder {
+            opacity: 0.6;
+            text-align: center;
+          }
         }
+      }
+      .button {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        margin: 5px 0;
       }
     }
   }
