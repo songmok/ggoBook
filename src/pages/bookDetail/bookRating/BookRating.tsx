@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "reducer/store";
 import BookRatingCss from "./BookRatingCss";
 
-interface IProps {
+export interface IProps {
   ISBN: number;
 }
 
@@ -14,6 +14,7 @@ interface IRating {
   nickName: string;
   score: number;
   onecommentSeq: number;
+  regDt: string;
 }
 
 const BookRating = (props: IProps) => {
@@ -34,18 +35,38 @@ const BookRating = (props: IProps) => {
     commentList();
   }, []);
 
+  console.log(content);
+
+  // 날짜 변경 함수
+  const datePrefix = (Day: string) => {
+    const Date = Day.substring(0, 10);
+    const [year, month, day] = Date.split("-");
+    return `${year}년${month}월${day}일`;
+  };
+
   return (
     <BookRatingCss>
-      <div className="ratings">
-        {content.map((ele) => {
-          return (
-            <div className="rating" key={ele.onecommentSeq}>
-              <p>{ele.content}</p>
-              <p>{ele.nickName} 님</p>
-              <span>{ele.score}</span>
-            </div>
-          );
-        })}
+      <div>
+        {content.length === 0 ? (
+          <div>
+            <p>
+              등록된 평점이 없습니다. 이 책을 완독하고 첫 평점을 등록해보세요!
+            </p>
+          </div>
+        ) : (
+          content.map((ele) => {
+            return (
+              <div className="rating" key={ele.onecommentSeq}>
+                <span>{ele.score}</span>
+                <p className="ratingContent">{ele.content}</p>
+                <p className="ratingND">
+                  <span>{ele.nickName}님</span>
+                  <span>{datePrefix(ele.regDt)}</span>
+                </p>
+              </div>
+            );
+          })
+        )}
       </div>
     </BookRatingCss>
   );
