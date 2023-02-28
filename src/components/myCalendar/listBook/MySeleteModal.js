@@ -3,25 +3,25 @@ import Modal from "react-modal";
 import axios from "axios";
 import moment from "moment";
 
-import { FormCss, FormModalCss } from "./style/AppointFormStyles";
 import { Button } from "utils/repeatCss";
-
-import TextField from "@mui/material/TextField";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers";
-
-const MyCalendarModal = ({
-  closeModal,
-  modalOpen,
-  modalData,
-  setEnd,
-  end,
-  start,
-  setStart,
-  handleSubmit,
+import {
+  FormCss,
+  FormModalCss,
+} from "../myCalendarModal/style/AppointFormStyles";
+import { useState } from "react";
+const MySeleteModal = ({
+  plan,
+  selectModalOpen,
+  selectModalClose,
   register,
+  slecteModal,
+  selectStart,
+  selectEnd,
   uiSeq,
+  listIng,
+  setSelectStart,
+  setSelectEnd,
+  handleSubmit,
 }) => {
   const customModalStyles = {
     content: {
@@ -36,14 +36,12 @@ const MyCalendarModal = ({
     },
     overlay: { zIndex: 1000 },
   };
-
-  // Open Modal Function
-  const onSubmit = (data) => {
+  const seletSubmit = (data) => {
     const appointmentInfo = {
       ...data,
-      biSeq: modalData.biSeq,
-      start: start,
-      end: end,
+      biSeq: selectData.biSeq,
+      start: selectStart,
+      end: selectEnd,
       uiSeq: uiSeq,
     };
     axios
@@ -51,59 +49,59 @@ const MyCalendarModal = ({
       .then((res) => {
         console.log(res.data);
         console.log(appointmentInfo);
+        listIng();
       })
       .catch((err) => {
         console.log(err);
-        closeModal();
+        selectModalClose();
       });
-    setStart(new Date());
-    setEnd(new Date());
-    closeModal();
+    setSelectStart(new Date());
+    setSelectEnd(new Date());
+    selectModalClose();
   };
-  console.log(modalData);
+  const [selectData, setSelectData] = useState("");
+  console.log("셀리트", selectData);
+  console.log("sdsd", plan);
   return (
     <>
       <FormModalCss>
-        {modalOpen && (
+        {slecteModal && (
           <Modal
-            isOpen={modalOpen}
-            onRequestClose={closeModal}
+            isOpen={slecteModal}
+            onRequestClose={selectModalClose}
             ariaHideApp={false}
             style={customModalStyles}
           >
-            <button onClick={closeModal} className="dks">
+            <button onClick={selectModalClose} className="dks">
               X
             </button>
-            <FormCss onSubmit={handleSubmit(onSubmit)}>
+            <FormCss onSubmit={handleSubmit(seletSubmit)}>
+              {plan.map((v, i) => {
+                return (
+                  <>
+                    <div className="myBook" key={v.id}>
+                      <button
+                        onClick={() => {
+                          setSelectData(v);
+                        }}
+                      >
+                        <div className="he" key={v.id}>
+                          <div className="df">{v.biName}</div>
+                        </div>
+                      </button>
+                    </div>
+                  </>
+                );
+              })}
               <div className="header">
-                <h2>{modalData.biName}</h2>
-                <img src={modalData.bimgUri} alt="" />
+                <h2>{selectData.biName}</h2>
               </div>
               <ul>
                 <li className="dateWrap">
                   <span className="dateHead">시작 날</span>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Basic example"
-                      value={start}
-                      onChange={(newValue) => {
-                        setStart(newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </LocalizationProvider>
+                  <span>{setSelectStart}</span>
                   <span className="dateHead">마지막 날</span>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Basic example"
-                      value={end}
-                      onChange={(newValue) => {
-                        setEnd(newValue);
-                        console.log("안녕", newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </LocalizationProvider>
+                  <span>{setSelectEnd}</span>
                 </li>
                 <li className="descWrap">
                   <label>기록란</label>
@@ -131,4 +129,4 @@ const MyCalendarModal = ({
   );
 };
 
-export default MyCalendarModal;
+export default MySeleteModal;
