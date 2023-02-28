@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "reducer/store";
 import ListBookCss from "components/myCalendar/listBook/style/ListBookCss";
@@ -6,6 +6,8 @@ import instance from "api/instance";
 import request from "api/request";
 import CompleteCss from "./style/CompleteCss";
 import axios from "axios";
+import EditRating from "./edit/EditRating";
+import EditReview from "./edit/EditReview";
 
 interface IBookList {
   id: number;
@@ -23,9 +25,11 @@ interface IArticle {
   content: string;
   comment: string;
   score: number;
+  ocSeq: number;
 }
 
 const Complete = () => {
+  const [alarm, setAlarm] = useState(false);
   const uiSeq = useSelector((state: RootState) => state.user.uiSeq);
   const [bookList, setBookList] = useState<IBookList[]>([]);
   const [biSeq, setBiSeq] = useState<number | null>(null);
@@ -45,13 +49,13 @@ const Complete = () => {
     completeBooks();
   }, []);
 
-  const myArticle = (biIsbn: number, biSeq: number, biName: string) => {
+  const myArticle = async (biIsbn: number, biSeq: number, biName: string) => {
     setBiName(biName);
     const params = {
       uiSeq: uiSeq,
       isbn: biIsbn,
     };
-    instance.get(request.article, { params: params }).then((res) => {
+    await instance.get(request.article, { params: params }).then((res) => {
       setArticle(res.data);
       setBiSeq(biSeq);
     });
@@ -87,6 +91,8 @@ const Complete = () => {
     alert("감상평을 등록하였습니다.");
   };
 
+  const [editTitle, setEditTitle] = useState<string>();
+
   const addArticle = () => {
     if (contentTitle === "") return alert("독후감 제목을 입력해주세요.");
     if (content === "") return alert("독후감 내용을 입력해주세요.");
@@ -107,6 +113,17 @@ const Complete = () => {
       },
     }).then((res) => console.log(res));
     alert("독후감을 등록하였습니다.");
+  };
+
+  //수정 기능
+  const [canEditRa, setCanEditRa] = useState<boolean>(false);
+  const [canEditRe, setCanEditRe] = useState<boolean>(false);
+  const editBookRa = () => {
+    setCanEditRa(true);
+  };
+
+  const editBookRe = () => {
+    setCanEditRe(true);
   };
 
   return (
@@ -149,16 +166,28 @@ const Complete = () => {
           <div className="bookForm">
             <span className="formName">나의 감상평</span>
             {article.comment ? (
-              <>
-                <div className="bookRating">
-                  <div className="ratingBox">
-                    <p>{article.comment}</p>
+              canEditRa ? (
+                <EditRating
+                  setCanEditRa={setCanEditRa}
+                  comment={article.comment}
+                  uiSeq={uiSeq}
+                  ocSeq={article.ocSeq}
+                  alarm={alarm}
+                  setAlarm={setAlarm}
+                  myArticle={myArticle}
+                />
+              ) : (
+                <>
+                  <div className="bookRating">
+                    <div className="ratingBox">
+                      <p>{article.comment}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="button">
-                  <button>수정</button>
-                </div>
-              </>
+                  <div className="button">
+                    <button onClick={editBookRa}>수정</button>
+                  </div>
+                </>
+              )
             ) : (
               <div className="bookRating">
                 <form>
@@ -178,17 +207,25 @@ const Complete = () => {
             )}
             <span className="formName">나의 독후감</span>
             {article.content ? (
-              <>
-                <div className="bookReview">
-                  <div className="reviewBox">
-                    <p className="reviewTitle">- {article.title} -</p>
-                    <p className="reviewContent">{article.content}</p>
+              canEditRe ? (
+                <EditReview
+                  setCanEditRe={setCanEditRe}
+                  title={article.title}
+                  content={article.content}
+                />
+              ) : (
+                <>
+                  <div className="bookReview">
+                    <div className="reviewBox">
+                      <p className="reviewTitle">- {article.title} -</p>
+                      <p className="reviewContent">{article.content}</p>
+                    </div>
+                    <div className="button">
+                      <button onClick={editBookRe}>수정</button>
+                    </div>
                   </div>
-                  <div className="button">
-                    <button>수정</button>
-                  </div>
-                </div>
-              </>
+                </>
+              )
             ) : (
               <div className="bookReview">
                 <form>
@@ -197,6 +234,7 @@ const Complete = () => {
                     rows={1}
                     placeholder="독후감의 제목을 적어주세요."
                     onChange={articleTitle}
+                    value={editTitle}
                   />
                   <textarea
                     cols={80}
