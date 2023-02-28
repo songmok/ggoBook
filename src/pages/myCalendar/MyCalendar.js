@@ -14,6 +14,7 @@ import MyCalendarSchedule from "components/myCalendar/listBook/MyCalendarSchedul
 import MyCalendarModal from "components/myCalendar/myCalendarModal/MyCalendarModal";
 import ListBook from "components/myCalendar/listBook/ListBook";
 import MySeleteModal from "components/myCalendar/listBook/MySeleteModal";
+import moment from "moment";
 
 const MyCalendar = () => {
   // States
@@ -47,7 +48,17 @@ const MyCalendar = () => {
         params: user,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log("addDate", res.data);
+        // res.data.end += "T23:59:00";
+        for (let temp of res.data) {
+          let tomorrow = new Date(temp.end);
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          // console.log(tomorrow);
+          temp.end = moment(tomorrow).format("YYYY-MM-DD");
+          // console.log(temp.end);
+          console.log("df", temp);
+        }
+
         setEvnet(res.data);
       })
       .catch((err) => {
@@ -89,7 +100,7 @@ const MyCalendar = () => {
     };
     await instance.get(request.myCalendar, { params: params }).then((res) => {
       setIng(res.data);
-      console.log("일정리스트", res.data);
+      console.log("서버에서 불러옴 일정리스트", res.data);
     });
   };
   useEffect(() => {
@@ -155,7 +166,7 @@ const MyCalendar = () => {
         selectStart={selectStart}
         selectEnd={selectEnd}
       />
-      <div clselectStartssName="fullcalendarWrap">
+      <div className="fullcalendarWrap">
         {uiSeq ? (
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -174,6 +185,12 @@ const MyCalendar = () => {
             select={(data) => {
               selectModalOpen(true);
               setSelectStart(data.startStr);
+              console.log("셀렉트 날짜 끝1", data.endStr);
+              let tomorrow = new Date(data.endStr);
+              tomorrow.setDate(tomorrow.getDate() - 1);
+              console.log("셀렉트 날짜 끝2", tomorrow);
+              data.endStr = moment(tomorrow).format("YYYY-MM-DD");
+              console.log(data.endStr);
               setSelectEnd(data.endStr);
               console.log("datae", data);
             }}
@@ -182,13 +199,13 @@ const MyCalendar = () => {
             weekends={true}
             locale={"ko"}
             eventStartEditable={false}
-            views={{
-              dayGrid: {
-                dayMaxEventRows: 4,
-              },
-            }}
-            height="85vh"
-            withd="85vw"
+            // views={{
+            //   dayGrid: {
+            //     dayMaxEventRows: 4,
+            //   },
+            // }}
+            height={"85vh"}
+            width={"85vw"}
           />
         ) : (
           <div>Loading</div>

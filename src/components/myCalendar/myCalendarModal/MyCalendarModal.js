@@ -6,11 +6,6 @@ import moment from "moment";
 import { FormCss, FormModalCss } from "./style/AppointFormStyles";
 import { Button } from "utils/repeatCss";
 
-import TextField from "@mui/material/TextField";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers";
-
 const MyCalendarModal = ({
   closeModal,
   modalOpen,
@@ -82,28 +77,22 @@ const MyCalendarModal = ({
               <ul>
                 <li className="dateWrap">
                   <span className="dateHead">시작 날</span>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Basic example"
-                      value={start}
-                      onChange={(newValue) => {
-                        setStart(newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </LocalizationProvider>
+                  <DatePicker
+                    onChange={setStart}
+                    value={start}
+                    format="y-MM-d"
+                  />
                   <span className="dateHead">마지막 날</span>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label="Basic example"
-                      value={end}
-                      onChange={(newValue) => {
-                        setEnd(newValue);
-                        console.log("안녕", newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </LocalizationProvider>
+
+                  <DatePicker
+                    onChange={(e) => {
+                      let tomo = new Date(e);
+                      e = moment(tomo).format("YYYY-MM-DD");
+                      let dates = new Date(e);
+                      setEnd(dates);
+                    }}
+                    value={end}
+                  />
                 </li>
                 <li className="descWrap">
                   <label>기록란</label>
