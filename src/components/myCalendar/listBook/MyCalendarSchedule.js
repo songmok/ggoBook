@@ -22,7 +22,16 @@ const MyCalendarSchedule = ({ ing, openForm, setModalData }) => {
   return (
     <>
       {ing.status === "성공" ? (
-        ""
+        <>
+          <ListBookCss>
+            <div className="bookList scheduleList">
+              <div className="header">
+                <h3>일정 리스트</h3>
+              </div>
+              <ul className="bookGnb"></ul>
+            </div>
+          </ListBookCss>
+        </>
       ) : (
         <>
           <ListBookCss>
