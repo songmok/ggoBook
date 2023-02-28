@@ -12,7 +12,6 @@ const BookDetailCss = styled.section`
     padding: 2px;
     display: flex;
     flex-direction: column;
-    
     .bookInfo {
       display: flex;
       flex-direction: column;
@@ -64,6 +63,8 @@ const BookDetailCss = styled.section`
     }
   }
   .bookRight {
+    width: 600px;
+    padding: 2px;
   }
 `;
 
