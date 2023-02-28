@@ -17,6 +17,7 @@ const request = {
   listComplete: "/api/mybook/status",
   article: "/api/user/article",
   addComment: "/api/onecomment/add",
+  articleBook: "/api/article/book",
 };
 
 export default request;
