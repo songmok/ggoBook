@@ -1,9 +1,15 @@
 import DatePicker from "react-date-picker";
 import Modal from "react-modal";
 import axios from "axios";
+import moment from "moment";
 
 import { FormCss, FormModalCss } from "./style/AppointFormStyles";
 import { Button } from "utils/repeatCss";
+
+import TextField from "@mui/material/TextField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers";
 
 const MyCalendarModal = ({
   closeModal,
@@ -50,7 +56,6 @@ const MyCalendarModal = ({
         console.log(err);
         closeModal();
       });
-
     setStart(new Date());
     setEnd(new Date());
     closeModal();
@@ -77,17 +82,27 @@ const MyCalendarModal = ({
               <ul>
                 <li className="dateWrap">
                   <span className="dateHead">시작 날</span>
-                  <DatePicker
-                    onChange={setStart}
-                    value={start}
-                    dateFormat={"yy-MM-dd"}
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateTimePicker
+                      label="Date&Time picker"
+                      value={start}
+                      onChange={(e) => {
+                        setStart(e);
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
                   <span className="dateHead">마지막 날</span>
-                  <DatePicker
-                    onChange={setEnd}
-                    value={end}
-                    dateFormat={"yy-MM-dd"}
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateTimePicker
+                      label="Date&Time picker"
+                      value={end}
+                      onChange={(e) => {
+                        setEnd(e);
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
                 </li>
                 <li className="descWrap">
                   <label>기록란</label>
