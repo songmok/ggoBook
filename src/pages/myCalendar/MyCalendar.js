@@ -13,11 +13,13 @@ import MyCalendarSchedule from "components/myCalendar/listBook/MyCalendarSchedul
 
 import MyCalendarModal from "components/myCalendar/myCalendarModal/MyCalendarModal";
 import ListBook from "components/myCalendar/listBook/ListBook";
+import MySeleteModal from "components/myCalendar/listBook/MySeleteModal";
 
 const MyCalendar = () => {
   // States
   // 모달
   const [modalOpen, setModalOpen] = useState(false);
+  const [slecteModal, setSlecteModal] = useState(false);
   // const [selectedModal, setSelectedModal] = useState("");
   // 이벤트
   const [event, setEvnet] = useState([]);
@@ -31,6 +33,8 @@ const MyCalendar = () => {
   // date start end
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
+  const [selectStart, setSelectStart] = useState(new Date());
+  const [selectEnd, setSelectEnd] = useState(new Date());
   // useForm handler
   const { register, handleSubmit } = useForm();
   // 일정추가
@@ -69,7 +73,6 @@ const MyCalendar = () => {
     }
   };
 
-  // onSubmit Function
   // booklist
   const listPlan = async () => {
     const params = {
@@ -86,7 +89,7 @@ const MyCalendar = () => {
     };
     await instance.get(request.myCalendar, { params: params }).then((res) => {
       setIng(res.data);
-      console.log(res.data);
+      console.log("일정리스트", res.data);
     });
   };
   useEffect(() => {
@@ -95,6 +98,7 @@ const MyCalendar = () => {
     listIng();
   }, []);
 
+  //
   const openForm = () => {
     // setSelectedModal(true);
     openModal();
@@ -102,12 +106,18 @@ const MyCalendar = () => {
   const openModal = () => {
     setModalOpen(true);
   };
-
   // Close Modal Function
   const closeModal = () => {
     setModalOpen(false);
   };
 
+  // select modal
+  const selectModalOpen = () => {
+    setSlecteModal(true);
+  };
+  const selectModalClose = () => {
+    setSlecteModal(false);
+  };
   return (
     <MyCalendarCss>
       <ListBook plan={plan} openForm={openForm} setModalData={setModalData} />
@@ -129,8 +139,23 @@ const MyCalendar = () => {
         handleSubmit={handleSubmit}
         register={register}
         uiSeq={uiSeq}
+        listIng={listIng}
       />
-      <div className="fullcalendarWrap">
+      <MySeleteModal
+        uiSeq={uiSeq}
+        setSelectStart={setSelectStart}
+        setSelectEnd={setSelectEnd}
+        plan={plan}
+        slecteModal={slecteModal}
+        handleSubmit={handleSubmit}
+        register={register}
+        selectModalOpen={selectModalOpen}
+        selectModalClose={selectModalClose}
+        listIng={listIng}
+        selectStart={selectStart}
+        selectEnd={selectEnd}
+      />
+      <div clselectStartssName="fullcalendarWrap">
         {uiSeq ? (
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -145,18 +170,25 @@ const MyCalendar = () => {
             allDaySlot={false}
             defaultAllDay={false}
             editable={true}
-            selectable={false}
+            selectable={true}
+            select={(data) => {
+              selectModalOpen(true);
+              setSelectStart(data.startStr);
+              setSelectEnd(data.endStr);
+              console.log("datae", data);
+            }}
             selectMirror={false}
             displayEventTime={false}
             weekends={true}
             locale={"ko"}
+            eventStartEditable={false}
             views={{
               dayGrid: {
                 dayMaxEventRows: 4,
               },
             }}
-            height="80vh"
-            withd="80vw"
+            height="85vh"
+            withd="85vw"
           />
         ) : (
           <div>Loading</div>

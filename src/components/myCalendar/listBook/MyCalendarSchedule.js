@@ -4,7 +4,7 @@ import { Button } from "utils/repeatCss";
 import ListBookCss from "./style/ListBookCss";
 
 const MyCalendarSchedule = ({ ing, openForm, setModalData }) => {
-  console.log(ing);
+  console.log("일정리스트" + ing);
   const deleteEvnet = (e) => {
     const sch = {
       id: e,
