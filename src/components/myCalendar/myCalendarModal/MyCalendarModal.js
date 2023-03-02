@@ -5,6 +5,9 @@ import moment from "moment";
 
 import { FormCss, FormModalCss } from "./style/AppointFormStyles";
 import { Button } from "utils/repeatCss";
+import { useCallback, useState } from "react";
+import instance from "api/instance";
+import request from "api/request";
 
 const MyCalendarModal = ({
   closeModal,
@@ -17,6 +20,9 @@ const MyCalendarModal = ({
   handleSubmit,
   register,
   uiSeq,
+  ing,
+  listIng,
+  event,
 }) => {
   const customModalStyles = {
     content: {
@@ -33,7 +39,7 @@ const MyCalendarModal = ({
   };
 
   // Open Modal Function
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const appointmentInfo = {
       ...data,
       biSeq: modalData.biSeq,
@@ -41,11 +47,12 @@ const MyCalendarModal = ({
       end: end,
       uiSeq: uiSeq,
     };
-    axios
-      .post("http://192.168.0.160:8520/api/schedule/add", appointmentInfo)
+    await instance
+      .post(request.scheduleAdd, appointmentInfo)
       .then((res) => {
         console.log(res.data);
         console.log(appointmentInfo);
+        listIng();
       })
       .catch((err) => {
         console.log(err);
@@ -55,7 +62,9 @@ const MyCalendarModal = ({
     setEnd(new Date());
     closeModal();
   };
-  console.log(modalData);
+  // update list
+
+
   return (
     <>
       <FormModalCss>

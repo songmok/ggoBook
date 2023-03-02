@@ -16,6 +16,7 @@ const Header = () => {
   const location = useLocation();
   if (location.pathname === "/login") return null;
   if (location.pathname === "/signup") return null;
+  
   return (
     <HeaderCss>
       <div>
