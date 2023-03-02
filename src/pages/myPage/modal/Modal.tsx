@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IUserData } from "../MyPage";
 
-interface Props {
+interface IProps {
   closeModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
   alarm: () => void;
   userInfo: IUserData | null;
@@ -19,7 +19,7 @@ interface Props {
   imageURL: string;
 }
 
-const Modal = (props: Props) => {
+const Modal = (props: IProps) => {
   const navigate = useNavigate();
   const [imgFile, setImgFile] = useState<any>(null);
   const [editName, setEditName] = useState<string>("");
@@ -55,7 +55,7 @@ const Modal = (props: Props) => {
         navigate("/signup");
       });
     } else {
-      alert("취소 ㅋ");
+      alert("취소되었습니다.");
     }
   };
 

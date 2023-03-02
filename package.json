@@ -16,6 +16,7 @@
     "@fullcalendar/timegrid": "^6.1.4",
     "@fullpage/react-fullpage": "^0.1.31",
     "@hookform/resolvers": "^2.9.11",
+    "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.10",
     "@mui/x-date-pickers": "^5.0.20",
     "@reduxjs/toolkit": "^1.9.1",
