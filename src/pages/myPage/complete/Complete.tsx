@@ -8,6 +8,9 @@ import CompleteCss from "./style/CompleteCss";
 import axios from "axios";
 import EditRating from "./edit/EditRating";
 import EditReview from "./edit/EditReview";
+import Rating from "@mui/material/Rating";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 interface IBookList {
   id: number;
@@ -26,15 +29,22 @@ interface IArticle {
   comment: string;
   score: number;
   ocSeq: number;
+  aiSeq: number;
+}
+
+interface IForArticle {
+  biIsbn: number;
+  biSeq: number;
+  biName: string;
 }
 
 const Complete = () => {
-  const [alarm, setAlarm] = useState(false);
   const uiSeq = useSelector((state: RootState) => state.user.uiSeq);
   const [bookList, setBookList] = useState<IBookList[]>([]);
   const [biSeq, setBiSeq] = useState<number | null>(null);
   const [article, setArticle] = useState<IArticle | null>(null);
   const [biName, setBiName] = useState<string>("");
+  const [forArticle, setForArticle] = useState<IForArticle | null>();
 
   const completeBooks = async () => {
     const params = {
@@ -50,6 +60,12 @@ const Complete = () => {
   }, []);
 
   const myArticle = async (biIsbn: number, biSeq: number, biName: string) => {
+    if (biIsbn === undefined) return;
+    setForArticle({
+      biIsbn: biIsbn,
+      biSeq: biSeq,
+      biName: biName,
+    });
     setBiName(biName);
     const params = {
       uiSeq: uiSeq,
@@ -83,15 +99,13 @@ const Complete = () => {
       uiSeq: uiSeq,
       biSeq: biSeq,
       content: comment,
-      score: 3,
+      score: value,
     };
     instance
       .post(request.addComment, data)
       .then((res) => console.log(res.data));
     alert("감상평을 등록하였습니다.");
   };
-
-  const [editTitle, setEditTitle] = useState<string>();
 
   const addArticle = () => {
     if (contentTitle === "") return alert("독후감 제목을 입력해주세요.");
@@ -125,6 +139,19 @@ const Complete = () => {
   const editBookRe = () => {
     setCanEditRe(true);
   };
+
+  // 별점 기능
+  const [value, setValue] = useState<number | null>(0);
+
+  const [change, setChange] = useState<boolean>(true);
+  const alarm = () => {
+    setChange(!change);
+  };
+
+  useEffect(() => {
+    forArticle &&
+      myArticle(forArticle?.biIsbn, forArticle?.biSeq, forArticle?.biName);
+  }, [change]);
 
   return (
     <CompleteCss>
@@ -172,13 +199,22 @@ const Complete = () => {
                   comment={article.comment}
                   uiSeq={uiSeq}
                   ocSeq={article.ocSeq}
-                  alarm={alarm}
-                  setAlarm={setAlarm}
                   myArticle={myArticle}
+                  value={article.score}
+                  alarm={alarm}
                 />
               ) : (
                 <>
                   <div className="bookRating">
+                    <div className="heart">
+                      <Rating
+                        name="read-only"
+                        value={article.score}
+                        readOnly
+                        icon={<FavoriteIcon fontSize="inherit" />}
+                        emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                      />
+                    </div>
                     <div className="ratingBox">
                       <p>{article.comment}</p>
                     </div>
@@ -191,6 +227,17 @@ const Complete = () => {
             ) : (
               <div className="bookRating">
                 <form>
+                  <div className="heart">
+                    <Rating
+                      name="simple-controlled"
+                      value={value}
+                      icon={<FavoriteIcon fontSize="inherit" />}
+                      emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                      onChange={(event, newValue) => {
+                        setValue(newValue);
+                      }}
+                    />
+                  </div>
                   <textarea
                     cols={80}
                     placeholder="감상평을 남겨주세요. 이 책에 대한 욕설 및 인신공격성 글은 평점 페이지에서 노출 제외처리됩니다."
@@ -212,6 +259,8 @@ const Complete = () => {
                   setCanEditRe={setCanEditRe}
                   title={article.title}
                   content={article.content}
+                  aiSeq={article.aiSeq}
+                  alarm={alarm}
                 />
               ) : (
                 <>
@@ -234,7 +283,6 @@ const Complete = () => {
                     rows={1}
                     placeholder="독후감의 제목을 적어주세요."
                     onChange={articleTitle}
-                    value={editTitle}
                   />
                   <textarea
                     cols={80}

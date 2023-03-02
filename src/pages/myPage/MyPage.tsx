@@ -57,6 +57,7 @@ const MyPage = () => {
   const alarm = () => {
     setChange(!change);
   };
+  
   // const logout = () => {
   //   axios({
   //     method: "post",
@@ -108,7 +109,7 @@ const MyPage = () => {
       dispatch(logoutUser());
       navigate("/login");
     } else {
-      alert("취소 ㅋ");
+      alert("취소되었습니다.");
     }
   };
 
@@ -117,7 +118,7 @@ const MyPage = () => {
       dispatch(logoutUser());
       document.location.href = KAKAO_LOGOUT;
     } else {
-      alert("취소 ㅋ");
+      alert("취소되었습니다.");
     }
   };
 
@@ -136,22 +137,6 @@ const MyPage = () => {
         dispatch(logoutUser());
         navigate("/login");
       });
-    }
-  };
-
-  const LogoutType = () => {
-    if (type === "kakao") {
-      <button className="profileBt" onClick={kakaoLogout}>
-        카카오 로그아웃
-      </button>;
-    } else if (type === "naver") {
-      <button className="profileBt" onClick={logout}>
-        네이버 로그아웃
-      </button>;
-    } else {
-      <button className="profileBt" onClick={logout}>
-        로그아웃
-      </button>;
     }
   };
 

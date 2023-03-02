@@ -9,6 +9,9 @@ const BookRatingCss = styled.section`
     background: white;
     margin: 20px 0;
     border-bottom: 1px solid;
+    & .MuiRating-iconFilled {
+      color: #bb6569;
+    }
     .ratingContent {
       font-size: 14px;
       margin: 5px 0;
