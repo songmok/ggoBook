@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const RankUser = ({ rankuser }) => {
+const RankUser = ({ users }) => {
   return (
     <>
-      {rankuser.map((v, i) => {
+      {users.map((ele, idx) => {
         return (
-          <li key={i}>
-            <span>{v.name}</span>
-            <span>{v.dd}</span>
-            <span>{v.pag}</span>
-            <span>{v.pit}</span>
+          <li key={idx}>
+            <span>{ele.rank}</span>
+            <span>{ele.userName}</span>
+            <span>{ele.totalPage}</span>
+            <span>{ele.totalPoint}</span>
           </li>
         );
       })}
