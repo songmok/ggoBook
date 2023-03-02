@@ -1,45 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-import { TTBKey } from "OAuth";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const BookSearch = ({ setSearchResult }) => {
+const BookSearch = ({ setSearchResult, keyword, setSearchParams }) => {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   const enterKey = (e) => {
     if (search === "" && e.key === "Enter") {
       alert("검색어를 입력해주세요.");
     } else if (search !== "" && e.key === "Enter") {
-      axios({
-        method: "get",
-        url: "aladin/ttb/api/ItemSearch.aspx",
-        params: {
-          TTBKey: TTBKey,
-          Query: search,
-          MaxResults: 30,
-          Output: "JS",
-          Version: "20131101",
-          Cover: "Big",
-        },
-      }).then((res) => setSearchResult(res.data.item));
+      navigate(`?keyword=${search}`);
     }
   };
 
-  const clickBtn = (e) => {
+  const clickBtn = async () => {
     if (search !== "") {
-      axios({
-        method: "get",
-        url: "aladin/ttb/api/ItemSearch.aspx",
-        params: {
-          TTBKey: TTBKey,
-          Query: search,
-          MaxResults: 30,
-          Output: "JS",
-          Version: "20131101",
-          Cover: "Big",
-        },
-      }).then((res) => setSearchResult(res.data.item));
+      navigate(`?keyword=${search}`);
     } else {
       alert("검색어를 입력해주세요.");
     }
@@ -55,7 +33,6 @@ const BookSearch = ({ setSearchResult }) => {
           onChange={(e) => {
             setSearch(e.target.value);
           }}
-          value={search}
           onKeyDown={enterKey}
         />
         <button type="submit" className="searchButton" onClick={clickBtn}>

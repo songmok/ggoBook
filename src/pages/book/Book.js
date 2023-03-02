@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import BookList from "components/book/BookList";
 import BookSearch from "components/book/BookSearch";
 import BookCss from "./style/BookCss";
+import { useSearchParams } from "react-router-dom";
 
 const Book = () => {
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const keyword = searchParams.get("keyword");
+
   return (
     <>
       <BookCss>
-        <BookSearch setSearchResult={setSearchResult} />
-        <BookList searchResult={searchResult} />
+        <BookSearch keyword={keyword} setSeratchParams={setSearchParams} />
+        {keyword === null ? (
+          <div className="noneKeyword">검색어를 입력해주세요</div>
+        ) : (
+          <BookList />
+        )}
       </BookCss>
     </>
   );

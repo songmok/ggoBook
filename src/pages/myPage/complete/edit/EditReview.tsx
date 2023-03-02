@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "reducer/store";
+import { Button } from "utils/repeatCss";
 
 interface IEditRe {
   setCanEditRe: React.Dispatch<React.SetStateAction<boolean>>;
@@ -60,14 +61,14 @@ const EditReview = (props: IEditRe) => {
           onChange={contentText}
         />
       </form>
-      <div className="button">
+      <Button className="button">
         <button type="button" onClick={() => props.setCanEditRe(false)}>
           취소
         </button>
         <button type="button" onClick={editArticle}>
           완료
         </button>
-      </div>
+      </Button>
     </div>
   );
 };

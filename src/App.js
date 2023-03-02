@@ -30,7 +30,7 @@ function App() {
               <Route path="/event" element={<Event />} />
               <Route path="/myPage" element={<MyPage />} />
               <Route path="/complete" element={<Complete />} />
-              <Route path="/rank/:RANK" element={<Rank />} />
+              <Route path="/rank" element={<Rank />} />
               <Route path="/book" element={<Book />} />
               <Route path="/bookdetail/:ISBN" element={<BookDetail />} />
               <Route path="*" element={<NotFound />} />

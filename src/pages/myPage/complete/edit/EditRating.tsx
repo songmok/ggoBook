@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Button } from "utils/repeatCss";
 
 interface IEditRa {
   setCanEditRa: React.Dispatch<React.SetStateAction<boolean>>;
@@ -56,14 +57,14 @@ const EditRating = (props: IEditRa) => {
         </div>
         <textarea cols={80} rows={4} value={editText} onChange={commentText} />
       </form>
-      <div className="button">
+      <Button className="button">
         <button type="button" onClick={() => props.setCanEditRa(false)}>
           취소
         </button>
         <button type="button" onClick={editComment}>
           완료
         </button>
-      </div>
+      </Button>
     </div>
   );
 };
