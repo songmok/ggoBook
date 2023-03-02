@@ -22,6 +22,7 @@ const MyCalendar = () => {
   // 모달
   const [modalOpen, setModalOpen] = useState(false);
   const [slecteModal, setSlecteModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
   // const [selectedModal, setSelectedModal] = useState("");
   // 이벤트
   const [event, setEvent] = useState([]);
@@ -52,7 +53,9 @@ const MyCalendar = () => {
       })
       .then((res) => {
         console.log("addDate", res.data);
-        // res.data.end += "T23:59:00";
+        if (res.data.message === "데이터 없음") {
+          res.data = [];
+        }
         for (let temp of res.data) {
           let tomorrow = new Date(temp.end);
           tomorrow.setDate(tomorrow.getDate() + 1);
@@ -62,7 +65,7 @@ const MyCalendar = () => {
           console.log("df", temp);
         }
         setEvent(res.data);
-        listIng();
+        // listIng();
       })
       .catch((err) => {
         console.log(err);
@@ -80,7 +83,7 @@ const MyCalendar = () => {
           },
         })
         .then((res) => {
-          console.log(res);
+          console.log("삭제될까?", res);
         })
         .catch((err) => {
           console.log(err);
@@ -97,6 +100,7 @@ const MyCalendar = () => {
       setPlan(res.data.mybookList);
     });
   };
+
   const listIng = async () => {
     const params = {
       uiSeq: uiSeq,
@@ -104,6 +108,7 @@ const MyCalendar = () => {
     await instance.get(request.myCalendar, { params: params }).then((res) => {
       setIng(res.data);
       console.log("서버에서 불러옴 일정리스트", res.data);
+      addListEvent();
     });
   };
 
@@ -112,11 +117,12 @@ const MyCalendar = () => {
     listPlan();
     listIng();
   }, []);
+
   const rendercalendar = () => {
     addListEvent();
   };
 
-  //
+  // modal api
   const openForm = () => {
     // setSelectedModal(true);
     openModal();
@@ -136,19 +142,13 @@ const MyCalendar = () => {
   const selectModalClose = () => {
     setSlecteModal(false);
   };
-  function handleDateSelect(data) {
-    console.log(data.view.type);
-    if (data.view.type === "dayGridMonth" || data.view.type === "timeGridDay") {
-      selectModalOpen(true);
-      setSelectStart(data.startStr);
-      let tomorrow = new Date(data.endStr);
-      tomorrow.setDate(tomorrow.getDate() - 1);
-      data.endStr = moment(tomorrow).format("YYYY-MM-DD");
-      console.log(data.endStr);
-      setSelectEnd(data.endStr);
-      console.log("datae", data);
-    }
-  }
+  //update modal
+  const updateModalOpen = () => {
+    setUpdateModal(true);
+  };
+  const updateModalClose = () => {
+    setUpdateModal(false);
+  };
 
   return (
     <MyCalendarCss>
@@ -157,10 +157,10 @@ const MyCalendar = () => {
         ing={ing}
         openForm={openForm}
         setModalData={setModalData}
-        start={start}
-        end={end}
         setIng={setIng}
         deleteEvnet={deleteEvnet}
+        updateModalOpen={updateModalOpen}
+        addListEvent={addListEvent}
       />
       <MyCalendarModal
         modalData={modalData}
@@ -191,6 +191,8 @@ const MyCalendar = () => {
         selectEnd={selectEnd}
       />
       <MyCalendarUpdate
+        ing={ing}
+        updateModal={updateModal}
         modalData={modalData}
         start={start}
         setStart={setStart}
@@ -200,6 +202,8 @@ const MyCalendar = () => {
         register={register}
         uiSeq={uiSeq}
         listIng={listIng}
+        updateModalOpen={updateModalOpen}
+        updateModalClose={updateModalClose}
       />
       <div className="fullcalendarWrap">
         {uiSeq ? (
@@ -212,12 +216,22 @@ const MyCalendar = () => {
             eventClick={deleteEvnet}
             initialView="dayGridMonth"
             events={event}
+            updateModalClose={updateModalClose}
             droppable={false}
             allDaySlot={false}
             defaultAllDay={false}
             editable={true}
             selectable={true}
-            select={handleDateSelect}
+            select={(data) => {
+              selectModalOpen(true);
+              setSelectStart(data.startStr);
+              let tomorrow = new Date(data.endStr);
+              tomorrow.setDate(tomorrow.getDate() - 1);
+              data.endStr = moment(tomorrow).format("YYYY-MM-DD");
+              console.log(data.endStr);
+              setSelectEnd(data.endStr);
+              console.log("datae", data);
+            }}
             selectMirror={false}
             displayEventTime={false}
             weekends={true}

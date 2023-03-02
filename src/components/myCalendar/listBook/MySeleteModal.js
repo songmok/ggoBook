@@ -36,7 +36,7 @@ const MySeleteModal = ({
     },
     overlay: { zIndex: 1000 },
   };
-  const seletSubmit = (data) => {
+  const selectSubmit = (data) => {
     const appointmentInfo = {
       ...data,
       biSeq: selectData.biSeq,
@@ -76,7 +76,7 @@ const MySeleteModal = ({
             <button onClick={selectModalClose} className="dks">
               X
             </button>
-            <FormCss onSubmit={handleSubmit(seletSubmit)}>
+            <FormCss onSubmit={handleSubmit(selectSubmit)}>
               {plan.map((v, i) => {
                 return (
                   <>
