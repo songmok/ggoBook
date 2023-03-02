@@ -5,6 +5,7 @@ import { addButton, myScheduleBtn } from "utils/repeatCss";
 const ListBookCss = styled.article`
   display: flex;
   position: relative;
+
   .scheduleList {
     margin-left: 20px;
   }
@@ -14,6 +15,12 @@ const ListBookCss = styled.article`
     height: 50vw;
     flex-direction: column;
     background: #eaf9ff;
+    @media ${(props) => props.theme.mob} {
+      flex-direction: none;
+      width: 70vw;
+      height: 20vw;
+      flex-direction: row;
+    }
     .header {
       height: 50px;
       background-color: #fefefe;
@@ -30,6 +37,10 @@ const ListBookCss = styled.article`
       width: 100%;
       height: 100%;
       overflow-y: scroll;
+      @media ${(props) => props.theme.mob} {
+        overflow: hidden;
+        overflow-x: scroll;
+      }
       .bookInfo {
         display: flex;
         width: 100%;

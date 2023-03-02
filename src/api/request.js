@@ -19,6 +19,8 @@ const request = {
   addComment: "/api/onecomment/add",
   articleBook: "/api/article/book",
   commentUpdate: "/api/onecomment/update",
+  scheduleUpdate: "/api/schedule/update",
+  scheduleAdd: "/api/schedule/add",
 };
 
 export default request;
