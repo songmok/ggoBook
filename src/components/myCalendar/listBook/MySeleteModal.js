@@ -55,6 +55,7 @@ const MySeleteModal = ({
         console.log(err);
         selectModalClose();
       });
+    listIng();
     setSelectStart(new Date());
     setSelectEnd(new Date());
     selectModalClose();

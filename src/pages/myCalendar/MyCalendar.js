@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Component, useCallback, useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -15,6 +15,7 @@ import MyCalendarModal from "components/myCalendar/myCalendarModal/MyCalendarMod
 import ListBook from "components/myCalendar/listBook/ListBook";
 import MySeleteModal from "components/myCalendar/listBook/MySeleteModal";
 import moment from "moment";
+import MyCalendarUpdate from "components/myCalendar/MyCalendarUpdate/MyCalendarUpdate";
 
 const MyCalendar = () => {
   // States
@@ -23,7 +24,7 @@ const MyCalendar = () => {
   const [slecteModal, setSlecteModal] = useState(false);
   // const [selectedModal, setSelectedModal] = useState("");
   // 이벤트
-  const [event, setEvnet] = useState([]);
+  const [event, setEvent] = useState([]);
   // 리스트
   const [plan, setPlan] = useState([]);
   const [ing, setIng] = useState([]);
@@ -38,8 +39,10 @@ const MyCalendar = () => {
   const [selectEnd, setSelectEnd] = useState(new Date());
   // useForm handler
   const { register, handleSubmit } = useForm();
+  const [update, setUpdate] = useState();
   // 일정추가
-  const addEvent = async () => {
+
+  const addListEvent = async () => {
     let user = {
       uiSeq: uiSeq,
     };
@@ -58,13 +61,14 @@ const MyCalendar = () => {
           // console.log(temp.end);
           console.log("df", temp);
         }
-
-        setEvnet(res.data);
+        setEvent(res.data);
+        listIng();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   // 캘린더에서 삭제
   const deleteEvnet = (e) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -83,7 +87,6 @@ const MyCalendar = () => {
         });
     }
   };
-
   // booklist
   const listPlan = async () => {
     const params = {
@@ -103,11 +106,15 @@ const MyCalendar = () => {
       console.log("서버에서 불러옴 일정리스트", res.data);
     });
   };
+
   useEffect(() => {
-    addEvent();
+    addListEvent();
     listPlan();
     listIng();
   }, []);
+  const rendercalendar = () => {
+    addListEvent();
+  };
 
   //
   const openForm = () => {
@@ -129,6 +136,20 @@ const MyCalendar = () => {
   const selectModalClose = () => {
     setSlecteModal(false);
   };
+  function handleDateSelect(data) {
+    console.log(data.view.type);
+    if (data.view.type === "dayGridMonth" || data.view.type === "timeGridDay") {
+      selectModalOpen(true);
+      setSelectStart(data.startStr);
+      let tomorrow = new Date(data.endStr);
+      tomorrow.setDate(tomorrow.getDate() - 1);
+      data.endStr = moment(tomorrow).format("YYYY-MM-DD");
+      console.log(data.endStr);
+      setSelectEnd(data.endStr);
+      console.log("datae", data);
+    }
+  }
+
   return (
     <MyCalendarCss>
       <ListBook plan={plan} openForm={openForm} setModalData={setModalData} />
@@ -138,6 +159,8 @@ const MyCalendar = () => {
         setModalData={setModalData}
         start={start}
         end={end}
+        setIng={setIng}
+        deleteEvnet={deleteEvnet}
       />
       <MyCalendarModal
         modalData={modalData}
@@ -151,6 +174,7 @@ const MyCalendar = () => {
         register={register}
         uiSeq={uiSeq}
         listIng={listIng}
+        event={event}
       />
       <MySeleteModal
         uiSeq={uiSeq}
@@ -165,6 +189,17 @@ const MyCalendar = () => {
         listIng={listIng}
         selectStart={selectStart}
         selectEnd={selectEnd}
+      />
+      <MyCalendarUpdate
+        modalData={modalData}
+        start={start}
+        setStart={setStart}
+        end={end}
+        setEnd={setEnd}
+        handleSubmit={handleSubmit}
+        register={register}
+        uiSeq={uiSeq}
+        listIng={listIng}
       />
       <div className="fullcalendarWrap">
         {uiSeq ? (
@@ -182,28 +217,12 @@ const MyCalendar = () => {
             defaultAllDay={false}
             editable={true}
             selectable={true}
-            select={(data) => {
-              selectModalOpen(true);
-              setSelectStart(data.startStr);
-              console.log("셀렉트 날짜 끝1", data.endStr);
-              let tomorrow = new Date(data.endStr);
-              tomorrow.setDate(tomorrow.getDate() - 1);
-              console.log("셀렉트 날짜 끝2", tomorrow);
-              data.endStr = moment(tomorrow).format("YYYY-MM-DD");
-              console.log(data.endStr);
-              setSelectEnd(data.endStr);
-              console.log("datae", data);
-            }}
+            select={handleDateSelect}
             selectMirror={false}
             displayEventTime={false}
             weekends={true}
             locale={"ko"}
             eventStartEditable={false}
-            // views={{
-            //   dayGrid: {
-            //     dayMaxEventRows: 4,
-            //   },
-            // }}
             height={"85vh"}
             width={"85vw"}
           />

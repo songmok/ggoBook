@@ -18,6 +18,8 @@ const request = {
   article: "/api/user/article",
   addComment: "/api/onecomment/add",
   articleBook: "/api/article/book",
+  scheduleUpdate: "/api/schedule/update",
+  scheduleAdd: "/api/schedule/add",
 };
 
 export default request;
