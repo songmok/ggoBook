@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "reducer/store";
 import BookRatingCss from "./BookRatingCss";
+import Rating from "@mui/material/Rating";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export interface IProps {
   ISBN: number;
@@ -57,7 +60,14 @@ const BookRating = (props: IProps) => {
           content.map((ele) => {
             return (
               <div className="rating" key={ele.onecommentSeq}>
-                <span>{ele.score}</span>
+                <Rating
+                  name="read-only"
+                  value={ele.score}
+                  readOnly
+                  icon={<FavoriteIcon fontSize="inherit" />}
+                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                />
+
                 <p className="ratingContent">{ele.content}</p>
                 <p className="ratingND">
                   <span>{ele.nickName}님</span>

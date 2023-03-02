@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "reducer/store";
 import ListBookCss from "components/myCalendar/listBook/style/ListBookCss";
@@ -6,6 +6,11 @@ import instance from "api/instance";
 import request from "api/request";
 import CompleteCss from "./style/CompleteCss";
 import axios from "axios";
+import EditRating from "./edit/EditRating";
+import EditReview from "./edit/EditReview";
+import Rating from "@mui/material/Rating";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 interface IBookList {
   id: number;
@@ -23,6 +28,14 @@ interface IArticle {
   content: string;
   comment: string;
   score: number;
+  ocSeq: number;
+  aiSeq: number;
+}
+
+interface IForArticle {
+  biIsbn: number;
+  biSeq: number;
+  biName: string;
 }
 
 const Complete = () => {
@@ -31,6 +44,7 @@ const Complete = () => {
   const [biSeq, setBiSeq] = useState<number | null>(null);
   const [article, setArticle] = useState<IArticle | null>(null);
   const [biName, setBiName] = useState<string>("");
+  const [forArticle, setForArticle] = useState<IForArticle | null>();
 
   const completeBooks = async () => {
     const params = {
@@ -45,13 +59,19 @@ const Complete = () => {
     completeBooks();
   }, []);
 
-  const myArticle = (biIsbn: number, biSeq: number, biName: string) => {
+  const myArticle = async (biIsbn: number, biSeq: number, biName: string) => {
+    if (biIsbn === undefined) return;
+    setForArticle({
+      biIsbn: biIsbn,
+      biSeq: biSeq,
+      biName: biName,
+    });
     setBiName(biName);
     const params = {
       uiSeq: uiSeq,
       isbn: biIsbn,
     };
-    instance.get(request.article, { params: params }).then((res) => {
+    await instance.get(request.article, { params: params }).then((res) => {
       setArticle(res.data);
       setBiSeq(biSeq);
     });
@@ -79,7 +99,7 @@ const Complete = () => {
       uiSeq: uiSeq,
       biSeq: biSeq,
       content: comment,
-      score: 3,
+      score: value,
     };
     instance
       .post(request.addComment, data)
@@ -108,6 +128,30 @@ const Complete = () => {
     }).then((res) => console.log(res));
     alert("독후감을 등록하였습니다.");
   };
+
+  //수정 기능
+  const [canEditRa, setCanEditRa] = useState<boolean>(false);
+  const [canEditRe, setCanEditRe] = useState<boolean>(false);
+  const editBookRa = () => {
+    setCanEditRa(true);
+  };
+
+  const editBookRe = () => {
+    setCanEditRe(true);
+  };
+
+  // 별점 기능
+  const [value, setValue] = useState<number | null>(0);
+
+  const [change, setChange] = useState<boolean>(true);
+  const alarm = () => {
+    setChange(!change);
+  };
+
+  useEffect(() => {
+    forArticle &&
+      myArticle(forArticle?.biIsbn, forArticle?.biSeq, forArticle?.biName);
+  }, [change]);
 
   return (
     <CompleteCss>
@@ -149,19 +193,51 @@ const Complete = () => {
           <div className="bookForm">
             <span className="formName">나의 감상평</span>
             {article.comment ? (
-              <>
-                <div className="bookRating">
-                  <div className="ratingBox">
-                    <p>{article.comment}</p>
+              canEditRa ? (
+                <EditRating
+                  setCanEditRa={setCanEditRa}
+                  comment={article.comment}
+                  uiSeq={uiSeq}
+                  ocSeq={article.ocSeq}
+                  myArticle={myArticle}
+                  value={article.score}
+                  alarm={alarm}
+                />
+              ) : (
+                <>
+                  <div className="bookRating">
+                    <div className="heart">
+                      <Rating
+                        name="read-only"
+                        value={article.score}
+                        readOnly
+                        icon={<FavoriteIcon fontSize="inherit" />}
+                        emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                      />
+                    </div>
+                    <div className="ratingBox">
+                      <p>{article.comment}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="button">
-                  <button>수정</button>
-                </div>
-              </>
+                  <div className="button">
+                    <button onClick={editBookRa}>수정</button>
+                  </div>
+                </>
+              )
             ) : (
               <div className="bookRating">
                 <form>
+                  <div className="heart">
+                    <Rating
+                      name="simple-controlled"
+                      value={value}
+                      icon={<FavoriteIcon fontSize="inherit" />}
+                      emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                      onChange={(event, newValue) => {
+                        setValue(newValue);
+                      }}
+                    />
+                  </div>
                   <textarea
                     cols={80}
                     placeholder="감상평을 남겨주세요. 이 책에 대한 욕설 및 인신공격성 글은 평점 페이지에서 노출 제외처리됩니다."
@@ -178,17 +254,27 @@ const Complete = () => {
             )}
             <span className="formName">나의 독후감</span>
             {article.content ? (
-              <>
-                <div className="bookReview">
-                  <div className="reviewBox">
-                    <p className="reviewTitle">- {article.title} -</p>
-                    <p className="reviewContent">{article.content}</p>
+              canEditRe ? (
+                <EditReview
+                  setCanEditRe={setCanEditRe}
+                  title={article.title}
+                  content={article.content}
+                  aiSeq={article.aiSeq}
+                  alarm={alarm}
+                />
+              ) : (
+                <>
+                  <div className="bookReview">
+                    <div className="reviewBox">
+                      <p className="reviewTitle">- {article.title} -</p>
+                      <p className="reviewContent">{article.content}</p>
+                    </div>
+                    <div className="button">
+                      <button onClick={editBookRe}>수정</button>
+                    </div>
                   </div>
-                  <div className="button">
-                    <button>수정</button>
-                  </div>
-                </div>
-              </>
+                </>
+              )
             ) : (
               <div className="bookReview">
                 <form>
