@@ -65,6 +65,12 @@ const BookDetailCss = styled.section`
   .bookRight {
     width: 600px;
     padding: 2px;
+    .buttons {
+      display: flex;
+      justify-content:center ;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
   }
 `;
 

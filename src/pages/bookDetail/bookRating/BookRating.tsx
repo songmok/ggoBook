@@ -37,9 +37,7 @@ const BookRating = (props: IProps) => {
   useEffect(() => {
     commentList();
   }, []);
-
-  console.log(content);
-
+  
   // 날짜 변경 함수
   const datePrefix = (Day: string) => {
     const Date = Day.substring(0, 10);
@@ -49,11 +47,12 @@ const BookRating = (props: IProps) => {
 
   return (
     <BookRatingCss>
-      <div>
+      <div className="ratingBox">
         {content.length === 0 ? (
-          <div>
+          <div className="noneRating">
             <p>
-              등록된 평점이 없습니다. 이 책을 완독하고 첫 평점을 등록해보세요!
+              등록된 평점이 없습니다.
+              <br /> 이 책을 완독하고 첫 평점을 등록해보세요!
             </p>
           </div>
         ) : (

@@ -1,8 +1,17 @@
-import { bigsize, headertitle, minsize } from "utils/FontSize";
+import { minsize } from "utils/FontSize";
 import { midllesize } from "utils/FontSize";
 import styled from "styled-components";
 
 const BookCss = styled.section`
+  .noneKeyword {
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: #00b4cc;
+  }
   .searchWrap {
     position: relative;
     margin: 10px auto;
@@ -107,6 +116,20 @@ const BookCss = styled.section`
         }
       }
     }
+  }
+  /* 아래의 모든 코드는 영역::코드로 사용 */
+  .bookGnb::-webkit-scrollbar {
+    width: 10px; /* 스크롤바의 너비 */
+  }
+
+  .bookGnb::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #217af4; /* 스크롤바의 색상 */
+    border-radius: 10px;
+  }
+
+  .bookGnb::-webkit-scrollbar-track {
+    background: #eaf9ff; /*스크롤바 뒷 배경 색상*/
   }
 `;
 

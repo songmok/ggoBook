@@ -1,5 +1,3 @@
-import { minsize } from "utils/FontSize";
-import { midllesize } from "utils/FontSize";
 import styled from "styled-components";
 
 const CompleteCss = styled.section`

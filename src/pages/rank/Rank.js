@@ -5,21 +5,19 @@ import request from "api/request";
 
 import RankHead from "components/rank/RankHead";
 import RankUser from "components/rank/RankUser";
-// import Pagination from "react-js-pagination";
-import { rankuser } from "pages/rank/data/rankjson";
-import { Link, useParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 
 const Rank = () => {
-  const { RANK } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = parseInt(searchParams.get("page"));
   const [users, setUsers] = useState([]);
   const [pages, setPages] = useState();
-  console.log(RANK);
-  const page = parseInt(RANK);
+
   const rank = async () => {
     const params = {
-      page: RANK - 1,
+      page: page - 1,
     };
     await instance.get(request.rank, { params: params }).then((res) => {
       setUsers(res.data.content);
@@ -29,9 +27,7 @@ const Rank = () => {
 
   useEffect(() => {
     rank();
-  }, [RANK]);
-
-  // const [items, setItems] = useState(10);
+  }, [page]);
 
   return (
     <>
@@ -42,7 +38,6 @@ const Rank = () => {
         <ul className="rankUser">
           <RankUser users={users} />
         </ul>
-
         <div className="pagination">
           <Pagination
             count={pages}
@@ -51,7 +46,7 @@ const Rank = () => {
             renderItem={(item) => (
               <PaginationItem
                 component={Link}
-                to={`/rank/${item.page}`}
+                to={`/rank?page=${item.page}`}
                 {...item}
               />
             )}

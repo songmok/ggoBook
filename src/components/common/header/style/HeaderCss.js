@@ -93,7 +93,7 @@ const HeaderCss = styled.header`
 
     .selected {
       font-weight: bold;
-      color: #afa9fd;
+      color: #00b4cc;
       @media ${(props) => props.theme.mob} {
         background-color: #999 !important;
       }
