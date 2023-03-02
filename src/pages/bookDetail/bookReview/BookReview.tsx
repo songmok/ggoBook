@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BookReviewCss from "./BookReviewCSS";
 import { IProps } from "../bookRating/BookRating";
 import instance from "api/instance";
@@ -29,18 +29,24 @@ const BookReview = (props: IProps) => {
 
   // 더보기 닫기 토글
   const [isShowMore, setIsShowMore] = useState<boolean>(false);
-  const textLimit = useRef<number>(190);
+  const [showNum, setShowNum] = useState<number>();
+  const textLimit = useRef<number>(180);
 
-  const commentar = (content: string) => {
+  const commentar = (content: string, aiSeq: number) => {
     const shortReview: string = content.slice(0, textLimit.current);
 
     if (content.length > textLimit.current) {
-      if (isShowMore) {
+      if (isShowMore && aiSeq === showNum) {
         return content;
       }
       return shortReview;
     }
     return content;
+  };
+
+  const thisOpen = (aiSeq: number) => {
+    setShowNum(aiSeq);
+    setIsShowMore(!isShowMore);
   };
 
   // 날짜 변경 함수
@@ -52,12 +58,12 @@ const BookReview = (props: IProps) => {
 
   return (
     <BookReviewCss>
-      <div className="reviewTop">
+      <div className="reviewBox">
         {article.length === 0 ? (
-          <div>
+          <div className="noneReview">
             <p>
-              등록된 독후감이 없습니다. 이 책을 완독하고 첫 독후감을
-              등록해보세요!
+              등록된 독후감이 없습니다.
+              <br />이 책을 완독하고 첫 독후감을 등록해보세요!
             </p>
           </div>
         ) : (
@@ -67,12 +73,14 @@ const BookReview = (props: IProps) => {
                 <div className="review">
                   <p className="reviewTitle">{ele.aiTitle}</p>
                   <p className="reviewContent">
-                    {commentar(ele.aiContent)}
+                    {commentar(ele.aiContent, ele.aiSeq)}
                     <button
-                      onClick={() => setIsShowMore(!isShowMore)}
+                      onClick={() => {
+                        thisOpen(ele.aiSeq);
+                      }}
                       className="showMore"
                     >
-                      {ele.aiContent.length > textLimit.current && // 버튼명은 조건에 따라 달라진다
+                      {ele.aiContent.length > textLimit.current &&
                         (isShowMore ? "닫기" : "...더보기")}
                     </button>
                   </p>

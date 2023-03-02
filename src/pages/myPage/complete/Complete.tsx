@@ -11,6 +11,7 @@ import EditReview from "./edit/EditReview";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Button } from "utils/repeatCss";
 
 interface IBookList {
   id: number;
@@ -74,6 +75,7 @@ const Complete = () => {
     await instance.get(request.article, { params: params }).then((res) => {
       setArticle(res.data);
       setBiSeq(biSeq);
+      setValue(0);
     });
   };
 
@@ -105,6 +107,7 @@ const Complete = () => {
       .post(request.addComment, data)
       .then((res) => console.log(res.data));
     alert("감상평을 등록하였습니다.");
+    alarm();
   };
 
   const addArticle = () => {
@@ -127,6 +130,7 @@ const Complete = () => {
       },
     }).then((res) => console.log(res));
     alert("독후감을 등록하였습니다.");
+    alarm();
   };
 
   //수정 기능
@@ -219,9 +223,9 @@ const Complete = () => {
                       <p>{article.comment}</p>
                     </div>
                   </div>
-                  <div className="button">
+                  <Button className="button">
                     <button onClick={editBookRa}>수정</button>
-                  </div>
+                  </Button>
                 </>
               )
             ) : (
@@ -269,9 +273,9 @@ const Complete = () => {
                       <p className="reviewTitle">- {article.title} -</p>
                       <p className="reviewContent">{article.content}</p>
                     </div>
-                    <div className="button">
+                    <Button className="button">
                       <button onClick={editBookRe}>수정</button>
-                    </div>
+                    </Button>
                   </div>
                 </>
               )

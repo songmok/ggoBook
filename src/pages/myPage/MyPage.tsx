@@ -28,6 +28,8 @@ export interface IUserData {
   userImg: string | null;
   userPoint: number;
   userRank: number;
+  userBook: number;
+  userPage: number;
 }
 
 const MyPage = () => {
@@ -57,7 +59,7 @@ const MyPage = () => {
   const alarm = () => {
     setChange(!change);
   };
-  
+
   // const logout = () => {
   //   axios({
   //     method: "post",
@@ -88,7 +90,6 @@ const MyPage = () => {
         downloadFiles
           .get(`http://192.168.0.160:8520/api/download/user/${userImg}`)
           .then((res) => {
-            console.log(res.data);
             const newFile = res.data;
             const reader = new FileReader(); // 1
             reader.onload = (e) => {
@@ -203,14 +204,14 @@ const MyPage = () => {
                 <FontAwesomeIcon icon={faBook} size="2x" />
               </span>
               <span>읽은 책</span>
-              <span className="count">0</span>
+              <span className="count">{userInfo?.userBook}</span>
             </li>
             <li>
               <span className="icon">
                 <FontAwesomeIcon icon={faFileLines} size="2x" />
               </span>
               <span>페이지 수 </span>
-              <span className="count">0</span>
+              <span className="count">{userInfo?.userPage}</span>
             </li>
             <li>
               <span className="icon">
@@ -230,7 +231,7 @@ const MyPage = () => {
               <span className="icon">
                 <FontAwesomeIcon icon={faClock} size="2x" />
               </span>
-              <span>독서일</span>
+              <span>계획</span>
               <span className="count">0</span>
             </li>
           </ul>

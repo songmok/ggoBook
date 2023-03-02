@@ -5,6 +5,7 @@ import { TTBKey_DETAIL } from "OAuth";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { Button } from "utils/repeatCss";
 import BookRating from "./bookRating/BookRating";
 import BookReview from "./bookReview/BookReview";
 import BookDetailCss from "./style/BookDetailCss";
@@ -55,7 +56,7 @@ const BookDetail = () => {
     instance
       .post(request.addPlan, body, { params: params })
       .then((res) => {
-        alert("한수담기 성공");
+        alert("책장에 넣기 성공");
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -80,12 +81,12 @@ const BookDetail = () => {
             <span className="page">{subInfo.itemPage}페이지</span>
           </div>
           <div className="bookBts">
-            <button onClick={addMybook}>한수담기</button>
+            <button onClick={addMybook}>책장에 넣기</button>
             <button onClick={gotoBuy}>구매하기</button>
           </div>
         </div>
         <div className="bookRight">
-          <div>
+          <Button className="buttons">
             <button
               onClick={() => {
                 setSelectOne("평점");
@@ -100,7 +101,7 @@ const BookDetail = () => {
             >
               독후감
             </button>
-          </div>
+          </Button>
           {selectOne === "평점" && <BookRating ISBN={ISBN} />}
           {selectOne === "독후감" && <BookReview ISBN={ISBN} />}
         </div>
