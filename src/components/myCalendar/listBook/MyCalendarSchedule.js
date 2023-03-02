@@ -3,7 +3,13 @@ import request from "api/request";
 import { Button } from "utils/repeatCss";
 import ListBookCss from "./style/ListBookCss";
 
-const MyCalendarSchedule = ({ ing, openForm, setModalData, setIng }) => {
+const MyCalendarSchedule = ({
+  ing,
+  setModalData,
+  setIng,
+  updateModalOpen,
+  addListEvent,
+}) => {
   console.log("일정리스트" + ing);
   const deleteEvnet = (e) => {
     const sch = {
@@ -18,6 +24,7 @@ const MyCalendarSchedule = ({ ing, openForm, setModalData, setIng }) => {
           console.log("데이터 삭제 :", res);
           const listIng = ing.filter((item) => item.id !== e);
           setIng(listIng);
+          addListEvent();
         });
     }
   };
@@ -64,7 +71,13 @@ const MyCalendarSchedule = ({ ing, openForm, setModalData, setIng }) => {
                           >
                             일정 삭제하기
                           </button>
-                          <button className="re" onClick={() => {}}>
+                          <button
+                            className="re"
+                            onClick={(e) => {
+                              updateModalOpen(true);
+                              setModalData(v);
+                            }}
+                          >
                             일정 수정하기
                           </button>
                         </Button>

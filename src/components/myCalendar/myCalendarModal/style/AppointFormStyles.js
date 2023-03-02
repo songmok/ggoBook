@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { headertitle, midllesize } from "utils/FontSize";
+import { headertitle, midllesize, minsize } from "utils/FontSize";
 
 export const FormModalCss = styled.div``;
 export const FormCss = styled.form`
@@ -17,10 +17,10 @@ export const FormCss = styled.form`
     flex-direction: column;
     justify-items: center;
     margin-right: 50px;
-    gap: 30px;
+
     h2 {
       text-align: center;
-      font-size: ${headertitle};
+      font-size: ${minsize};
     }
     img {
       display: block;
