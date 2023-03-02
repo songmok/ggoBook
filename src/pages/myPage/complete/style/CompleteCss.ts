@@ -33,8 +33,15 @@ const CompleteCss = styled.section`
       .bookRating {
         display: flex;
         flex-direction: column;
-        align-items: center;
         margin: 10px 0;
+        .heart {
+          span {
+            margin: 5px 0;
+          }
+          & .MuiRating-iconFilled {
+            color: #bb6569;
+          }
+        }
         .ratingBox {
           width: 708px;
           padding: 5px;
