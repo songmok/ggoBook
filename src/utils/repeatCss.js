@@ -18,7 +18,7 @@ export const Button = styled.div`
     &:hover {
       border: 0.1rem #6c7e05 solid;
       color: #fff;
-      background-color: #8002a7;
+      background-color: #e5d566;
     }
   }
 `;

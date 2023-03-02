@@ -9,9 +9,9 @@ import {
   FormModalCss,
 } from "../myCalendarModal/style/AppointFormStyles";
 import { useState } from "react";
+import ListSelectCss from "./style/ListselectCss";
 const MySeleteModal = ({
   plan,
-  selectModalOpen,
   selectModalClose,
   register,
   slecteModal,
@@ -22,6 +22,8 @@ const MySeleteModal = ({
   setSelectStart,
   setSelectEnd,
   handleSubmit,
+  selectData,
+  setSelectData,
 }) => {
   const customModalStyles = {
     content: {
@@ -55,14 +57,11 @@ const MySeleteModal = ({
         console.log(err);
         selectModalClose();
       });
-    listIng();
     setSelectStart(new Date());
     setSelectEnd(new Date());
     selectModalClose();
   };
-  const [selectData, setSelectData] = useState("");
-  console.log("셀리트", selectData);
-  console.log("sdsd", plan);
+  console.log("selectData", selectData);
   return (
     <>
       <FormModalCss>
@@ -76,53 +75,69 @@ const MySeleteModal = ({
             <button onClick={selectModalClose} className="dks">
               X
             </button>
-            <FormCss onSubmit={handleSubmit(selectSubmit)}>
-              {plan.map((v, i) => {
-                return (
-                  <>
-                    <div className="myBook" key={v.id}>
-                      <button
-                        onClick={() => {
-                          setSelectData(v);
-                        }}
-                      >
-                        <div className="he" key={v.id}>
-                          <div className="df">{v.biName}</div>
-                        </div>
-                      </button>
-                    </div>
-                  </>
-                );
-              })}
-              <div className="header">
-                <h2>{selectData.biName}</h2>
+            <ListSelectCss onSubmit={handleSubmit(selectSubmit)}>
+              <div className="myBook">
+                {plan.map((v, i) => {
+                  return (
+                    <>
+                      <div className="myBookIn" key={i}>
+                        <input
+                          type="button"
+                          id={v.biName}
+                          onClick={() => {
+                            setSelectData(v);
+                          }}
+                        />
+                        <label htmlFor={v.biName}>
+                          <div className="bookWrap" key={v.id}>
+                            <div className="bookName">{v.biName}</div>
+                            <img src={v.bimgUri} alt={v.biName} />
+                          </div>
+                        </label>
+                      </div>
+                    </>
+                  );
+                })}
               </div>
-              <ul>
-                <li className="dateWrap">
-                  <span className="dateHead">시작 날</span>
-                  <span>{setSelectStart}</span>
-                  <span className="dateHead">마지막 날</span>
-                  <span>{setSelectEnd}</span>
-                </li>
-                <li className="descWrap">
-                  <label>기록란</label>
-                  <textarea
-                    className="desc"
-                    name="description"
-                    required
-                    {...register("description", {
-                      required: true,
-                      maxLength: 300,
-                    })}
-                  ></textarea>
-                  <Button className="submit">
-                    <button className="save" type="submit">
-                      저장하기
-                    </button>
-                  </Button>
-                </li>
-              </ul>
-            </FormCss>
+              <div className="planList">
+                <div className="header">
+                  {selectData !== "" ? (
+                    <h2>{selectData.biName}</h2>
+                  ) : (
+                    <h2>왼쪽에서 책을 선택해주세요</h2>
+                  )}
+                </div>
+                <ul>
+                  <li className="dateWrap">
+                    <div className="start dates">
+                      <span className="dateHead">시작 날</span>
+                      <span className="str">{selectStart}</span>
+                    </div>
+                    <div className="end dates">
+                      <span className="dateHead">마지막 날</span>
+                      <span className="str">{selectEnd}</span>
+                    </div>
+                  </li>
+                  <li className="descWrap">
+                    <label>기록란</label>
+                    <textarea
+                      className="desc"
+                      name="description"
+                      required
+                      {...register("description", {
+                        required: true,
+                        maxLength: 300,
+                      })}
+                    ></textarea>
+                    <Button className="submit">
+                      <button className="save" type="submit">
+                        저장하기
+                      </button>
+                    </Button>
+                  </li>
+                </ul>
+              </div>
+            </ListSelectCss>
           </Modal>
         )}
       </FormModalCss>

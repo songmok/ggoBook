@@ -16,11 +16,11 @@ const Header = () => {
   const location = useLocation();
   if (location.pathname === "/login") return null;
   if (location.pathname === "/signup") return null;
-  
+
   return (
     <HeaderCss>
       <div>
-        <Link to="/login">Project SB</Link>
+        <Link to="/login">꼬북꼬북</Link>
       </div>
       <div className="headerWrap">
         <ul>

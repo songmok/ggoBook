@@ -8,9 +8,11 @@ interface IProps {
   openForm: any;
   setModalData: any;
   start: any;
+  listPlan: any;
 }
 
 const ListBook = (props: IProps) => {
+  // console.log(props.addListEvent());
   const listDelete = (id: number) => {
     const params = {
       id: id,
@@ -18,6 +20,7 @@ const ListBook = (props: IProps) => {
     window.confirm("책 목록에서 삭제하시겠습니까?") &&
       instance.delete(request.listDelete, { params: params }).then((res) => {
         alert(res.data.message);
+        props.listPlan();
       });
   };
 
@@ -30,6 +33,7 @@ const ListBook = (props: IProps) => {
         .post(request.listComplete, null, { params: params })
         .then((res) => {
           console.log(res);
+          props.listPlan();
         });
   };
   console.log(props.plan);

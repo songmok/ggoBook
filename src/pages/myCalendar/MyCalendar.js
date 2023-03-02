@@ -41,7 +41,8 @@ const MyCalendar = () => {
   // useForm handler
   const { register, handleSubmit } = useForm();
   const [update, setUpdate] = useState();
-  // 일정추가
+  // 선택 리스트
+  const [selectData, setSelectData] = useState("");
 
   const addListEvent = async () => {
     let user = {
@@ -59,37 +60,16 @@ const MyCalendar = () => {
         for (let temp of res.data) {
           let tomorrow = new Date(temp.end);
           tomorrow.setDate(tomorrow.getDate() + 1);
-          // console.log(tomorrow);
           temp.end = moment(tomorrow).format("YYYY-MM-DD");
-          // console.log(temp.end);
           console.log("df", temp);
         }
         setEvent(res.data);
-        // listIng();
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  // 캘린더에서 삭제
-  const deleteEvnet = (e) => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      const siSeq = e.event._def;
-      instance
-        .delete(request.scheduleDelete, {
-          params: {
-            id: siSeq.publicId,
-          },
-        })
-        .then((res) => {
-          console.log("삭제될까?", res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
   // booklist
   const listPlan = async () => {
     const params = {
@@ -118,10 +98,6 @@ const MyCalendar = () => {
     listIng();
   }, []);
 
-  const rendercalendar = () => {
-    addListEvent();
-  };
-
   // modal api
   const openForm = () => {
     // setSelectedModal(true);
@@ -141,6 +117,7 @@ const MyCalendar = () => {
   };
   const selectModalClose = () => {
     setSlecteModal(false);
+    setSelectData("");
   };
   //update modal
   const updateModalOpen = () => {
@@ -149,16 +126,20 @@ const MyCalendar = () => {
   const updateModalClose = () => {
     setUpdateModal(false);
   };
-
+  console.log("뭘보세요", plan);
   return (
     <MyCalendarCss>
-      <ListBook plan={plan} openForm={openForm} setModalData={setModalData} />
+      <ListBook
+        plan={plan}
+        openForm={openForm}
+        setModalData={setModalData}
+        listPlan={listPlan}
+      />
       <MyCalendarSchedule
         ing={ing}
         openForm={openForm}
         setModalData={setModalData}
         setIng={setIng}
-        deleteEvnet={deleteEvnet}
         updateModalOpen={updateModalOpen}
         addListEvent={addListEvent}
       />
@@ -189,6 +170,8 @@ const MyCalendar = () => {
         listIng={listIng}
         selectStart={selectStart}
         selectEnd={selectEnd}
+        setSelectData={setSelectData}
+        selectData={selectData}
       />
       <MyCalendarUpdate
         ing={ing}
@@ -213,7 +196,28 @@ const MyCalendar = () => {
               left: "title",
               right: "prevYear,prev,today,next,nextYear",
             }}
-            eventClick={deleteEvnet}
+            eventClick={(e) => {
+              const deleteEvnet = (e) => {
+                if (window.confirm("정말 삭제하시겠습니까?")) {
+                  const siSeq = e.event._def;
+                  instance
+                    .delete(request.scheduleDelete, {
+                      params: {
+                        id: siSeq.publicId,
+                      },
+                    })
+                    .then((res) => {
+                      console.log("삭제될까?", res);
+                      addListEvent();
+                      listIng();
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }
+              };
+              deleteEvnet(e);
+            }}
             initialView="dayGridMonth"
             events={event}
             updateModalClose={updateModalClose}
@@ -228,9 +232,7 @@ const MyCalendar = () => {
               let tomorrow = new Date(data.endStr);
               tomorrow.setDate(tomorrow.getDate() - 1);
               data.endStr = moment(tomorrow).format("YYYY-MM-DD");
-              console.log(data.endStr);
               setSelectEnd(data.endStr);
-              console.log("datae", data);
             }}
             selectMirror={false}
             displayEventTime={false}

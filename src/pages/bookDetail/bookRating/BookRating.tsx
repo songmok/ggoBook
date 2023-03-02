@@ -67,7 +67,6 @@ const BookRating = (props: IProps) => {
                   icon={<FavoriteIcon fontSize="inherit" />}
                   emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                 />
-
                 <p className="ratingContent">{ele.content}</p>
                 <p className="ratingND">
                   <span>{ele.nickName}님</span>

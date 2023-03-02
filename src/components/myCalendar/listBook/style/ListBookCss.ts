@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import { midllesize, minsize } from "utils/FontSize";
+import { defaltsize, midllesize, minsize } from "utils/FontSize";
 import { addButton, myScheduleBtn } from "utils/repeatCss";
 
 const ListBookCss = styled.article`
   display: flex;
   position: relative;
-
   .scheduleList {
     margin-left: 20px;
   }
@@ -85,7 +84,11 @@ const ListBookCss = styled.article`
             }
             .title {
               font-weight: bold;
-              font-size: ${midllesize};
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              font-size: ${defaltsize};
+              padding: 0px 10px;
             }
             .author {
               font-size: ${minsize};
