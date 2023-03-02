@@ -3,8 +3,8 @@ import request from "api/request";
 import { Button } from "utils/repeatCss";
 import ListBookCss from "./style/ListBookCss";
 
-const MyCalendarSchedule = ({ ing, openForm, setModalData }) => {
-  console.log(ing);
+const MyCalendarSchedule = ({ ing, openForm, setModalData, setIng }) => {
+  console.log("일정리스트" + ing);
   const deleteEvnet = (e) => {
     const sch = {
       id: e,
@@ -15,7 +15,9 @@ const MyCalendarSchedule = ({ ing, openForm, setModalData }) => {
           params: sch,
         })
         .then((res) => {
-          console.log(res);
+          console.log("데이터 삭제 :", res);
+          const listIng = ing.filter((item) => item.id !== e);
+          setIng(listIng);
         });
     }
   };

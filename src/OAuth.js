@@ -17,3 +17,5 @@ export const NAVER_LOGOUT = `https://nid.naver.com/oauth2.0/token?grant_type=del
 
 export const TTBKey = process.env.REACT_APP_TTBKEY;
 export const TTBKey_DETAIL = process.env.REACT_APP_TTBKEY_DETAIL;
+export const TTBKeyIP = process.env.REACT_APP_TTBKEY_IP;
+export const TTBKeyIP_DETAIL = process.env.REACT_APP_TTBKEY_IP_DETAIL;

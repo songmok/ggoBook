@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Component, useCallback, useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -13,14 +13,18 @@ import MyCalendarSchedule from "components/myCalendar/listBook/MyCalendarSchedul
 
 import MyCalendarModal from "components/myCalendar/myCalendarModal/MyCalendarModal";
 import ListBook from "components/myCalendar/listBook/ListBook";
+import MySeleteModal from "components/myCalendar/listBook/MySeleteModal";
+import moment from "moment";
+import MyCalendarUpdate from "components/myCalendar/MyCalendarUpdate/MyCalendarUpdate";
 
 const MyCalendar = () => {
   // States
   // 모달
   const [modalOpen, setModalOpen] = useState(false);
+  const [slecteModal, setSlecteModal] = useState(false);
   // const [selectedModal, setSelectedModal] = useState("");
   // 이벤트
-  const [event, setEvnet] = useState([]);
+  const [event, setEvent] = useState([]);
   // 리스트
   const [plan, setPlan] = useState([]);
   const [ing, setIng] = useState([]);
@@ -31,10 +35,14 @@ const MyCalendar = () => {
   // date start end
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
+  const [selectStart, setSelectStart] = useState(new Date());
+  const [selectEnd, setSelectEnd] = useState(new Date());
   // useForm handler
   const { register, handleSubmit } = useForm();
+  const [update, setUpdate] = useState();
   // 일정추가
-  const addEvent = async () => {
+
+  const addListEvent = async () => {
     let user = {
       uiSeq: uiSeq,
     };
@@ -43,13 +51,24 @@ const MyCalendar = () => {
         params: user,
       })
       .then((res) => {
-        console.log(res.data);
-        setEvnet(res.data);
+        console.log("addDate", res.data);
+        // res.data.end += "T23:59:00";
+        for (let temp of res.data) {
+          let tomorrow = new Date(temp.end);
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          // console.log(tomorrow);
+          temp.end = moment(tomorrow).format("YYYY-MM-DD");
+          // console.log(temp.end);
+          console.log("df", temp);
+        }
+        setEvent(res.data);
+        listIng();
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   // 캘린더에서 삭제
   const deleteEvnet = (e) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -68,8 +87,6 @@ const MyCalendar = () => {
         });
     }
   };
-
-  // onSubmit Function
   // booklist
   const listPlan = async () => {
     const params = {
@@ -86,15 +103,20 @@ const MyCalendar = () => {
     };
     await instance.get(request.myCalendar, { params: params }).then((res) => {
       setIng(res.data);
-      console.log(res.data);
+      console.log("서버에서 불러옴 일정리스트", res.data);
     });
   };
+
   useEffect(() => {
-    addEvent();
+    addListEvent();
     listPlan();
     listIng();
   }, []);
+  const rendercalendar = () => {
+    addListEvent();
+  };
 
+  //
   const openForm = () => {
     // setSelectedModal(true);
     openModal();
@@ -102,11 +124,31 @@ const MyCalendar = () => {
   const openModal = () => {
     setModalOpen(true);
   };
-
   // Close Modal Function
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  // select modal
+  const selectModalOpen = () => {
+    setSlecteModal(true);
+  };
+  const selectModalClose = () => {
+    setSlecteModal(false);
+  };
+  function handleDateSelect(data) {
+    console.log(data.view.type);
+    if (data.view.type === "dayGridMonth" || data.view.type === "timeGridDay") {
+      selectModalOpen(true);
+      setSelectStart(data.startStr);
+      let tomorrow = new Date(data.endStr);
+      tomorrow.setDate(tomorrow.getDate() - 1);
+      data.endStr = moment(tomorrow).format("YYYY-MM-DD");
+      console.log(data.endStr);
+      setSelectEnd(data.endStr);
+      console.log("datae", data);
+    }
+  }
 
   return (
     <MyCalendarCss>
@@ -117,6 +159,8 @@ const MyCalendar = () => {
         setModalData={setModalData}
         start={start}
         end={end}
+        setIng={setIng}
+        deleteEvnet={deleteEvnet}
       />
       <MyCalendarModal
         modalData={modalData}
@@ -129,6 +173,33 @@ const MyCalendar = () => {
         handleSubmit={handleSubmit}
         register={register}
         uiSeq={uiSeq}
+        listIng={listIng}
+        event={event}
+      />
+      <MySeleteModal
+        uiSeq={uiSeq}
+        setSelectStart={setSelectStart}
+        setSelectEnd={setSelectEnd}
+        plan={plan}
+        slecteModal={slecteModal}
+        handleSubmit={handleSubmit}
+        register={register}
+        selectModalOpen={selectModalOpen}
+        selectModalClose={selectModalClose}
+        listIng={listIng}
+        selectStart={selectStart}
+        selectEnd={selectEnd}
+      />
+      <MyCalendarUpdate
+        modalData={modalData}
+        start={start}
+        setStart={setStart}
+        end={end}
+        setEnd={setEnd}
+        handleSubmit={handleSubmit}
+        register={register}
+        uiSeq={uiSeq}
+        listIng={listIng}
       />
       <div className="fullcalendarWrap">
         {uiSeq ? (
@@ -145,18 +216,15 @@ const MyCalendar = () => {
             allDaySlot={false}
             defaultAllDay={false}
             editable={true}
-            selectable={false}
+            selectable={true}
+            select={handleDateSelect}
             selectMirror={false}
             displayEventTime={false}
             weekends={true}
             locale={"ko"}
-            views={{
-              dayGrid: {
-                dayMaxEventRows: 4,
-              },
-            }}
-            height="80vh"
-            withd="80vw"
+            eventStartEditable={false}
+            height={"85vh"}
+            width={"85vw"}
           />
         ) : (
           <div>Loading</div>
