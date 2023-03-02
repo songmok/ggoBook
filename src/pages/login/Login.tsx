@@ -15,8 +15,8 @@ const Login = () => {
   return (
     <LoginCss>
       <div className="title">
-        <p className="logo">Project_SB</p>
-        <p className="slogan">한스의 캘린더</p>
+        <p className="logo">꼬북꼬북</p>
+        <p className="slogan">나의 북스케줄</p>
       </div>
       <div className="orBt">
         <span className="on">로그인</span>
@@ -28,12 +28,12 @@ const Login = () => {
         <span className="or"> 또는 </span>
       </div>
       <a href={KAKAO_URL} className="kakao">
-        <img src={kakao} alt="카카오 로그인" />
-        <span>카카오 로그인</span>
+        <img src={kakao} alt="카카오로 시작하기" />
+        <span>카카오로 시작하기</span>
       </a>
       <a href={NAVER_URL} className="naver">
-        <img src={naver} alt="네이버 로그인" />
-        <span>네이버 로그인</span>
+        <img src={naver} alt="네이버로 시작하기" />
+        <span>네이버로 시작하기</span>
       </a>
     </LoginCss>
   );

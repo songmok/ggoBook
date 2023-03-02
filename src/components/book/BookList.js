@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import { searchImg } from "assets/images/search_img.jpg";
+
 const BookList = ({ searchResult }) => {
-  console.log(searchResult);
   return (
     <>
       <div className="bookWrap">

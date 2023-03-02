@@ -12,8 +12,8 @@ const Signup = () => {
   return (
     <SignupCss>
       <div className="title">
-        <p className="logo">Project_SB</p>
-        <p className="slogan">한스의 캘린더</p>
+        <p className="logo">꼬북꼬북</p>
+        <p className="slogan">나의 북스케줄</p>
       </div>
       <div className="orBt">
         <span onClick={goLogin}>로그인</span>
