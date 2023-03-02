@@ -21,6 +21,7 @@ const request = {
   commentUpdate: "/api/onecomment/update",
   scheduleUpdate: "/api/schedule/update",
   scheduleAdd: "/api/schedule/add",
+  rank: "/api/rank/list",
 };
 
 export default request;

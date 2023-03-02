@@ -4,6 +4,7 @@ import { rankgrid, sectionwrap } from "utils/Layout";
 import { bfaf } from "utils/repeatCss";
 const RankCss = styled.section`
   ${sectionwrap}
+
   .rankHead {
     ${rankgrid}
     padding-bottom: 30px;
@@ -26,6 +27,7 @@ const RankCss = styled.section`
     }
   }
   .rankUser {
+    margin-bottom: 30px;
     > li {
       ${rankgrid}
       padding-top: 45px;
@@ -40,15 +42,15 @@ const RankCss = styled.section`
   }
   .pagination {
     display: flex;
-    flex-wrap: nowrap;
+    justify-content: center;
     li {
       a {
+        font-size: 20px;
         color: black;
         float: left;
         padding: 8px 16px;
         text-decoration: none;
         transition: background-color 0.3s;
-        border: 1px solid #ddd;
       }
     }
   }

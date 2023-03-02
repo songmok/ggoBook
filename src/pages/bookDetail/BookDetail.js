@@ -15,7 +15,6 @@ const BookDetail = () => {
   const [subInfo, setSubInfo] = useState([]);
   const [selectOne, setSelectOne] = useState("평점");
   const uiSeq = useSelector((state) => state.user.uiSeq);
-  console.log(uiSeq);
 
   const bookData = async () => {
     await axios({
@@ -39,8 +38,6 @@ const BookDetail = () => {
   useEffect(() => {
     bookData();
   }, []);
-
-  console.log(bookAbout);
 
   const addMybook = () => {
     const body = {
