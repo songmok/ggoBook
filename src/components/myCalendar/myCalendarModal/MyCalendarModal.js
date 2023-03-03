@@ -23,20 +23,9 @@ const MyCalendarModal = ({
   ing,
   listIng,
   event,
+  customModalStyles
 }) => {
-  const customModalStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      width: "50%",
-      height: "500px",
-      transform: "translate(-50%, -50%)",
-    },
-    overlay: { zIndex: 1000 },
-  };
+
 
   // Open Modal Function
   const onSubmit = async (data) => {
@@ -63,7 +52,6 @@ const MyCalendarModal = ({
     closeModal();
   };
   // update list
-
 
   return (
     <>

@@ -249,11 +249,11 @@ const Complete = () => {
                     onChange={commentText}
                   />
                 </form>
-                <div className="button">
+                <Button className="button">
                   <button type="button" onClick={addComment}>
                     작성
                   </button>
-                </div>
+                </Button>
               </div>
             )}
             <span className="formName">나의 독후감</span>
@@ -295,11 +295,11 @@ const Complete = () => {
                     onChange={articleText}
                   />
                 </form>
-                <div className="button">
+                <Button className="button">
                   <button type="button" onClick={addArticle}>
                     작성
                   </button>
-                </div>
+                </Button>
               </div>
             )}
           </div>

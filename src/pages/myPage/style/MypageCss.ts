@@ -16,7 +16,7 @@ const MyPageCss = styled.section`
           height: 200px;
           width: 200px;
           border-radius: 100%;
-          border: 1px solid #00b4cc ;
+          border: 1px solid #00b4cc;
           size: cover;
         }
       }

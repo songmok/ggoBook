@@ -1,8 +1,8 @@
 // 카카오 로그인
 
 export const REST_API_KEY = process.env.REACT_APP_KAKAO;
-export const REDIRECT_URI = "http://localhost:3000/wait";
-export const LOGOUT_REDIRECT_URI = "http://localhost:3000/login";
+export const REDIRECT_URI = "http://192.168.0.137:3000/wait";
+export const LOGOUT_REDIRECT_URI = "http://192.168.0.137:3000/login";
 export const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 export const KAKAO_LOGOUT = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
 

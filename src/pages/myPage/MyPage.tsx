@@ -30,6 +30,9 @@ export interface IUserData {
   userRank: number;
   userBook: number;
   userPage: number;
+  userArticle: number;
+  userOneComment: number;
+  userDays: number;
 }
 
 const MyPage = () => {
@@ -218,21 +221,21 @@ const MyPage = () => {
                 <FontAwesomeIcon icon={faPencil} size="2x" />
               </span>
               <span>독후감</span>
-              <span className="count">0</span>
+              <span className="count">{userInfo?.userArticle}</span>
             </li>
             <li>
               <span className="icon">
                 <FontAwesomeIcon icon={faStar} size="2x" />
               </span>
               <span>평점</span>
-              <span className="count">0</span>
+              <span className="count">{userInfo?.userOneComment}</span>
             </li>
             <li>
               <span className="icon">
                 <FontAwesomeIcon icon={faClock} size="2x" />
               </span>
               <span>계획</span>
-              <span className="count">0</span>
+              <span className="count">{userInfo?.userDays}</span>
             </li>
           </ul>
         </div>

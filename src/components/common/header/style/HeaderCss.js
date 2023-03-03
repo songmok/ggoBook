@@ -9,13 +9,23 @@ const HeaderCss = styled.header`
   height: 6.7708vw;
   border-bottom: 1px solid #bbb;
   padding: 0px 30px;
-  background-color: #942e44;
+  background-color: #d15872;
   position: relative;
   z-index: 9999;
   @media ${(props) => props.theme.mob} {
     position: fixed;
     left: 0;
     top: 0;
+  }
+  .logo {
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px 5px #d15872 inset;
+    width: 100px;
+    img {
+      border-radius: 15px;
+      width: 100%;
+      display: block;
+    }
   }
   .headerWrap {
     @media ${(props) => props.theme.mob} {

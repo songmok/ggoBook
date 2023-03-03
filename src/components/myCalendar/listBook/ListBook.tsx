@@ -36,7 +36,6 @@ const ListBook = (props: IProps) => {
           props.listPlan();
         });
   };
-  console.log(props.plan);
 
   return (
     <ListBookCss>

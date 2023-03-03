@@ -17,6 +17,7 @@ const Book = () => {
         ) : (
           <BookList />
         )}
+        <span className="fromAladin">출처 : 알라딘</span>
       </BookCss>
     </>
   );

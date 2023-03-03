@@ -10,7 +10,6 @@ const MyCalendarSchedule = ({
   updateModalOpen,
   addListEvent,
 }) => {
-  console.log("일정리스트" + ing);
   const deleteEvnet = (e) => {
     const sch = {
       id: e,

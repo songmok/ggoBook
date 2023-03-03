@@ -5,11 +5,25 @@ import { addButton, myScheduleBtn } from "utils/repeatCss";
 const ListSelectCss = styled.form`
   padding: 20px;
   display: flex;
+  overflow: hidden;
+  .myBook ::-webkit-scrollbar {
+    width: 10px !important; /* 스크롤바의 너비 */
+  }
+  .myBook ::-webkit-scrollbar-thumb {
+    height: 30% !important; /* 스크롤바의 길이 */
+    background: #217af4; /* 스크롤바의 색상 */
+    border-radius: 10px !important;
+  }
+  .myBook ::-webkit-scrollbar-track {
+    background: #eaf9ff; /*스크롤바 뒷 배경 색상*/
+  }
   .myBook {
     width: 200px;
     height: 400px;
     /* background-color: #000; */
     overflow-y: scroll;
+    overflow-x: hidden;
+
     .myBookIn {
       width: 200px;
       input {
@@ -29,6 +43,7 @@ const ListSelectCss = styled.form`
           flex-wrap: wrap;
           justify-content: center;
           padding-bottom: 10px;
+
           .bookName {
             color: #000;
             font-size: 1.3rem;

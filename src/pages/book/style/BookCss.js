@@ -49,7 +49,7 @@ const BookCss = styled.section`
     height: 85vh;
     .bookGnb {
       width: 40vw;
-      height: 903px;
+      height: 890px;
       overflow-y: scroll;
       overflow-x: hidden;
       background: #eaf9ff;
@@ -116,6 +116,12 @@ const BookCss = styled.section`
         }
       }
     }
+  }
+  .fromAladin {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 14px;
+    margin-right: 30px;
   }
   /* 아래의 모든 코드는 영역::코드로 사용 */
   .bookGnb::-webkit-scrollbar {

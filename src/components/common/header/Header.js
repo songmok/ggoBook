@@ -10,6 +10,7 @@ import {
   faCalendarDay,
   faBookOpen,
 } from "@fortawesome/free-solid-svg-icons";
+import logoGo from "assets/images/ggobook.png";
 const Header = () => {
   library.add(faUser, faBook, faPersonRunning, faCalendarDay, faBookOpen);
   // <FontAwesomeIcon icon="fa-solid fa-person-running" />;
@@ -19,8 +20,8 @@ const Header = () => {
 
   return (
     <HeaderCss>
-      <div>
-        <Link to="/login">꼬북꼬북</Link>
+      <div className="logo">
+        <img src={logoGo} alt="로고" />
       </div>
       <div className="headerWrap">
         <ul>

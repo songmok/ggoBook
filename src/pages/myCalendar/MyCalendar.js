@@ -13,9 +13,10 @@ import MyCalendarSchedule from "components/myCalendar/listBook/MyCalendarSchedul
 
 import MyCalendarModal from "components/myCalendar/myCalendarModal/MyCalendarModal";
 import ListBook from "components/myCalendar/listBook/ListBook";
-import MySeleteModal from "components/myCalendar/listBook/MySeleteModal";
+
 import moment from "moment";
 import MyCalendarUpdate from "components/myCalendar/MyCalendarUpdate/MyCalendarUpdate";
+import MySeleteModal from "components/myCalendar/MySeleteModal/MySeleteModal";
 
 const MyCalendar = () => {
   // States
@@ -39,7 +40,7 @@ const MyCalendar = () => {
   const [selectStart, setSelectStart] = useState(new Date());
   const [selectEnd, setSelectEnd] = useState(new Date());
   // useForm handler
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [update, setUpdate] = useState();
   // 선택 리스트
   const [selectData, setSelectData] = useState("");
@@ -61,13 +62,13 @@ const MyCalendar = () => {
           let tomorrow = new Date(temp.end);
           tomorrow.setDate(tomorrow.getDate() + 1);
           temp.end = moment(tomorrow).format("YYYY-MM-DD");
-          console.log("df", temp);
         }
         setEvent(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
+    reset();
   };
 
   // booklist
@@ -87,7 +88,7 @@ const MyCalendar = () => {
     };
     await instance.get(request.myCalendar, { params: params }).then((res) => {
       setIng(res.data);
-      console.log("서버에서 불러옴 일정리스트", res.data);
+      console.log("listIng", res.data);
       addListEvent();
     });
   };
@@ -126,7 +127,20 @@ const MyCalendar = () => {
   const updateModalClose = () => {
     setUpdateModal(false);
   };
-  console.log("뭘보세요", plan);
+  const customModalStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      width: "50%",
+      height: "500px",
+      // overflow: "hidden",
+      transform: "translate(-50%, -50%)",
+    },
+    overlay: { zIndex: 1000 },
+  };
   return (
     <MyCalendarCss>
       <ListBook
@@ -134,6 +148,7 @@ const MyCalendar = () => {
         openForm={openForm}
         setModalData={setModalData}
         listPlan={listPlan}
+        reset={reset}
       />
       <MyCalendarSchedule
         ing={ing}
@@ -142,9 +157,11 @@ const MyCalendar = () => {
         setIng={setIng}
         updateModalOpen={updateModalOpen}
         addListEvent={addListEvent}
+        reset={reset}
       />
       <MyCalendarModal
         modalData={modalData}
+        customModalStyles={customModalStyles}
         closeModal={closeModal}
         modalOpen={modalOpen}
         start={start}
@@ -156,12 +173,14 @@ const MyCalendar = () => {
         uiSeq={uiSeq}
         listIng={listIng}
         event={event}
+        reset={reset}
       />
       <MySeleteModal
         uiSeq={uiSeq}
         setSelectStart={setSelectStart}
         setSelectEnd={setSelectEnd}
         plan={plan}
+        customModalStyles={customModalStyles}
         slecteModal={slecteModal}
         handleSubmit={handleSubmit}
         register={register}
@@ -172,6 +191,7 @@ const MyCalendar = () => {
         selectEnd={selectEnd}
         setSelectData={setSelectData}
         selectData={selectData}
+        reset={reset}
       />
       <MyCalendarUpdate
         ing={ing}
@@ -180,6 +200,7 @@ const MyCalendar = () => {
         start={start}
         setStart={setStart}
         end={end}
+        customModalStyles={customModalStyles}
         setEnd={setEnd}
         handleSubmit={handleSubmit}
         register={register}
@@ -207,7 +228,7 @@ const MyCalendar = () => {
                       },
                     })
                     .then((res) => {
-                      console.log("삭제될까?", res);
+                      console.log("delete", res);
                       addListEvent();
                       listIng();
                     })

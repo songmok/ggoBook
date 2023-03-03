@@ -1,5 +1,6 @@
 import instance from "api/instance";
 import request from "api/request";
+import moment from "moment";
 import DatePicker from "react-date-picker";
 import Modal from "react-modal";
 import { Button } from "utils/repeatCss";
@@ -23,21 +24,9 @@ const MyCalendarUpdate = ({
   updateModalOpen,
   updateModalClose,
   ing,
+  reset,
+  customModalStyles,
 }) => {
-  const customModalStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      width: "50%",
-      height: "500px",
-      transform: "translate(-50%, -50%)",
-    },
-    overlay: { zIndex: 1000 },
-  };
-  console.log("ing:", ing);
   const scheduleUpdate = async (data) => {
     let updateAppointmentInfo = {
       ...data,
@@ -57,8 +46,9 @@ const MyCalendarUpdate = ({
     setStart(new Date());
     setEnd(new Date());
     updateModalClose();
+    reset();
   };
-  console.log("bb", modalData);
+
   return (
     <>
       <FormModalCss>
@@ -75,15 +65,18 @@ const MyCalendarUpdate = ({
             <UpdateModalCss onSubmit={handleSubmit(scheduleUpdate)}>
               <div className="header">
                 <h2>{modalData.title}</h2>
+                <img src={modalData.biUri} alt={modalData.title} />
               </div>
               <ul>
                 <li className="dateWrap">
-                  <span className="dateHead">시작 날</span>
-                  <span>{modalData.start}</span>
-                  <span className="dateHead">마지막 날</span>
-                  <span>{modalData.end}</span>
+                  <div className="dates">
+                    <span className="dateHead">기존 시작 날</span>
+                    <span className="str">{modalData.start}</span>
+                    <span className="dateHead">기존 마지막 날</span>
+                    <span className="str">{modalData.end}</span>
+                  </div>
                 </li>
-                <li>
+                <li className="fixWrap">
                   <span className="dateUpdate">수정할 시작 날</span>
                   <DatePicker
                     onChange={setStart}
@@ -91,7 +84,16 @@ const MyCalendarUpdate = ({
                     format="y-MM-d"
                   />
                   <span className="dateUpdate">수정할 마지막 날</span>
-                  <DatePicker onChange={setEnd} value={end} format="y-MM-d" />
+                  <DatePicker
+                    onChange={(e) => {
+                      let tomo = new Date(e);
+                      e = moment(tomo).format("YYYY-MM-DD");
+                      let dates = new Date(e);
+                      setEnd(dates);
+                    }}
+                    value={end}
+                    format="y-MM-d"
+                  />
                 </li>
                 <li className="descWrap">
                   <label>기록란</label>

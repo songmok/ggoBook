@@ -1,7 +1,7 @@
 import instance from "api/instance";
 import request from "api/request";
 import axios from "axios";
-import { TTBKey_DETAIL } from "OAuth";
+import { TTBKeyIP_DETAIL, TTBKey_DETAIL } from "OAuth";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -20,10 +20,10 @@ const BookDetail = () => {
   const bookData = async () => {
     await axios({
       method: "get",
-      baseURL: "http://localhost:3000/",
+      baseURL: "http://192.168.0.137:3000/",
       url: "aladin/ttb/api/ItemLookUp.aspx",
       params: {
-        TTBKey: TTBKey_DETAIL,
+        TTBKey: TTBKeyIP_DETAIL,
         ItemId: ISBN,
         ItemIdType: "ISBN13",
         Output: "JS",

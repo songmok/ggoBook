@@ -10,6 +10,7 @@ import {
 } from "../myCalendarModal/style/AppointFormStyles";
 import { useState } from "react";
 import ListSelectCss from "./style/ListselectCss";
+
 const MySeleteModal = ({
   plan,
   selectModalClose,
@@ -24,20 +25,8 @@ const MySeleteModal = ({
   handleSubmit,
   selectData,
   setSelectData,
+  reset,
 }) => {
-  const customModalStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      width: "50%",
-      height: "500px",
-      transform: "translate(-50%, -50%)",
-    },
-    overlay: { zIndex: 1000 },
-  };
   const selectSubmit = (data) => {
     const appointmentInfo = {
       ...data,
@@ -60,8 +49,22 @@ const MySeleteModal = ({
     setSelectStart(new Date());
     setSelectEnd(new Date());
     selectModalClose();
+    reset();
   };
-  console.log("selectData", selectData);
+  const customModalStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      width: "50%",
+      height: "500px",
+      overflow: "hidden",
+      transform: "translate(-50%, -50%)",
+    },
+    overlay: { zIndex: 1000 },
+  };
   return (
     <>
       <FormModalCss>

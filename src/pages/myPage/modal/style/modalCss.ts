@@ -64,7 +64,7 @@ const ModalCss = styled.div`
             img {
               height: 200px;
               width: 200px;
-              border: 1px solid;
+              border: 1px solid #00b4cc;
               border-radius: 100%;
             }
           }
