@@ -75,9 +75,14 @@ const MyCalendarModal = ({
                 <li className="dateWrap">
                   <span className="dateHead">시작 날</span>
                   <DatePicker
-                    onChange={setStart}
+                    onChange={(e) => {
+                      let tomo = new Date(e);
+                      e = moment(tomo).format("YYYY-MM-DD");
+                      let dates = new Date(e);
+                      setStart(dates);
+                    }}
                     value={start}
-                    format="y-MM-d"
+      
                   />
                   <span className="dateHead">마지막 날</span>
 

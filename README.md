@@ -1,46 +1,65 @@
-# Getting Started with Create React App
+# GGoBook_꼬북꼬북
+프론트엔드(React) + 백엔드 협업 독서 일정관리 프로그램
+## :데스크톱_컴퓨터: 프로젝트 소개
+읽을 책을 선택하고, 일정 및 기록을 남긴다.
+본인이 다 읽은 책은 독후감과 평점을 남길 수 있으며,
+포인트를 쌓아 랭킹을 올릴 수 있다.
+`Target`
+독서에 관심있거나 독서를 즐겨하는 사람들
+`기대효과`
+1. 본인이 읽은 책을 쉽게 일정 등록하고 관리 및 목표설정이 가능.
+2. 원하는 책을 쉽게 검색이 가능.
+3. 다른 사용자의 독후감과 평점을 확인 가능.
+4. 랭킹 시스템으로 개개인의 동기부여.
+### :손을_잡은_사람들: 맴버구성
+- 프론트엔드 팀장 : 오한수 - 기획, 피그마, 디자인, 캘린더 및 일정관리 기능, UI/UX, Git 관리
+- 프론트엔드 팀원1 : 반재원 - 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 백엔드 팀장 : 문주영 - 독서 일정 관리, 도서 정보 관리, 회원 포인트, Git 관리
+- 백엔드 팀원1 : 차대군 - 회원 관리, 마이 페이지
+- 백엔드 팀원2 : 류승지 - 독후감 관리, 댓글 관리
+- 백엔드 팀원2 : 김성민 - 랭킹 관리, 한줄평 관리 
+### :컴퓨터: 사용 기술
+- `Html`
+- `Css` : styled-components
+- `JavaScript`
+- `React` 
+- 'typescript'
+- **Libraries** : fullcalendar, mui, react-date-picker, React-Hook-Form, redux-persist, swiper
+### :톱니바퀴: 개발 환경
+- `Java 8`
+- `JDK 1.8.0`
+- **IDE** : STS 3.9
+- **Framework** : Springboot(2.x)
+- **Database** : Oracle DB(11xe)
+- **ORM** : Mybatis
+### :날짜: 프로젝트 관리
+- GitHub
+- Slack
+- Figma
+- Swagger
+## :압정: 주요 기능
+#### 로그인 화면 
+- 카카오, 네이버 로그인 api 구현
+- 자체 회원가입 및 로그인 구현
+#### 마이 페이지 
+- 닉네임 및 사진 수정 구현
+- 사용자의 독서 권 수, 읽은 페이지 수, 독후감 수, 평점 합점들을 계산해 보여줌.
+- 로그아웃 및 회원탈퇴 구현 
+#### 도서
+- 알라딘 api를 이용해 도서 검색 구현
+- 원하는 도서 선택 후 이용자들의 독후감 및 평점 확인 가능
+- 해당 도서 알라딘 구매 페이지로 이동 가능
+- 읽고 싶은 책 마이 리스트의 추가 가능
+#### 나의 책장
+- 마이 리스트: 도서를 일정 추가 가능, 리스트에서 삭제 가능, 완독을 눌러 완독리스트에 등록 가능
+- 일정 리스트: 일정 삭제 및 등록된 일정 수정 가능
+- 캘린더: 캘린더에서 시작일과 마지막일을 드래그하여 일정 등록 가능, 해당 일정을 클릭해 삭제 가능
+#### 이벤트
+- 스와이퍼로 이벤트 페이지 슬라이드 구현
+#### 완독서 관리
+- 마이 리스트에서 완독한 도서를 관리
+- 리스트에서 도서를 누르면 해당 도서의 독후감 및 평점 작성 가능
+- 평점과 독후감 수정 가능
+<br/>
+\*\* 본 readme는 프론트엔드의 입장에서만 작성되었습니다.
