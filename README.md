@@ -27,12 +27,7 @@
  
 ### 🎥 시연영상
 
-<<<<<<< HEAD
 <img src="https://user-images.githubusercontent.com/118712217/223914798-38874fe7-8907-4924-81ac-24cd7199e208.mp4" width="300" height="600"/>
-=======
-<img src="https://user-images.githubusercontent.com/118712217/223914798-38874fe7-8907-4924-81ac-24cd7199e208.mp4 width="300" height="600"
-/>
->>>>>>> f6ef3a103fb819e24fd72366ee118a955b11bb58
 
 ### 💻: 사용 기술
 - `Html`
