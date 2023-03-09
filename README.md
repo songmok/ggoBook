@@ -27,7 +27,7 @@
  
 ### 🎥 시연영상
 
-<img src="https://user-images.githubusercontent.com/118712217/223914798-38874fe7-8907-4924-81ac-24cd7199e208.mp4
+<img src="https://user-images.githubusercontent.com/118712217/223914798-38874fe7-8907-4924-81ac-24cd7199e208.mp4 width="300" height="600"
 />
 
 ### 💻: 사용 기술
