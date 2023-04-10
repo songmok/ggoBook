@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { headertitle, midllesize } from "utils/FontSize";
 import { rankgrid, sectionwrap } from "utils/Layout";
 import { bfaf } from "utils/repeatCss";
+import { ThemeProvider } from "styled-components";
 const RankCss = styled.section`
   ${sectionwrap}
 
@@ -31,7 +32,7 @@ const RankCss = styled.section`
     > li {
       ${rankgrid}
       padding-top: 45px;
-      &:first-child {
+      &:first-of-type {
         padding-top: 30px;
       }
       > span {
